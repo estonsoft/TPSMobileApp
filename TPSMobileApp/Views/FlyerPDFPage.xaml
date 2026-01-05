@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TPSMobileApp.Views.FlyerPDFPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    xmlns:ios="http://schemas.microsoft.com/dotnet/2021/maui/ios"
+    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.PdfViewer;assembly=Syncfusion.Maui.PdfViewer"
+    Title="Monthly Flyer PDF"
+    >
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+
+            <controls:CustomHeader x:Name="CustomHeader" Grid.Row="0" />
+
+            <syncfusion:SfPdfViewer
+                x:Name="pdfViewerControl"
+                Grid.Row="1"
+                Tapped="pdfViewerControl_Tapped" />
+            <controls:CustomToolbar x:Name="CustomToolbar" Grid.Row="2" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

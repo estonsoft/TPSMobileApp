@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TPSMobileApp.Views.ItemSearchPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Maui"
+    xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
+    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    Title="Search Products"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+
+    <NavigationPage.TitleView>
+        <StackLayout
+            Orientation="Horizontal"
+            Spacing="10"
+            VerticalOptions="Center">
+
+            <Label
+                Padding="10,0,0,0"
+                FontSize="16"
+                Text="Profit Order"
+                TextColor="White"
+                VerticalTextAlignment="Center" />
+        </StackLayout>
+    </NavigationPage.TitleView>
+
+    <!--
+    <Shell.SearchHandler>
+        <controls:MySearchHandler Placeholder="Search Products" ShowsResults="false" DisplayMemberName="Name" />
+    </Shell.SearchHandler>
+    -->
+
+    <ContentPage.BindingContext>
+        <local:ItemSearchViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="BannerBackground">White</Color>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="46" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+
+            <controls:CustomHeader Grid.Row="0" />
+            <StackLayout
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                Orientation="Horizontal"
+                VerticalOptions="Center">
+                <Entry
+                    x:Name="Search"
+                    Margin="0,0,0,0"
+                    ClearButtonVisibility="WhileEditing"
+                    Completed="OnTappedSearch"
+                    FontSize="14"
+                    HeightRequest="36"
+                    HorizontalOptions="Start"
+                    Placeholder="Enter Search Text"
+                    PlaceholderColor="Gray"
+                    Text="{Binding SearchText}"
+                    VerticalOptions="Center"
+                    WidthRequest="250" />
+                <Image
+                    Margin="10,0,0,0"
+                    HeightRequest="20"
+                    WidthRequest="20">
+                    <Image.Source>
+                        <FontImageSource
+                            FontFamily="FontAwesomeFreeSolid"
+                            Glyph="&#xF002;"
+                            Size="12"
+                            Color="Blue" />
+                    </Image.Source>
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTappedSearch" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </StackLayout>
+            <StackLayout
+                Grid.Row="2"
+                Margin="0,0,0,0"
+                Orientation="Vertical"
+                Spacing="0"
+                VerticalOptions="Start">
+                <BoxView
+                    BackgroundColor="gray"
+                    HeightRequest="3"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
+                    Color="lightgray" />
+                <StackLayout
+                    Margin="0,10,0,0"
+                    HorizontalOptions="Center"
+                    Orientation="Vertical"
+                    VerticalOptions="Center">
+                    <Label
+                        Margin="0,0,0,0"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="{Binding Category}"
+                        TextColor="black"
+                        TextDecorations="Underline">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTappedCategory" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label
+                        x:Name="SubcategoryLabel"
+                        Margin="0,-3,0,2"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="{Binding Subcategory}"
+                        TextColor="black"
+                        TextDecorations="Underline">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTappedSubcategory" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label
+                        x:Name="SubsubcategoryLabel"
+                        Margin="0,-3,0,2"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="{Binding Subsubcategory}"
+                        TextColor="black"
+                        TextDecorations="Underline">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTappedSubsubcategory" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Frame
+                        Margin="10,0,0,0"
+                        Padding="0,0,0,0"
+                        BackgroundColor="#CDCDCD"
+                        BorderColor="Transparent"
+                        CornerRadius="5"
+                        HeightRequest="20"
+                        HorizontalOptions="Center"
+                        IsVisible="false"
+                        VerticalOptions="Center"
+                        WidthRequest="20">
+                        <Label
+                            Margin="0,0,0,0"
+                            BackgroundColor="#CDCDCD"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HeightRequest="20"
+                            HorizontalTextAlignment="Center"
+                            Text="X"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center"
+                            WidthRequest="20">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnTappedClearCategory" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Frame>
+                </StackLayout>
+                <StackLayout
+                    Margin="0,0,0,7"
+                    HorizontalOptions="Center"
+                    Orientation="Horizontal"
+                    VerticalOptions="Center">
+                    <CheckBox
+                        x:Name="TopSellers"
+                        CheckedChanged="TopSellers_CheckedChanged"
+                        IsChecked="{Binding TopSellersValue}"
+                        VerticalOptions="Center"
+                        Color="Blue" />
+                    <Label
+                        Margin="0,2,0,0"
+                        FontSize="12"
+                        Text="Top Sellers"
+                        TextColor="black"
+                        VerticalOptions="Center" />
+                    <CheckBox
+                        x:Name="InStockOnly"
+                        Margin="20,0,0,0"
+                        CheckedChanged="InStockOnly_CheckedChanged"
+                        IsChecked="{Binding InStockOnlyValue}"
+                        VerticalOptions="Center"
+                        Color="Blue" />
+                    <Label
+                        x:Name="InStockLabel"
+                        Margin="0,2,0,0"
+                        FontSize="12"
+                        Text="Show In Stock Only"
+                        TextColor="black"
+                        VerticalOptions="Center" />
+                </StackLayout>
+                <StackLayout
+                    Margin="0,0,0,5"
+                    HorizontalOptions="Center"
+                    IsVisible="false"
+                    Orientation="Horizontal"
+                    VerticalOptions="Center">
+                    <Label
+                        Padding="0,7,0,10"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        Text="{Binding Subcategory}"
+                        TextColor="black"
+                        TextDecorations="Underline">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnTappedSubcategory" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Frame
+                        Margin="10,0,0,0"
+                        Padding="0,0,0,0"
+                        BackgroundColor="#CDCDCD"
+                        BorderColor="Transparent"
+                        CornerRadius="5"
+                        HeightRequest="20"
+                        HorizontalOptions="Center"
+                        IsVisible="false"
+                        VerticalOptions="Center"
+                        WidthRequest="20">
+                        <Label
+                            Margin="0,0,0,0"
+                            BackgroundColor="#CDCDCD"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HeightRequest="20"
+                            HorizontalTextAlignment="Center"
+                            Text="X"
+                            TextColor="Black"
+                            VerticalTextAlignment="Center"
+                            WidthRequest="20">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnTappedClearSubcategory" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Frame>
+                </StackLayout>
+                <BoxView
+                    BackgroundColor="gray"
+                    HeightRequest="3"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
+                    Color="lightgray" />
+                <syncfusion:SfListView
+                    x:Name="ItemsListSearch"
+                    AutoFitMode="DynamicHeight"
+                    ItemAppearing="ItemsListSearch_ItemAppearing"
+                    ItemsSourceChangeCachingStrategy="ClearItems"
+                    SelectionMode="None">
+                    <syncfusion:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:CustomListItem />
+                        </DataTemplate>
+                    </syncfusion:SfListView.ItemTemplate>
+                </syncfusion:SfListView>
+
+            </StackLayout>
+            <controls:CustomToolbar Grid.Row="3" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

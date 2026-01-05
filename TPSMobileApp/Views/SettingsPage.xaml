@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TPSMobileApp.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    Title="Settings"
+    BackgroundColor="White"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <controls:CustomHeader Grid.Row="0" />
+            <ScrollView Grid.Row="1">
+                <StackLayout
+                    Padding="0,50,0,0"
+                    BackgroundColor="White"
+                    VerticalOptions="Start">
+                    <Label
+                        Padding="0,0,0,0"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="30"
+                        HorizontalOptions="Center"
+                        Text="Settings"
+                        TextColor="black" />
+                    <StackLayout
+                        Margin="0,40,0,0"
+                        HorizontalOptions="Center"
+                        Orientation="Horizontal">
+                        <CheckBox
+                            x:Name="DisableScanner"
+                            VerticalOptions="Center"
+                            Color="blue" />
+                        <Label
+                            Margin="-5,0,0,0"
+                            FontSize="12"
+                            Text="Disable Camera Scanner"
+                            TextColor="black"
+                            VerticalOptions="Center" />
+                    </StackLayout>
+                    <Button
+                        x:Name="SaveButton"
+                        Margin="0,20,0,0"
+                        Padding="0,0,0,0"
+                        BackgroundColor="blue"
+                        Clicked="Save_Clicked"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        HeightRequest="35"
+                        HorizontalOptions="Center"
+                        Text="       Save       "
+                        TextColor="White"
+                        TextTransform="None" />
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

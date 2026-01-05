@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TPSMobileApp.Views.CheckoutPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    xmlns:controls1="clr-namespace:TPSMobileApp.Controls"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Maui"
+    xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
+    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    xmlns:view="clr-namespace:TPSMobileApp.Views"
+    x:Name="Checkout"
+    Title="Checkout"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+
+            <controls1:CustomHeader Grid.Row="0" />
+
+            <VerticalStackLayout
+                Grid.Row="1"
+                Spacing="0"
+                VerticalOptions="Start">
+                <!--
+                <BoxView BackgroundColor="gray" Margin="0,10,0,00" Color="lightgray" HeightRequest="3" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                <StackLayout Orientation="Horizontal" Margin="0,0,0,0" HorizontalOptions="Start" VerticalOptions="Center">
+                    <Label Text="Payment&#10;Method" Margin="10,10,0,0" FontSize="16" FontAttributes="Bold" WidthRequest="80" HorizontalOptions="Start" VerticalOptions="Start" BackgroundColor="White" TextColor="Black"/>
+                    <Label Text="On Account" Margin="5,10,0,0" FontSize="16" WidthRequest="200" HorizontalOptions="Start"  BackgroundColor="White" TextColor="Black"/>
+                    <Label Text="Change" IsVisible="false" x:Name="lblPaymentMethod" Margin="10,10,0,0" FontSize="12" TextDecorations="Underline" HorizontalOptions="Start"  BackgroundColor="White" TextColor="Red"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Margin="0,0,0,0" HorizontalOptions="Start" VerticalOptions="Center">
+                    <Label Text="Billing&#10;Address" Margin="10,10,0,0" FontSize="16" FontAttributes="Bold" WidthRequest="80" HorizontalOptions="Start" VerticalOptions="Start" BackgroundColor="White" TextColor="Black"/>
+                    <Label Text="Same as shipping address" Margin="5,10,0,0" FontSize="16" WidthRequest="220" HorizontalOptions="Start"  BackgroundColor="White" TextColor="Black"/>
+                </StackLayout>
+                <BoxView BackgroundColor="gray" Margin="0,10,0,00" Color="lightgray" HeightRequest="3" HorizontalOptions="Fill" VerticalOptions="Fill" />
+                -->
+                <BoxView
+                    x:Name="DeliveryBlock"
+                    BackgroundColor="gray"
+                    HeightRequest="3"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
+                    Color="lightgray" />
+                <HorizontalStackLayout Margin="0,0,0,10" HorizontalOptions="Center">
+                    <StackLayout>
+                        <Frame
+                            x:Name="Delivery"
+                            Margin="0,15,0,5"
+                            Padding="0"
+                            BackgroundColor="LightGray"
+                            BorderColor="white"
+                            CornerRadius="10"
+                            HasShadow="false"
+                            HeightRequest="170"
+                            HorizontalOptions="Center"
+                            IsClippedToBounds="True"
+                            VerticalOptions="Start">
+                            <StackLayout VerticalOptions="Start">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnDelivery" />
+                                </StackLayout.GestureRecognizers>
+                                <HorizontalStackLayout
+                                    Margin="0,0,0,10"
+                                    Padding="0,0,0,0"
+                                    HeightRequest="60"
+                                    WidthRequest="180">
+                                    <Label
+                                        Padding="15,5,0,0"
+                                        FontAttributes="Bold"
+                                        FontFamily="FontAwesomeFreeSolid"
+                                        FontSize="18"
+                                        HeightRequest="45"
+                                        HorizontalOptions="Center"
+                                        Text="&#xF0D1;"
+                                        TextColor="Blue"
+                                        VerticalOptions="Center"
+                                        WidthRequest="45" />
+                                    <Label
+                                        Margin="0,5,0,0"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="Start"
+                                        Text="Delivery"
+                                        TextColor="Blue"
+                                        VerticalOptions="Center"
+                                        WidthRequest="100" />
+                                    <Label
+                                        Padding="0,0,8,0"
+                                        FontAttributes="Bold"
+                                        FontFamily="FontAwesomeFreeSolid"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="Center"
+                                        IsVisible="{Binding IsDeliveryHighlighted}"
+                                        Text="&#xF00C;"
+                                        TextColor="blue"
+                                        VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                                <VerticalStackLayout Margin="15,15,0,0">
+                                    <Label
+                                        FontSize="11"
+                                        Text="{Binding CompanyName}"
+                                        TextColor="Black" />
+                                    <Label
+                                        x:Name="DeliveryAddress"
+                                        FontSize="11"
+                                        Text="{Binding CompanyAddress}"
+                                        TextColor="Black" />
+                                    <Label
+                                        FontSize="11"
+                                        Text="{Binding CompanyCityStateZip}"
+                                        TextColor="Black" />
+                                </VerticalStackLayout>
+                            </StackLayout>
+                        </Frame>
+                        <BoxView
+                            Margin="0,-10,0,0"
+                            BackgroundColor="blue"
+                            HeightRequest="3"
+                            HorizontalOptions="Fill"
+                            IsVisible="{Binding IsDeliveryHighlighted}"
+                            VerticalOptions="Fill"
+                            Color="blue" />
+                    </StackLayout>
+                    <StackLayout>
+                        <Frame
+                            x:Name="Pickup"
+                            Margin="0,15,0,5"
+                            Padding="0"
+                            BackgroundColor="LightGray"
+                            BorderColor="white"
+                            CornerRadius="10"
+                            HasShadow="false"
+                            HeightRequest="170"
+                            HorizontalOptions="Center"
+                            IsClippedToBounds="True"
+                            VerticalOptions="Start">
+                            <VerticalStackLayout VerticalOptions="Start">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnPickup" />
+                                </VerticalStackLayout.GestureRecognizers>
+                                <HorizontalStackLayout
+                                    Margin="0,0,0,10"
+                                    Padding="0,0,0,0"
+                                    HeightRequest="60"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Start"
+                                    WidthRequest="180">
+                                    <Label
+                                        Padding="15,5,0,0"
+                                        FontAttributes="Bold"
+                                        FontFamily="FontAwesomeFreeSolid"
+                                        FontSize="18"
+                                        HeightRequest="45"
+                                        HorizontalOptions="Center"
+                                        Text="&#xF474;"
+                                        TextColor="blue"
+                                        VerticalOptions="Center"
+                                        WidthRequest="45" />
+                                    <Label
+                                        Margin="0,5,0,0"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="Start"
+                                        Text="Pickup"
+                                        TextColor="blue"
+                                        VerticalOptions="Center"
+                                        WidthRequest="100" />
+                                    <Label
+                                        Padding="0,0,8,0"
+                                        FontAttributes="Bold"
+                                        FontFamily="FontAwesomeFreeSolid"
+                                        FontSize="16"
+                                        HeightRequest="45"
+                                        HorizontalOptions="Center"
+                                        IsVisible="{Binding IsPickupHighlighted}"
+                                        Text="&#xF00C;"
+                                        TextColor="blue"
+                                        VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                                <VerticalStackLayout Margin="15,15,0,0">
+                                    <Label
+                                        FontSize="11"
+                                        Text="{Binding LocationName}"
+                                        TextColor="Black" />
+                                    <Label
+                                        FontSize="11"
+                                        Text="{Binding LocationAddress}"
+                                        TextColor="Black" />
+                                    <Label
+                                        FontSize="11"
+                                        Text="{Binding LocationCityStateZip}"
+                                        TextColor="Black" />
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <BoxView
+                            Margin="0,-10,0,0"
+                            BackgroundColor="blue"
+                            HeightRequest="3"
+                            HorizontalOptions="Fill"
+                            IsVisible="{Binding IsPickupHighlighted}"
+                            VerticalOptions="Fill"
+                            Color="blue" />
+                    </StackLayout>
+                </HorizontalStackLayout>
+                <BoxView
+                    BackgroundColor="gray"
+                    HeightRequest="3"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
+                    Color="lightgray" />
+                <StackLayout
+                    Margin="0,0,0,0"
+                    Orientation="Vertical"
+                    Spacing="0"
+                    VerticalOptions="Start">
+                    <StackLayout
+                        Margin="0,0,0,0"
+                        HorizontalOptions="Start"
+                        Orientation="Horizontal"
+                        VerticalOptions="Center">
+                        <StackLayout
+                            Margin="0,0,0,0"
+                            Orientation="Vertical"
+                            Spacing="0"
+                            VerticalOptions="Start">
+                            <StackLayout
+                                Margin="0,0,0,0"
+                                HorizontalOptions="Start"
+                                Orientation="Horizontal"
+                                VerticalOptions="Center">
+                                <Label
+                                    Margin="25,10,0,0"
+                                    BackgroundColor="White"
+                                    FontSize="14"
+                                    HorizontalOptions="Start"
+                                    Text="Items:"
+                                    TextColor="Black"
+                                    VerticalOptions="Start"
+                                    WidthRequest="55" />
+                                <Label
+                                    Margin="5,10,0,0"
+                                    BackgroundColor="White"
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding CartItems}"
+                                    TextColor="Black" />
+                            </StackLayout>
+                            <StackLayout
+                                Margin="0,-10,0,0"
+                                HorizontalOptions="Start"
+                                Orientation="Horizontal"
+                                VerticalOptions="Center">
+                                <Label
+                                    Margin="25,10,0,0"
+                                    BackgroundColor="White"
+                                    FontSize="14"
+                                    HorizontalOptions="Start"
+                                    Text="Pieces:"
+                                    TextColor="Black"
+                                    VerticalOptions="Start"
+                                    WidthRequest="55" />
+                                <Label
+                                    Margin="5,10,0,0"
+                                    BackgroundColor="White"
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding CartPieces}"
+                                    TextColor="Black" />
+                            </StackLayout>
+                            <StackLayout
+                                Margin="0,-10,0,0"
+                                HorizontalOptions="Start"
+                                Orientation="Horizontal"
+                                VerticalOptions="Center">
+                                <Label
+                                    Margin="25,10,0,0"
+                                    BackgroundColor="White"
+                                    FontSize="14"
+                                    HorizontalOptions="Start"
+                                    Text="Total:"
+                                    TextColor="Black"
+                                    VerticalOptions="Start"
+                                    WidthRequest="55" />
+                                <Label
+                                    Margin="5,10,0,0"
+                                    BackgroundColor="White"
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    HorizontalOptions="Start"
+                                    Text="{Binding CartTotal}"
+                                    TextColor="Black" />
+                            </StackLayout>
+                        </StackLayout>
+                        <StackLayout
+                            Margin="25,0,0,0"
+                            Orientation="Vertical"
+                            Spacing="0"
+                            VerticalOptions="Start">
+                            <Button
+                                Margin="15,15,0,0"
+                                Padding="0"
+                                BackgroundColor="Blue"
+                                Clicked="OnPlaceOrderClicked"
+                                CornerRadius="10"
+                                FontAttributes="Bold"
+                                FontSize="14"
+                                HeightRequest="35"
+                                HorizontalOptions="Start"
+                                Text="Place Order"
+                                TextColor="White"
+                                VerticalOptions="Start"
+                                WidthRequest="150" />
+                            <StackLayout
+                                Margin="0,10,0,0"
+                                HorizontalOptions="Start"
+                                Orientation="Horizontal"
+                                VerticalOptions="Center">
+                                <CheckBox
+                                    x:Name="HoldForReviewCheckbox"
+                                    HorizontalOptions="Start"
+                                    IsChecked="{Binding HoldForReview}"
+                                    VerticalOptions="Center"
+                                    Color="blue" />
+                                <Label
+                                    x:Name="HoldForReviewLabel"
+                                    Margin="0,-2,0,0"
+                                    FontSize="12"
+                                    HorizontalOptions="Start"
+                                    Text="Hold For Review"
+                                    TextColor="black"
+                                    VerticalOptions="Center" />
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout
+                        x:Name="ItemStack"
+                        Margin="0,15,0,0"
+                        HorizontalOptions="Center"
+                        Orientation="Horizontal"
+                        VerticalOptions="Center">
+                        <Label
+                            Margin="0,15,0,5"
+                            BackgroundColor="White"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            HorizontalOptions="Start"
+                            Text="Items"
+                            TextColor="Blue" />
+                        <Label
+                            x:Name="NotesIcon"
+                            Padding="30,20,0,0"
+                            FontAttributes="Bold"
+                            FontFamily="FontAwesomeFreeSolid"
+                            FontSize="18"
+                            HeightRequest="50"
+                            HorizontalOptions="Start"
+                            Text="&#xF044;"
+                            TextColor="Blue"
+                            VerticalOptions="Start"
+                            WidthRequest="50">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnNotes" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout
+                        x:Name="NotesLabel"
+                        Margin="0,15,0,0"
+                        HorizontalOptions="Start"
+                        IsVisible="false"
+                        Orientation="Horizontal"
+                        VerticalOptions="Center">
+                        <Label
+                            Margin="50,0,0,0"
+                            BackgroundColor="White"
+                            FontSize="10"
+                            HorizontalOptions="Start"
+                            Text="Notes"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="240,0,0,0"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            HorizontalOptions="Start"
+                            Text="X"
+                            TextColor="Red"
+                            VerticalOptions="Start">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCloseNotes" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout
+                        x:Name="NotesEntry"
+                        Margin="0,0,0,20"
+                        BackgroundColor="White"
+                        HeightRequest="100"
+                        IsVisible="false"
+                        WidthRequest="300">
+                        <StackLayout
+                            Margin="40,0,0,0"
+                            Padding="1"
+                            BackgroundColor="Black"
+                            HeightRequest="100"
+                            HorizontalOptions="Start"
+                            WidthRequest="300">
+                            <Editor
+                                Margin="0,0,0,0"
+                                BackgroundColor="White"
+                                FontSize="14"
+                                HeightRequest="100"
+                                HorizontalOptions="Start"
+                                MaxLength="200"
+                                Text="{Binding Notes}"
+                                VerticalOptions="Center"
+                                WidthRequest="300" />
+                        </StackLayout>
+                    </StackLayout>
+                    <BoxView
+                        BackgroundColor="gray"
+                        HeightRequest="3"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        Color="lightgray" />
+                    <syncfusion:SfListView
+                        x:Name="ItemsListCart"
+                        AutoFitMode="DynamicHeight"
+                        ItemsSourceChangeCachingStrategy="ClearItems"
+                        SelectionMode="None">
+                        <syncfusion:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <VerticalStackLayout
+                                        Margin="0,0,0,0"
+                                        Spacing="0"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            Margin="10,10,0,0"
+                                            BackgroundColor="White"
+                                            FontAttributes="Bold"
+                                            FontSize="16"
+                                            HorizontalOptions="Start"
+                                            Text="{Binding Description}"
+                                            TextColor="Blue" />
+                                        <HorizontalStackLayout Margin="0,0,0,0" VerticalOptions="Center">
+                                            <ffimageloading:CachedImage
+                                                Margin="15,15,15,15"
+                                                Aspect="AspectFill"
+                                                HeightRequest="90"
+                                                HorizontalOptions="Fill"
+                                                Source="{Binding ImageURL}"
+                                                VerticalOptions="Fill"
+                                                WidthRequest="90" />
+                                            <VerticalStackLayout VerticalOptions="Center">
+                                                <HorizontalStackLayout HorizontalOptions="Start" VerticalOptions="Start">
+                                                    <Label
+                                                        Margin="5,5,0,0"
+                                                        BackgroundColor="White"
+                                                        FontAttributes="Bold"
+                                                        FontSize="16"
+                                                        Text="{Binding ItemNoDisplay}"
+                                                        TextColor="Black" />
+                                                    <Label
+                                                        Margin="10,8,0,0"
+                                                        BackgroundColor="White"
+                                                        FontSize="12"
+                                                        Text="{Binding ItemNoDisplayUPC}"
+                                                        TextColor="Black" />
+                                                </HorizontalStackLayout>
+                                                <Label
+                                                    Margin="5,5,0,0"
+                                                    BackgroundColor="White"
+                                                    FontSize="14"
+                                                    HorizontalOptions="Start"
+                                                    Text="{Binding CategoryDesc}"
+                                                    TextColor="Black" />
+                                                <HorizontalStackLayout>
+                                                    <VerticalStackLayout Spacing="0">
+                                                        <HorizontalStackLayout Margin="0,5,0,0" WidthRequest="160">
+                                                            <Label
+                                                                Margin="5,2,0,0"
+                                                                BackgroundColor="White"
+                                                                FontAttributes="Bold"
+                                                                FontSize="16"
+                                                                IsVisible="{Binding IsLoggedIn}"
+                                                                MaxLines="1"
+                                                                Text="{Binding PriceDisplay}"
+                                                                TextColor="Black" />
+                                                            <Label
+                                                                BackgroundColor="White"
+                                                                FontSize="12"
+                                                                IsVisible="{Binding IsLoggedIn}"
+                                                                Text="{Binding SizeUOM}"
+                                                                TextColor="Black" />
+                                                        </HorizontalStackLayout>
+                                                    </VerticalStackLayout>
+                                                    <Label
+                                                        Margin="30,10,0,0"
+                                                        BackgroundColor="White"
+                                                        FontSize="14"
+                                                        Text="Qty"
+                                                        TextColor="Black" />
+                                                    <Label
+                                                        Margin="5,5,0,0"
+                                                        BackgroundColor="White"
+                                                        FontAttributes="Bold"
+                                                        FontSize="20"
+                                                        Text="{Binding QtyOrder}"
+                                                        TextColor="Black" />
+                                                </HorizontalStackLayout>
+                                            </VerticalStackLayout>
+                                        </HorizontalStackLayout>
+                                        <BoxView
+                                            BackgroundColor="gray"
+                                            HeightRequest="3"
+                                            HorizontalOptions="Fill"
+                                            VerticalOptions="Fill"
+                                            Color="lightgray" />
+                                    </VerticalStackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </syncfusion:SfListView.ItemTemplate>
+                    </syncfusion:SfListView>
+                </StackLayout>
+            </VerticalStackLayout>
+            <controls1:CustomToolbar Grid.Row="2" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

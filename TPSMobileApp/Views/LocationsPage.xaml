@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TPSMobileApp.Views.LocationsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    xmlns:controls1="clr-namespace:TPSMobileApp.Controls"
+    
+    xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
+    x:Name="LocationPage"
+    Title="Cash &amp; Carry Locations"
+    >
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+
+            <ScrollView Grid.Row="0">
+                <StackLayout>
+                    <Label
+                        Padding="50,10,0,0"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="24"
+                        HorizontalOptions="Start"
+                        Text="BRISBANE"
+                        TextColor="Red" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="385 Valley Dr&#10;Brisbane, CA 94005"
+                        TextColor="Black"
+                        VerticalOptions="Start" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Phone: (888) 828-0404"
+                        TextColor="Black" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Warehouse Hours:"
+                        TextColor="Black" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Monday - Friday 7:00am - 5:00pm&#10;Saturday 7:00am - 4:00pm&#10;Sunday Closed"
+                        TextColor="Black" />
+                    <BoxView
+                        Margin="0,10,0,0"
+                        BackgroundColor="gray"
+                        HeightRequest="3"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        Color="lightgray" />
+                    <Label
+                        Padding="50,10,0,0"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="24"
+                        HorizontalOptions="Start"
+                        Text="OAKLAND"
+                        TextColor="Red" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="727 Kennedy St&#10;Oakland, CA 94606"
+                        TextColor="Black"
+                        VerticalOptions="Start" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Phone: (800) 200-4244&#10;Fax: (510) 533-2059"
+                        TextColor="Black" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Warehouse Hours:"
+                        TextColor="Black" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Monday - Friday 6:00am - 5:00pm&#10;Saturday 7:00am - 4:00pm&#10;Sunday 8:00am - 3:00pm"
+                        TextColor="Black" />
+                    <BoxView
+                        Margin="0,10,0,0"
+                        BackgroundColor="gray"
+                        HeightRequest="3"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        Color="lightgray" />
+                    <Label
+                        Padding="50,10,0,0"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="24"
+                        HorizontalOptions="Start"
+                        Text="SAN JOSE"
+                        TextColor="Red" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="567 Cinnabar St&#10;San Jose, CA 95110"
+                        TextColor="Black"
+                        VerticalOptions="Start" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Phone: (800) 464-4441 • (408) 282-2200&#10;Fax: (408) 282-9711"
+                        TextColor="Black" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Warehouse Hours:"
+                        TextColor="Black" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Monday - Friday 7:00am - 6:00pm&#10;Saturday 7:00am - 4:00pm&#10;Sunday Closed"
+                        TextColor="Black" />
+                    <BoxView
+                        Margin="0,10,0,0"
+                        BackgroundColor="gray"
+                        HeightRequest="3"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        Color="lightgray" />
+                    <Label
+                        Padding="50,10,0,0"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="24"
+                        HorizontalOptions="Start"
+                        Text="WEST SACRAMENTO"
+                        TextColor="Red" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="3575 Ramos Dr&#10;West Sacramento, CA 95691"
+                        TextColor="Black"
+                        VerticalOptions="Start" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Phone: (877) 371-7000&#10;Fax: (916) 372-7773"
+                        TextColor="Black" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Warehouse Hours:"
+                        TextColor="Black" />
+                    <Label
+                        Padding="50,0,0,0"
+                        BackgroundColor="White"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Monday - Friday 7:00am - 6:00pm&#10;Saturday 7:00am - 4:00pm&#10;Sunday Closed"
+                        TextColor="Black" />
+                </StackLayout>
+            </ScrollView>
+            <controls1:CustomToolbar Grid.Row="1" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

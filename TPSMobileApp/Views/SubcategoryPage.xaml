@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TPSMobileApp.Views.SubcategoryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    xmlns:controls1="clr-namespace:TPSMobileApp.Controls"
+    xmlns:controls11="clr-namespace:TPSMobileApp.Controls"
+    xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
+    x:Name="SubcategoriesPage"
+    Title="Product Subcategories">
+
+    <Shell.SearchHandler>
+        <controls1:MySearchHandler
+            DisplayMemberName="Name"
+            Placeholder="Search Products"
+            ShowsResults="false" />
+    </Shell.SearchHandler>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+
+            <controls1:CustomHeader Grid.Row="0" />
+
+            <StackLayout
+                Grid.Row="1"
+                Margin="0,0,0,0"
+                Orientation="Vertical"
+                Spacing="0"
+                VerticalOptions="Start">
+                <Label
+                    x:Name="CategoryLabel"
+                    Padding="0,15,0,15"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HorizontalOptions="Center"
+                    TextColor="black" />
+                <BoxView
+                    BackgroundColor="gray"
+                    HeightRequest="3"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
+                    Color="lightgray" />
+                <ListView
+                    x:Name="SubcategoriesListSearch"
+                    CachingStrategy="RetainElement"
+                    HasUnevenRows="true"
+                    ItemTapped="OnSubcategoryTapped"
+                    RowHeight="{Binding RowHeight, Mode=TwoWay}"
+                    SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout
+                                    Margin="0,0,0,0"
+                                    Orientation="Vertical"
+                                    Spacing="0"
+                                    VerticalOptions="Start">
+                                    <Label
+                                        Margin="0,0,0,0"
+                                        IsVisible="false"
+                                        Text="{Binding Code}" />
+                                    <Label
+                                        Margin="60,15,0,15"
+                                        BackgroundColor="White"
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding Description}"
+                                        TextColor="black"
+                                        VerticalOptions="Start" />
+                                    <BoxView
+                                        BackgroundColor="gray"
+                                        HeightRequest="3"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="Fill"
+                                        Color="lightgray" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <controls11:CustomToolbar Grid.Row="2" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

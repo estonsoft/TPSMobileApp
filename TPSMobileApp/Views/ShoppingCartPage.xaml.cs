@@ -1,0 +1,196 @@
+﻿using System;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+
+using TPSMobileApp.Views;
+using TPSMobileApp.ViewModels;
+using TPSMobileApp;
+using TPSMobileApp.Controls;
+using System.Globalization;
+
+namespace TPSMobileApp.Views
+{
+    public partial class ShoppingCartPage : ContentPage
+    {
+        int iCartItems = 0;
+        int iCartPieces = 0;
+        decimal dCartTotal = 0;
+
+        string sCartItems;
+        string sCartPieces;
+        string sCartTotal;
+
+        List<Item> lstItems = new List<Item>();
+
+        public string CartItems
+        {
+            get { return iCartItems.ToString(); }
+            set
+            {
+                sCartItems = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string CartPieces
+        {
+            get { return iCartPieces.ToString(); }
+            set
+            {
+                sCartPieces = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string CartTotal
+        {
+            get { return string.Format("{0:C}", dCartTotal); }
+            set
+            {
+                sCartTotal = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ShoppingCartPage()
+        {
+            InitializeComponent();
+
+            //BindingContext = _viewModel = new ShoppingCartViewModel();
+            BindingContext = this;
+
+            App.g_ShoppingCartPage = this;
+
+            MessagingCenter.Subscribe<ShoppingCartPage>(this, "RefreshShoppingCart", (sender) =>
+            {
+                RefreshList();
+            });
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            lstItems = App.g_db.GetOrderCartItems();
+
+            if (lstItems.Count > 0)
+            {
+                App.g_CurrentPage = "ShoppingCartPage";
+
+                RefreshList();
+            }
+            else
+            {
+                Device.StartTimer(TimeSpan.FromSeconds(0), () =>
+                {
+                    Shell.Current.Navigation.PopToRootAsync();
+                    App.g_Shell.GoToHome();
+                    App.Current.MainPage.DisplayAlert("Profit Order", "Your shopping cart is empty", "Ok");
+
+                    return false;
+                });
+            }
+
+            if (App.g_IsLoggedIn)
+            {
+                btnCheckout.IsVisible = true;
+                btnSignIn.IsVisible = false;
+            }
+            else
+            {
+                btnCheckout.IsVisible = false;
+                btnSignIn.IsVisible = true;
+            }
+        }
+
+        public void UpdateTotals()
+        {
+            iCartItems = 0;
+            iCartPieces = 0;
+            dCartTotal = 0;
+
+            foreach (Item item in (List<Item>)ItemsListCart.ItemsSource)
+            {
+                try
+                {
+                    if (item.QtyOrder > 0)
+                    {
+                        item.PriceOrder = item.Price;
+
+                        iCartItems += 1;
+                        dCartTotal += (item.PriceOrder * item.QtyOrder);
+                        iCartPieces += item.QtyOrder;
+                    }
+                }
+                catch { }
+            }
+
+            CartItems = iCartItems.ToString();
+            CartPieces = iCartPieces.ToString();
+            CartTotal = dCartTotal.ToString("{0:C2}");
+        }
+
+        public async void RefreshList()
+        {
+            ItemsListCart.ItemsSource = null;
+
+            lstItems = App.g_db.GetOrderCartItems();
+
+            foreach (Item i in lstItems)
+            {
+                Item.SetListItem(i, "O");
+            }
+
+            ItemsListCart.ItemsSource = lstItems;
+
+            UpdateTotals();
+        }
+
+        private async void btnCheckout_Clicked(object sender, EventArgs e)
+        {
+            App.g_Shell.GoToCheckout();
+        }
+
+        private async void btnSignIn_Clicked(object sender, EventArgs e)
+        {
+            App.g_Shell.GoToLogin();
+        }
+
+        private async void btnClearCart_Clicked(object sender, EventArgs e)
+        {
+            bool bClear = await DisplayAlert("Profit Order", "Are you sure you wish to remove all the items from your shopping cart?", "Yes", "No");
+
+            if (bClear)
+            {
+                App.g_db.ClearOrderCartItems();
+                App.g_Shell.GoToHome();
+            }
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
+
+        private void ItemsListCart_ItemAppearing(object sender, Syncfusion.Maui.ListView.ItemAppearingEventArgs e)
+        {
+            Item item = (Item)e.DataItem;
+
+            if (item.QtyOrder > 0)
+            {
+                item.IsStepperVisible = true;
+                item.IsAddToOrderVisible = false;
+            }
+            else
+            {
+                item.IsStepperVisible = false;
+                item.IsAddToOrderVisible = true;
+            }
+        }
+    }
+}

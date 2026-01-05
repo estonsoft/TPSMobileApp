@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TPSMobileApp.Views.PurchaseHistoryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    xmlns:controls1="clr-namespace:TPSMobileApp.Controls"
+    
+    xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
+    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    Title="Order History"
+    
+    Shell.NavBarIsVisible="False">
+
+    <NavigationPage.TitleView>
+        <StackLayout
+            Orientation="Horizontal"
+            Spacing="10"
+            VerticalOptions="Center">
+            
+            <Label
+                Padding="10,0,0,0"
+                FontSize="16"
+                Text="Profit Order"
+                TextColor="White"
+                VerticalTextAlignment="Center" />
+        </StackLayout>
+    </NavigationPage.TitleView>
+
+    <Shell.SearchHandler>
+        <controls:MySearchHandler
+            DisplayMemberName="Name"
+            Placeholder="Search Products"
+            ShowsResults="false" />
+    </Shell.SearchHandler>
+
+    <ContentPage.BindingContext>
+        <local:ItemSearchViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="BannerBackground">White</Color>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+
+            <controls:CustomHeader Grid.Row="0" />
+
+            <StackLayout Grid.Row="1">
+                <BoxView
+                    BackgroundColor="gray"
+                    HeightRequest="3"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
+                    Color="lightgray" />
+                <syncfusion:SfListView
+                    x:Name="OrderHistoryList"
+                    AutoFitMode="DynamicHeight"
+                    ItemsSourceChangeCachingStrategy="ClearItems"
+                    
+                    SelectionMode="None">
+                    <syncfusion:SfListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout
+                                    Margin="0,10,0,0"
+                                    Orientation="Vertical"
+                                    Spacing="0"
+                                    VerticalOptions="Start">
+                                    <StackLayout
+                                        Margin="0,0,0,0"
+                                        HorizontalOptions="Start"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            Margin="40,0,0,0"
+                                            BackgroundColor="White"
+                                            FontSize="16"
+                                            HorizontalOptions="Start"
+                                            Text="Order #"
+                                            TextColor="DimGray" />
+                                        <Label
+                                            Margin="5,0,0,0"
+                                            BackgroundColor="White"
+                                            FontAttributes="Bold"
+                                            FontSize="18"
+                                            HorizontalOptions="Start"
+                                            Text="{Binding OrderNo}"
+                                            TextColor="Black"
+                                            WidthRequest="100" />
+                                        <Label
+                                            Margin="50,0,0,0"
+                                            BackgroundColor="White"
+                                            FontAttributes="Bold"
+                                            FontSize="16"
+                                            HorizontalOptions="Start"
+                                            Text="{Binding OrderDateDisplay}"
+                                            TextColor="Black" />
+                                    </StackLayout>
+                                    <StackLayout
+                                        Margin="0,0,0,0"
+                                        HorizontalOptions="Start"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            Margin="40,0,0,0"
+                                            BackgroundColor="White"
+                                            FontAttributes="Bold"
+                                            FontSize="18"
+                                            HorizontalOptions="Start"
+                                            Text="{Binding Items}"
+                                            TextColor="Black"
+                                            WidthRequest="35" />
+                                        <Label
+                                            Margin="5,0,0,0"
+                                            BackgroundColor="White"
+                                            FontSize="16"
+                                            HorizontalOptions="Start"
+                                            Text="Items"
+                                            TextColor="DimGray" />
+                                    </StackLayout>
+                                    <StackLayout
+                                        Margin="0,0,0,0"
+                                        HorizontalOptions="Start"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            Margin="40,0,0,0"
+                                            BackgroundColor="White"
+                                            FontAttributes="Bold"
+                                            FontSize="18"
+                                            HorizontalOptions="Start"
+                                            Text="{Binding Pieces}"
+                                            TextColor="Black"
+                                            WidthRequest="35" />
+                                        <Label
+                                            Margin="5,0,0,0"
+                                            BackgroundColor="White"
+                                            FontSize="16"
+                                            HorizontalOptions="Start"
+                                            Text="Pieces"
+                                            TextColor="DimGray" />
+                                    </StackLayout>
+                                    <StackLayout
+                                        Margin="0,0,0,0"
+                                        HorizontalOptions="Start"
+                                        Orientation="Horizontal"
+                                        VerticalOptions="Start">
+                                        <Label
+                                            Margin="40,0,0,10"
+                                            BackgroundColor="White"
+                                            FontAttributes="Bold"
+                                            FontSize="18"
+                                            HorizontalOptions="Start"
+                                            Text="{Binding TotalDisplay}"
+                                            TextColor="Black"
+                                            WidthRequest="250" />
+                                        <controls1:OrderLabel
+                                            Margin="10,5,0,10"
+                                            FontSize="12"
+                                            HorizontalOptions="Start"
+                                            OrderNo="{Binding OrderNo}"
+                                            Text="View Details"
+                                            TextColor="Blue"
+                                            VerticalOptions="Center">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnTappedDetails" />
+                                            </Label.GestureRecognizers>
+                                        </controls1:OrderLabel>
+                                    </StackLayout>
+                                    <BoxView
+                                        BackgroundColor="gray"
+                                        HeightRequest="3"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="Fill"
+                                        Color="lightgray" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </syncfusion:SfListView.ItemTemplate>
+                </syncfusion:SfListView>
+            </StackLayout>
+
+            <controls1:CustomToolbar Grid.Row="2" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

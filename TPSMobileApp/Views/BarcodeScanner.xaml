@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TPSMobileApp.Views.BarcodeScanner"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    xmlns:controls1="clr-namespace:TPSMobileApp.Controls"
+    xmlns:local="clr-namespace:TPSMobileApp.Views"
+    xmlns:pages="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
+    Title="Scan Barcode">
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+
+            <controls1:CustomHeader Grid.Row="0" />
+
+            <StackLayout Grid.Row="1">
+                <Grid
+                    BackgroundColor="White"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <StackLayout
+                        Margin="0,-200,0,0"
+                        Padding="30,30,30,30"
+                        BackgroundColor="White"
+                        HorizontalOptions="Center"
+                        Orientation="Vertical"
+                        VerticalOptions="Center">
+                        <Label
+                            BackgroundColor="White"
+                            FontSize="14"
+                            HeightRequest="40"
+                            HorizontalOptions="Center"
+                            Text="Align barcode within the frame"
+                            TextColor="Black" />
+                        <Label
+                            Margin="0,-160,0,0"
+                            BackgroundColor="Red"
+                            FontSize="14"
+                            HeightRequest="2"
+                            HorizontalOptions="Fill"
+                            Text=""
+                            TextColor="Red"
+                            TextDecorations="Underline"
+                            WidthRequest="300" />
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+
+            <controls1:CustomToolbar Grid.Row="2" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

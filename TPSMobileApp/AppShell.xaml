@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+    x:Class="TPSMobileApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Maui"
+    xmlns:views="clr-namespace:TPSMobileApp.Views"
+    FlyoutBehavior="Flyout"
+    FlyoutWidth="280"
+    ForegroundColor="Gray">
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="white" />
+                <Setter Property="Shell.ForegroundColor" Value="Gray" />
+                <Setter Property="Shell.TitleColor" Value="blue" />
+                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="white" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="blue" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="blue" />
+                <Setter Property="Shell.TabBarTitleColor" Value="blue" />
+            </Style>
+            <Style BasedOn="{StaticResource BaseStyle}" TargetType="TabBar" />
+            <Style BasedOn="{StaticResource BaseStyle}" TargetType="FlyoutItem" />
+            <Style x:Key="FlyoutHeaderStyle" TargetType="ffimageloading:CachedImage">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="Margin" Value="5" />
+            </Style>
+
+            <!--
+                Default Styles for all Flyout Items
+                https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyoutitem-and-menuitem-style-classes
+            -->
+            <Style Class="FlyoutItemLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Gray" />
+                <Setter Property="HeightRequest" Value="40" />
+            </Style>
+            <Style
+                ApplyToDerivedTypes="True"
+                Class="FlyoutItemLayoutStyle"
+                TargetType="Layout">
+                <Setter Property="BackgroundColor" Value="white" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="White" />
+                                    <Setter Property="HeightRequest" Value="40" />
+                                    <!--<Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" />-->
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="Gray" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <!--<Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>-->
+                                    <Setter Property="HeightRequest" Value="40" />
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="Gray" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style x:Key="MyButtonStyle" TargetType="Button">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" />
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.FontSize" Value="10" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <!--
+                Custom Style you can apply to any Flyout Item
+            -->
+            <Style
+                ApplyToDerivedTypes="True"
+                Class="MenuItemLayoutStyle"
+                TargetType="Layout">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="Black" />
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.FontSize" Value="12" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <views:ShellTitleConverter x:Key="titleConverter" />
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid BackgroundColor="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ffimageloading:CachedImage
+                    Margin="6"
+                    Aspect="AspectFill"
+                    HeightRequest="50"
+                    HorizontalOptions="Center"
+                    Source="logo.png"
+                    StyleClass="FlyoutHeaderStyle"
+                    VerticalOptions="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+
+    <FlyoutItem Title="Home" FlyoutDisplayOptions="AsMultipleItems">
+        <ShellContent
+            x:Name="MenuHome"
+            Title="Home"
+            ContentTemplate="{DataTemplate views:HomePage}"
+            Route="HomePage"
+            StyleClass="MenuItemLayoutStyle">
+            <ShellContent.Icon FontSize="16">
+                <FontImageSource
+                    FontFamily="FontAwesomeFreeSolid"
+                    Glyph="&#xF015;"
+                    Color="Black" />
+            </ShellContent.Icon>
+        </ShellContent>
+    </FlyoutItem>
+
+    <MenuItem
+        x:Name="MenuShoppingCart"
+        Clicked="MenuShoppingCart_Clicked"
+        StyleClass="MenuItemLayoutStyle"
+        Text="Shopping Cart">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                FontFamily="FontAwesomeFreeSolid"
+                Glyph="&#xF07A;"
+                Color="Black" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+    <MenuItem
+        x:Name="MenuScanBarcode"
+        Clicked="MenuScanBarcode_Clicked"
+        StyleClass="MenuItemLayoutStyle"
+        Text="Scan Barcode">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                FontFamily="FontAwesomePro6Regular"
+                Glyph="&#xF464;"
+                Color="Black" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+    <MenuItem
+        x:Name="MenuQuickEntry"
+        Clicked="MenuQuickEntry_Clicked"
+        StyleClass="MenuItemLayoutStyle"
+        Text="Quick Entry">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                FontFamily="FontAwesomeFreeSolid"
+                Glyph="&#xF039;"
+                Color="Black" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+    <MenuItem
+        x:Name="MenuMyPurchases"
+        Clicked="MenuMyPurchases_Clicked"
+        StyleClass="MenuItemLayoutStyle"
+        Text="Order History">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                FontFamily="FontAwesomeFreeSolid"
+                Glyph="&#xF571;"
+                Color="Black" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+    <MenuItem
+        x:Name="MenuFlyerPDF"
+        Clicked="MenuFlyerPDF_Clicked"
+        StyleClass="MenuItemLayoutStyle"
+        Text="Monthly Ad Flyer">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                FontFamily="FontAwesomePro6Regular"
+                Glyph="&#xF1C1;"
+                Color="Black" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+    <MenuItem
+        x:Name="MenuCategories"
+        Clicked="MenuCategories_Clicked"
+        StyleClass="MenuItemLayoutStyle"
+        Text="Product Categories">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                FontFamily="FontAwesomeFreeSolid"
+                Glyph="&#xF0CA;"
+                Color="Black" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+    <MenuItem
+        x:Name="MenuMyAccount"
+        Clicked="MenuMyAccount_Clicked"
+        StyleClass="MenuItemLayoutStyle"
+        Text="My Account">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                FontFamily="FontAwesomeFreeSolid"
+                Glyph="&#xF007;"
+                Color="Black" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+    <MenuItem
+        x:Name="MenuLogout"
+        Clicked="MenuLogout_Clicked"
+        StyleClass="MenuItemLayoutStyle"
+        Text="Logout">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                FontFamily="FontAwesomeFreeSolid"
+                Glyph="&#xF007;"
+                Color="Black" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+    <MenuItem
+        x:Name="MenuCustomers"
+        Clicked="MenuCustomers_Clicked"
+        StyleClass="MenuItemLayoutStyle"
+        Text="Customers">
+        <MenuItem.IconImageSource>
+            <FontImageSource
+                FontFamily="FontAwesomeFreeSolid"
+                Glyph="&#xF500;"
+                Color="Black" />
+        </MenuItem.IconImageSource>
+    </MenuItem>
+    <MenuItem
+        x:Name="MenuCreditCart"
+        Clicked="MenuCreditCart_Clicked"
+        IconImageSource="credit.png"
+        StyleClass="MenuItemLayoutStyle"
+        Text="Return Cart" />
+
+
+</Shell>
+

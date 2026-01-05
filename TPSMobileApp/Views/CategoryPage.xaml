@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TPSMobileApp.Views.CategoryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    xmlns:controls1="clr-namespace:TPSMobileApp.Controls"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Maui"
+    xmlns:ios="http://schemas.microsoft.com/dotnet/2021/maui/ios"
+    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    x:Name="CategoriesPage"
+    Title="Product Categories">
+
+    <Shell.SearchHandler>
+        <controls:MySearchHandler
+            DisplayMemberName="Name"
+            Placeholder="Search Products"
+            ShowsResults="false" />
+    </Shell.SearchHandler>
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+
+            <controls1:CustomHeader Grid.Row="0" />
+
+            <syncfusion:SfListView
+                x:Name="CategoriesListSearch"
+                Grid.Row="1"
+                AutoFitMode="DynamicHeight"
+                ItemTapped="CategoriesListSearch_ItemTapped"
+                SelectionMode="None">
+                <syncfusion:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <!--  Use a plain layout as the DataTemplate content for MAUI  -->
+                        <VerticalStackLayout
+                            Margin="0,0,0,0"
+                            Spacing="0"
+                            VerticalOptions="Start">
+                            <Label
+                                Margin="0,0,0,0"
+                                BackgroundColor="Aqua"
+                                IsVisible="False"
+                                Text="{Binding Code}" />
+                            <HorizontalStackLayout
+                                Margin="20,5,0,0"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center">
+                                <ffimageloading:CachedImage
+                                    Margin="5,5,5,5"
+                                    Aspect="AspectFit"
+                                    HeightRequest="90"
+                                    HorizontalOptions="Fill"
+                                    Source="{Binding ImageURL}"
+                                    VerticalOptions="Fill"
+                                    WidthRequest="90" />
+                                <StackLayout
+                                    Margin="0,0,0,0"
+                                    HorizontalOptions="Start"
+                                    Orientation="Vertical"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        Margin="5,0,0,0"
+                                        BackgroundColor="White"
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        HorizontalOptions="Start"
+                                        LineBreakMode="WordWrap"
+                                        Text="{Binding Description}"
+                                        TextColor="Blue"
+                                        VerticalOptions="Start" />
+                                </StackLayout>
+                            </HorizontalStackLayout>
+                            <BoxView
+                                HeightRequest="3"
+                                HorizontalOptions="Fill"
+                                IsVisible="false"
+                                VerticalOptions="Fill"
+                                Color="LightGray" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </syncfusion:SfListView.ItemTemplate>
+            </syncfusion:SfListView>
+
+            <controls1:CustomToolbar Grid.Row="2" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

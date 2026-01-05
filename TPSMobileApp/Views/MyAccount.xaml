@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TPSMobileApp.Views.MyAccountPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    Title="My Account">
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+
+            <controls:CustomHeader Grid.Row="0" />
+
+            <VerticalStackLayout
+                Grid.Row="1"
+                Margin="25,40,0,0"
+                HorizontalOptions="Start"
+                VerticalOptions="Start">
+                <Label
+                    x:Name="CompanyName"
+                    BackgroundColor="White"
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    HorizontalOptions="Start"
+                    Text=""
+                    TextColor="Blue"
+                    VerticalOptions="Start" />
+                <Label
+                    x:Name="Address"
+                    BackgroundColor="White"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text=""
+                    TextColor="Black"
+                    VerticalOptions="Start" />
+                <Label
+                    x:Name="CityStateZip"
+                    BackgroundColor="White"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text=""
+                    TextColor="Black"
+                    VerticalOptions="Start" />
+                <Label
+                    x:Name="Phone"
+                    BackgroundColor="White"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text=""
+                    TextColor="Black"
+                    VerticalOptions="Start" />
+                <Label
+                    x:Name="Email"
+                    BackgroundColor="White"
+                    FontSize="16"
+                    HorizontalOptions="Start"
+                    Text=""
+                    TextColor="Black"
+                    VerticalOptions="Start" />
+                <StackLayout HorizontalOptions="Start" Orientation="Horizontal">
+                    <Label
+                        BackgroundColor="White"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="Credit Limit:"
+                        TextColor="Black"
+                        VerticalOptions="Start"
+                        WidthRequest="90" />
+                    <Label
+                        x:Name="CreditLimit"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text=""
+                        TextColor="Black"
+                        VerticalOptions="Start" />
+                </StackLayout>
+                <StackLayout HorizontalOptions="Start" Orientation="Horizontal">
+                    <Label
+                        BackgroundColor="White"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text="AR Balance:"
+                        TextColor="Black"
+                        VerticalOptions="Start"
+                        WidthRequest="90" />
+                    <Label
+                        x:Name="ARBalance"
+                        BackgroundColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HorizontalOptions="Start"
+                        Text=""
+                        TextColor="Black"
+                        VerticalOptions="Start" />
+                </StackLayout>
+            </VerticalStackLayout>
+
+            <controls:CustomToolbar Grid.Row="2" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

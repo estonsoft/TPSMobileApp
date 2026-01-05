@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TPSMobileApp.Views.QuickEntryPageBasic"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    xmlns:controls1="clr-namespace:TPSMobileApp.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    Title="Quick Entry"
+    BackgroundColor="White"
+    Shell.NavBarIsVisible="False"
+    mc:Ignorable="d">
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+
+            <controls:CustomHeader Grid.Row="0" />
+
+            <ScrollView Grid.Row="1">
+                <StackLayout
+                    Padding="0,10,0,0"
+                    BackgroundColor="White"
+                    VerticalOptions="Start">
+                    <StackLayout
+                        Margin="30,40,0,0"
+                        HorizontalOptions="Start"
+                        Orientation="Horizontal"
+                        VerticalOptions="Center">
+                        <Entry
+                            x:Name="ScanItem"
+                            Margin="0,0,0,0"
+                            FontSize="18"
+                            HeightRequest="45"
+                            HorizontalOptions="Start"
+                            Keyboard="Numeric"
+                            Placeholder="Item # or UPC"
+                            PlaceholderColor="Gray"
+                            VerticalOptions="Center"
+                            WidthRequest="200" />
+                        <Button
+                            x:Name="EnterButton"
+                            Margin="10,0,0,0"
+                            BackgroundColor="RoyalBlue"
+                            Clicked="EnterButton_Clicked"
+                            CornerRadius="10"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            HorizontalOptions="Start"
+                            Text="  Search  "
+                            TextColor="White"
+                            TextTransform="None" />
+                    </StackLayout>
+                    <StackLayout
+                        Margin="30,40,0,0"
+                        HorizontalOptions="Start"
+                        Orientation="Horizontal"
+                        VerticalOptions="Center">
+                        <Entry
+                            x:Name="Qty"
+                            Margin="0,0,0,0"
+                            Focused="Qty_Focused"
+                            FontSize="18"
+                            HeightRequest="45"
+                            HorizontalOptions="Start"
+                            Keyboard="Numeric"
+                            Placeholder="Qty"
+                            PlaceholderColor="Gray"
+                            VerticalOptions="Center"
+                            WidthRequest="100" />
+                        <Button
+                            x:Name="QtyEnterButton"
+                            Margin="10,0,0,0"
+                            BackgroundColor="RoyalBlue"
+                            Clicked="QtyEnterButton_Clicked"
+                            CornerRadius="10"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            HorizontalOptions="Start"
+                            Text=" Add / Update Qty "
+                            TextColor="White"
+                            TextTransform="None"
+                            WidthRequest="160" />
+                    </StackLayout>
+                    <Label
+                        x:Name="Message"
+                        Margin="0,30,0,0"
+                        BackgroundColor="White"
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        IsVisible="false"
+                        TextColor="Red" />
+                    <Label
+                        x:Name="ItemDesc"
+                        Margin="0,30,0,0"
+                        BackgroundColor="White"
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        TextColor="RoyalBlue" />
+                </StackLayout>
+            </ScrollView>
+
+            <controls1:CustomToolbar Grid.Row="2" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

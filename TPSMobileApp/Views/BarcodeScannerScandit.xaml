@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TPSMobileApp.Views.BarcodeScannerScandit"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    xmlns:controls1="clr-namespace:TPSMobileApp.Controls"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    Title="Scan Barcode">
+
+    <!--
+    <Shell.SearchHandler>
+        <controls:MySearchHandler Placeholder="Search Products" ShowsResults="false" DisplayMemberName="Name" />
+    </Shell.SearchHandler>
+    -->
+
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60" />
+            </Grid.RowDefinitions>
+
+            <controls1:CustomHeader Grid.Row="0" />
+
+            <StackLayout Grid.Row="1">
+                <Grid
+                    BackgroundColor="White"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start">
+                    <StackLayout
+                        Margin="0,20,0,0"
+                        Padding="30,30,30,30"
+                        BackgroundColor="White"
+                        HorizontalOptions="Center"
+                        Orientation="Vertical"
+                        VerticalOptions="Center">
+                        <Label
+                            BackgroundColor="White"
+                            FontSize="14"
+                            HeightRequest="40"
+                            HorizontalOptions="Center"
+                            Text="Align barcode within the frame"
+                            TextColor="Black" />
+
+                        <!--
+                            The following control requires the ScanditCaptureCoreUnified assembly.
+                            To fix XLS0418, ensure the ScanditCaptureCoreUnified NuGet package is installed in your project.
+                            If you do not have access to this package, comment out or remove the control below.
+                        -->
+                        <!--<scanditCore:DataCaptureView
+                            DataCaptureContext="{Binding Context}"
+                            HeightRequest="300"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            WidthRequest="300" />-->
+
+                        <Label
+                            Margin="0,-160,0,0"
+                            BackgroundColor="Red"
+                            FontSize="14"
+                            HeightRequest="2"
+                            HorizontalOptions="Fill"
+                            Text=""
+                            TextColor="Red"
+                            TextDecorations="Underline"
+                            WidthRequest="300" />
+                    </StackLayout>
+                    <!--<zxing:ZXingDefaultOverlay TopText="Align the barcode within the frame" BackgroundColor="LightGray"/>-->
+                </Grid>
+            </StackLayout>
+
+            <controls1:CustomToolbar Grid.Row="2" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

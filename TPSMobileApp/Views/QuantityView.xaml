@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="TPSMobileApp.QuantityView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <ContentView.Content>
+        <StackLayout>
+            <Frame
+                BorderColor="Black"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <StackLayout Orientation="Horizontal">
+                    <ImageButton
+                        BackgroundColor="Transparent"
+                        Command="{Binding MinusCommand}"
+                        Source="minus.png"
+                        VerticalOptions="Center"
+                        WidthRequest="60" />
+                    <Label
+                        FontSize="18"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding Number}"
+                        TextColor="Black"
+                        VerticalOptions="Center"
+                        WidthRequest="60" />
+                    <ImageButton
+                        BackgroundColor="Transparent"
+                        Command="{Binding PlusCommand}"
+                        Source="plus.png"
+                        VerticalOptions="Center"
+                        WidthRequest="60" />
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
