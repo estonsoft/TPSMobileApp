@@ -4,7 +4,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
-    xmlns:controls1="clr-namespace:TPSMobileApp.Controls"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
@@ -111,7 +110,7 @@
                 </StackLayout>
             </ScrollView>
 
-            <controls1:CustomToolbar Grid.Row="2" />
+            <controls:CustomToolbar Grid.Row="2" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

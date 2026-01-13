@@ -4,8 +4,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
-    xmlns:controls1="clr-namespace:TPSMobileApp.Controls"
-    xmlns:controls11="clr-namespace:TPSMobileApp.Controls"
     
     
     xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
@@ -14,7 +12,7 @@
     >
 
     <Shell.SearchHandler>
-        <controls1:MySearchHandler
+        <controls:MySearchHandler
             DisplayMemberName="Name"
             Placeholder="Search Products"
             ShowsResults="false" />
@@ -28,7 +26,7 @@
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
 
-            <controls1:CustomHeader Grid.Row="0" />
+            <controls:CustomHeader Grid.Row="0" />
 
             <StackLayout
                 Grid.Row="1"
@@ -98,7 +96,7 @@
                 </ListView>
             </StackLayout>
 
-            <controls11:CustomToolbar Grid.Row="2" />
+            <controls:CustomToolbar Grid.Row="2" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

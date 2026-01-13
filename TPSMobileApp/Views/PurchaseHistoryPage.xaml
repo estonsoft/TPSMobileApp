@@ -4,12 +4,9 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
-    xmlns:controls1="clr-namespace:TPSMobileApp.Controls"
-    
     xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
     xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     Title="Order History"
-    
     Shell.NavBarIsVisible="False">
 
     <NavigationPage.TitleView>
@@ -17,7 +14,7 @@
             Orientation="Horizontal"
             Spacing="10"
             VerticalOptions="Center">
-            
+
             <Label
                 Padding="10,0,0,0"
                 FontSize="16"
@@ -66,7 +63,6 @@
                     x:Name="OrderHistoryList"
                     AutoFitMode="DynamicHeight"
                     ItemsSourceChangeCachingStrategy="ClearItems"
-                    
                     SelectionMode="None">
                     <syncfusion:SfListView.ItemTemplate>
                         <DataTemplate>
@@ -164,7 +160,7 @@
                                             Text="{Binding TotalDisplay}"
                                             TextColor="Black"
                                             WidthRequest="250" />
-                                        <controls1:OrderLabel
+                                        <controls:OrderLabel
                                             Margin="10,5,0,10"
                                             FontSize="12"
                                             HorizontalOptions="Start"
@@ -175,7 +171,7 @@
                                             <Label.GestureRecognizers>
                                                 <TapGestureRecognizer Tapped="OnTappedDetails" />
                                             </Label.GestureRecognizers>
-                                        </controls1:OrderLabel>
+                                        </controls:OrderLabel>
                                     </StackLayout>
                                     <BoxView
                                         BackgroundColor="gray"
@@ -190,7 +186,7 @@
                 </syncfusion:SfListView>
             </StackLayout>
 
-            <controls1:CustomToolbar Grid.Row="2" />
+            <controls:CustomToolbar Grid.Row="2" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

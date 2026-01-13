@@ -4,15 +4,11 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
-    xmlns:controls1="clr-namespace:TPSMobileApp.Controls"
-    
-    
     xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
     xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     xmlns:view="clr-namespace:TPSMobileApp.Views"
     x:Name="ReturnCart"
     Title="Return Cart"
-    
     Shell.TabBarIsVisible="False">
 
     <ContentPage.Resources>
@@ -175,7 +171,6 @@
                     x:Name="ItemsListCart"
                     AutoFitMode="DynamicHeight"
                     ItemsSourceChangeCachingStrategy="ClearItems"
-                    
                     SelectionMode="None">
                     <syncfusion:SfListView.ItemTemplate>
                         <DataTemplate>
@@ -187,7 +182,7 @@
                 </syncfusion:SfListView>
             </StackLayout>
 
-            <controls1:CustomToolbar Grid.Row="2" />
+            <controls:CustomToolbar Grid.Row="2" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

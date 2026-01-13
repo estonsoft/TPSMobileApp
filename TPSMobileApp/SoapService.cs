@@ -99,14 +99,14 @@ namespace TPSMobileApp.Data
                     $"<sNotes>{sNotes}</sNotes><iHoldForReview>{iHoldForReview}</iHoldForReview>" +
                     $"<sOrderType>{sOrderType}</sOrderType>"));
 
-        public Task<string> SubmitReturnAsync(string sCustNo, string sOrderInfo, string sUser, string sNotes)
+        public Task<string> SubmitReturnAsync(string sCust, string sOrderInfo, string sUser, string sNotes)
             => SendSoapRequestAsync("http://turningpointremotephoneapp.com/SubmitReturn",
                 SoapEnvelope("SubmitReturn",
-                    $"<sCustNo>{sCustNo}</sCustNo><sOrderInfo>{sOrderInfo}</sOrderInfo><sUser>{sUser}</sUser><sNotes>{sNotes}</sNotes>"));
+                    $"<sCust>{sCust}</sCust><sOrderInfo>{sOrderInfo}</sOrderInfo><sUser>{sUser}</sUser><sNotes>{sNotes}</sNotes>"));
 
-        public Task<string> GetOrderHistoryAsync(string sCustNo)
+        public Task<string> GetOrderHistoryAsync(string sCust)
             => SendSoapRequestAsync("http://turningpointremotephoneapp.com/GetOrderHistory",
-                SoapEnvelope("GetOrderHistory", $"<sCustNo>{sCustNo}</sCustNo>"));
+                SoapEnvelope("GetOrderHistory", $"<sCust>{sCust}</sCust>"));
 
         public Task<string> GetSalespersonCustomersAsync(string sUser)
             => SendSoapRequestAsync("http://turningpointremotephoneapp.com/GetSalespersonCustomers",

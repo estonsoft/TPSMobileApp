@@ -4,13 +4,10 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
-    xmlns:controls1="clr-namespace:TPSMobileApp.Controls"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
-    
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Submit Return"
-    
     BackgroundColor="White"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
@@ -23,7 +20,7 @@
                 <RowDefinition Height="60" />
             </Grid.RowDefinitions>
 
-            <controls1:CustomHeader Grid.Row="0" />
+            <controls:CustomHeader Grid.Row="0" />
             <StackLayout
                 Grid.Row="1"
                 Margin="0,0,0,0"
@@ -55,7 +52,7 @@
                     Text="Please Wait..."
                     TextColor="Blue" />
             </StackLayout>
-            <controls1:CustomToolbar Grid.Row="2" />
+            <controls:CustomToolbar Grid.Row="2" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

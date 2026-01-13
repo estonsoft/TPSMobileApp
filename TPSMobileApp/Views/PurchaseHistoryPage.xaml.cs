@@ -32,12 +32,19 @@ namespace TPSMobileApp.Views
             RefreshList();
         }
 
-        public async void RefreshList()
+        public void RefreshList()
         {
             OrderHistoryList.ItemsSource = null;
 
-            //Database db = new Database();
-            OrderHistoryList.ItemsSource = App.g_db.GetOrderHeaders();
+            Task.Run(async () =>
+            {
+                List<OrderHeader> orderHeaders = App.g_db.GetOrderHeaders();
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    OrderHistoryList.ItemsSource = orderHeaders;
+                });
+            });
+           
         }
 
         void OnTappedDetails(object sender, EventArgs args)
