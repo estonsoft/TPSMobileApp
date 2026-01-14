@@ -154,75 +154,57 @@
                                     Source="blue_plus.png"
                                     WidthRequest="30" />
                             </HorizontalStackLayout>
-                            <controls:AddToOrderButton
-                                x:Name="AddToOrderButton"
-                                Margin="5,-5,5,0"
-                                BackgroundColor="LightGray"
-                                Clicked="AddToOrderButton_Clicked"
-                                CornerRadius="8"
-                                FontAttributes="Bold"
-                                FontSize="14"
-                                HeightRequest="35"
-                                HorizontalOptions="Center"
-                                IsVisible="{Binding IsAddToOrderVisible}"
-                                ItemNo="{Binding ItemNo}"
-                                Text="Add To Order"
-                                TextColor="RoyalBlue"
-                                VerticalOptions="Start"
-                                WidthRequest="110" />
+                            <VerticalStackLayout>
+                                <controls:AddToOrderButton
+                                    x:Name="AddToOrderButton"
+                                    BackgroundColor="LightGray"
+                                    Clicked="AddToOrderButton_Clicked"
+                                    CornerRadius="8"
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    HeightRequest="35"
+                                    IsVisible="{Binding IsAddToOrderVisible}"
+                                    ItemNo="{Binding ItemNo}"
+                                    Text="Add To Order"
+                                    TextColor="RoyalBlue"
+                                    WidthRequest="110" />
+                                <HorizontalStackLayout
+                                    x:Name="SalespersonStack"
+                                    Margin="15"
+                                    HorizontalOptions="Center">
+                                    <controls:CreditButton
+                                        Aspect="AspectFit"
+                                        BackgroundColor="Transparent"
+                                        Clicked="CreditButton_Clicked"
+                                        HeightRequest="18"
+                                        ItemNo="{Binding ItemNo}"
+                                        Source="credit.png" />
+                                    <controls:LabelButton
+                                        Aspect="AspectFit"
+                                        BackgroundColor="Green"
+                                        Clicked="LabelButton_Clicked"
+                                        HeightRequest="18"
+                                        IsVisible="false"
+                                        ItemNo="{Binding ItemNo}"
+                                        Source="labels.png" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
                         </HorizontalStackLayout>
                     </HorizontalStackLayout>
-                    <HorizontalStackLayout
-                        Margin="0,0,0,0"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Start">
-                        <VerticalStackLayout
-                            Margin="0,0,0,0"
-                            Spacing="0"
-                            VerticalOptions="Start"
-                            WidthRequest="200">
-                            <HorizontalStackLayout
-                                Margin="0,0,0,0"
-                                HorizontalOptions="Start"
-                                Spacing="1">
+                    <HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <HorizontalStackLayout Spacing="1">
                                 <Label
                                     x:Name="PriceDisplay"
-                                    Margin="5,-4,0,3"
                                     BackgroundColor="White"
                                     FontAttributes="Bold"
                                     FontSize="16"
-                                    HorizontalOptions="Start"
                                     IsVisible="{Binding IsPriceVisible}"
-                                    MaxLines="1"
                                     Text="{Binding PriceDisplay}"
-                                    TextColor="Black"
-                                    VerticalOptions="Start" />
+                                    TextColor="Black" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
-                        <HorizontalStackLayout
-                            x:Name="SalespersonStack"
-                            Margin="0,0,0,7"
-                            HorizontalOptions="Start"
-                            IsVisible="{Binding IsSalesUser}"
-                            VerticalOptions="Center">
-                            <controls:CreditButton
-                                Margin="0,0,5,0"
-                                Aspect="AspectFit"
-                                BackgroundColor="Transparent"
-                                Clicked="CreditButton_Clicked"
-                                HeightRequest="18"
-                                ItemNo="{Binding ItemNo}"
-                                Source="credit.png" />
-                            <controls:LabelButton
-                                Margin="5,0,5,0"
-                                Aspect="AspectFit"
-                                BackgroundColor="Transparent"
-                                Clicked="LabelButton_Clicked"
-                                HeightRequest="18"
-                                IsVisible="false"
-                                ItemNo="{Binding ItemNo}"
-                                Source="labels.png" />
-                        </HorizontalStackLayout>
+
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </HorizontalStackLayout>

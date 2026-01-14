@@ -27,98 +27,53 @@
 
             <controls:CustomHeader Grid.Row="0" />
 
-            <StackLayout
-                Grid.Row="1"
-                Margin="0,0,0,0"
-                Orientation="Vertical"
-                Spacing="0"
-                VerticalOptions="Start">
-                <StackLayout
-                    Margin="0,0,0,0"
-                    HorizontalOptions="Start"
-                    Orientation="Horizontal"
-                    VerticalOptions="Center">
-                    <StackLayout
-                        Margin="0,0,0,0"
-                        Orientation="Vertical"
-                        Spacing="0"
-                        VerticalOptions="Start"
-                        WidthRequest="225">
-                        <StackLayout
-                            Margin="0,0,0,0"
-                            HorizontalOptions="Start"
-                            Orientation="Horizontal"
-                            VerticalOptions="Center">
+            <VerticalStackLayout Grid.Row="1" Spacing="0">
+                <HorizontalStackLayout>
+                    <VerticalStackLayout WidthRequest="225">
+                        <HorizontalStackLayout Margin="15,15,0,0">
                             <Label
-                                Margin="15,15,0,0"
                                 BackgroundColor="White"
                                 FontSize="14"
-                                HorizontalOptions="Start"
                                 Text="Items:"
                                 TextColor="Black"
-                                VerticalOptions="Start"
                                 WidthRequest="55" />
                             <Label
-                                Margin="0,15,0,0"
                                 BackgroundColor="White"
                                 FontAttributes="Bold"
                                 FontSize="14"
-                                HorizontalOptions="Start"
                                 Text="{Binding CartItems}"
                                 TextColor="Black" />
-                        </StackLayout>
-                        <StackLayout
-                            Margin="0,0,0,0"
-                            HorizontalOptions="Start"
-                            Orientation="Horizontal"
-                            VerticalOptions="Center">
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="15,0,0,0">
                             <Label
-                                Margin="15,0,0,0"
                                 BackgroundColor="White"
                                 FontSize="14"
-                                HorizontalOptions="Start"
                                 Text="Pieces:"
                                 TextColor="Black"
-                                VerticalOptions="Start"
                                 WidthRequest="55" />
                             <Label
-                                Margin="0,0,0,0"
                                 BackgroundColor="White"
                                 FontAttributes="Bold"
                                 FontSize="14"
-                                HorizontalOptions="Start"
                                 Text="{Binding CartPieces}"
                                 TextColor="Black" />
-                        </StackLayout>
-                        <StackLayout
-                            Margin="0,0,0,0"
-                            HorizontalOptions="Start"
-                            Orientation="Horizontal"
-                            VerticalOptions="Center">
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="15,0,0,0">
                             <Label
-                                Margin="15,0,0,0"
                                 BackgroundColor="White"
                                 FontSize="14"
-                                HorizontalOptions="Start"
                                 Text="Total:"
                                 TextColor="Black"
-                                VerticalOptions="Start"
                                 WidthRequest="55" />
                             <Label
-                                Margin="0,0,0,0"
                                 BackgroundColor="White"
                                 FontAttributes="Bold"
                                 FontSize="14"
-                                HorizontalOptions="Start"
                                 Text="{Binding CartTotal}"
                                 TextColor="Black" />
-                        </StackLayout>
-                    </StackLayout>
-                    <StackLayout
-                        Margin="0,15,0,0"
-                        HorizontalOptions="Start"
-                        Orientation="Horizontal"
-                        VerticalOptions="Center">
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                    <HorizontalStackLayout Margin="0,15,0,0">
                         <Button
                             x:Name="btnCheckout"
                             Margin="0"
@@ -129,38 +84,29 @@
                             CornerRadius="10"
                             FontAttributes="Bold"
                             FontSize="14"
-                            HeightRequest="35"
-                            HorizontalOptions="Start"
                             Text="Submit Return"
                             TextColor="White"
-                            VerticalOptions="Start"
                             WidthRequest="130" />
-                    </StackLayout>
-                </StackLayout>
-                <StackLayout
-                    Margin="0,0,0,0"
-                    HorizontalOptions="Center"
-                    Orientation="Horizontal"
-                    VerticalOptions="Center">
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout Margin="0,15,0,0" HorizontalOptions="Center">
                     <Label
-                        Margin="0,15,0,5"
                         BackgroundColor="White"
                         FontAttributes="Bold"
                         FontSize="20"
-                        HorizontalOptions="Center"
                         Text="Items"
-                        TextColor="Blue" />
+                        TextColor="Blue"
+                        VerticalOptions="Center" />
                     <ImageButton
                         x:Name="btnClearCart"
-                        Margin="40,10,0,10"
+                        Margin="50,10,0,10"
                         BackgroundColor="Transparent"
                         Clicked="btnClearCart_Clicked"
                         HeightRequest="30"
-                        HorizontalOptions="Center"
                         Source="delete.png"
                         VerticalOptions="Center"
                         WidthRequest="30" />
-                </StackLayout>
+                </HorizontalStackLayout>
                 <BoxView
                     BackgroundColor="gray"
                     HeightRequest="3"
@@ -180,7 +126,7 @@
                         </DataTemplate>
                     </syncfusion:SfListView.ItemTemplate>
                 </syncfusion:SfListView>
-            </StackLayout>
+            </VerticalStackLayout>
 
             <controls:CustomToolbar Grid.Row="2" />
         </Grid>
