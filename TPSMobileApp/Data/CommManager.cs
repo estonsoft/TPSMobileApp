@@ -150,7 +150,6 @@ namespace TPSMobileApp.Data
                 String response = await soapService.GetFlyerItemsPDFAsync();
                 XMLResponseParser.commService_GetFlyerItemsPDFCompleted(response);
             });
-
         }
     }
 }
