@@ -1,17 +1,15 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-
-
-using TPSMobileApp.Views;
-using TPSMobileApp.ViewModels;
+using CommunityToolkit.Mvvm.Messaging;
 using TPSMobileApp;
 using TPSMobileApp.Controls;
-using System.Globalization;
+using TPSMobileApp.ViewModels;
+using TPSMobileApp.Views;
 
 namespace TPSMobileApp.Views
 {
@@ -66,10 +64,16 @@ namespace TPSMobileApp.Views
 
             App.g_ShoppingCartPage = this;
 
-            MessagingCenter.Subscribe<ShoppingCartPage>(this, "RefreshShoppingCart", (sender) =>
+            WeakReferenceMessenger.Default.Register<ShoppingCartPage>(
+            this,
+            (r, m) =>
             {
                 RefreshList();
             });
+            //MessagingCenter.Subscribe<ShoppingCartPage>(this, "RefreshShoppingCart", (sender) =>
+            //{
+
+            //});
         }
 
         protected override void OnAppearing()

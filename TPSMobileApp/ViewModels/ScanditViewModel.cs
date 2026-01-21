@@ -15,16 +15,17 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.Messaging;
+using Scandit.DataCapture.Barcode.Capture;
+using Scandit.DataCapture.Barcode.Data;
+using Scandit.DataCapture.Core.Capture;
+using Scandit.DataCapture.Core.Data;
+using Scandit.DataCapture.Core.Source;
+using TPSMobileApp;
+using TPSMobileApp;
 using TPSMobileApp.Controls;
 using TPSMobileApp.Models;
 using TPSMobileApp.Views;
-using TPSMobileApp;
-using Scandit.DataCapture.Barcode.Capture;
-using Scandit.DataCapture.Barcode.Data;
-using Scandit.DataCapture.Core.Source;
-using Scandit.DataCapture.Core.Capture;
-using TPSMobileApp;
-using Scandit.DataCapture.Core.Data;
 
 namespace TPSMobileApp.ViewModels
 {
@@ -72,8 +73,15 @@ namespace TPSMobileApp.ViewModels
 
         private void SubscribeToAppMessages()
         {
-            MessagingCenter.Subscribe(this, App.MessageKeys.OnResume, callback: async (App app) => await this.OnResumeAsync());
-            MessagingCenter.Subscribe(this, App.MessageKeys.OnSleep, callback: async (App app) => await this.OnSleep());
+            WeakReferenceMessenger.Default.Register<App>(
+            this,
+            async (_, _) => await OnResumeAsync());
+
+            WeakReferenceMessenger.Default.Register<App>(
+                this,
+                async (_, _) => await OnSleep());
+            //MessagingCenter.Subscribe(this, App.MessageKeys.OnResume, callback: async (App app) => await this.OnResumeAsync());
+            //MessagingCenter.Subscribe(this, App.MessageKeys.OnSleep, callback: async (App app) => await this.OnSleep());
         }
 
         private void InitializeScanner()

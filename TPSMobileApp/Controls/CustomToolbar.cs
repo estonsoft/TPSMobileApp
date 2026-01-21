@@ -110,7 +110,7 @@ public class CustomToolbar : StackLayout
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         };
-
+        glyph = glyph.Replace("/u","0x");
         icon = new Image
         {
             Margin = new Thickness(0, 8, 0, 0),
