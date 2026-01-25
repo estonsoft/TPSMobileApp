@@ -106,12 +106,14 @@ public class CustomToolbar : StackLayout
         var stack = new VerticalStackLayout
         {
             BackgroundColor = Colors.Blue,
-            //WidthRequest = ColumnWidth,
-            Margin = new Thickness(0,5,0,0),
+            //WidthRequest = ColumnWidth,            
             HeightRequest = 80,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         };
+        if (DeviceInfo.Platform == DevicePlatform.iOS)
+            stack.Margin = new Thickness(0, 15, 0, 0);
+        
         glyph = glyph.Replace("/u","0x");
         icon = new Image
         {
