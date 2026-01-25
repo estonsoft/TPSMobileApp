@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls;
+﻿using System.Drawing.Printing;
+using Microsoft.Maui.Controls;
 
 namespace TPSMobileApp.Controls;
 
@@ -106,6 +107,7 @@ public class CustomToolbar : StackLayout
         {
             BackgroundColor = Colors.Blue,
             //WidthRequest = ColumnWidth,
+            Margin = new Thickness(0,5,0,0),
             HeightRequest = 80,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
