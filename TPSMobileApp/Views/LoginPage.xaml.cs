@@ -66,7 +66,7 @@ namespace TPSMobileApp.Views
             return true;
         }
 
-        private void Settings_Clicked(object sender, EventArgs e)
+        private async void Settings_Clicked(object sender, EventArgs e)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace TPSMobileApp.Views
                 App.g_SettingsUser = "";
             }
             App.g_HeaderTitle = "Settings";
-            App.g_Shell.GoToSettings();
+            await App.g_Shell.GoToSettings();
         }
     }
 }

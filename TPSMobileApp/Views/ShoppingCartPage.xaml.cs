@@ -155,22 +155,22 @@ namespace TPSMobileApp.Views
 
         private async void btnCheckout_Clicked(object sender, EventArgs e)
         {
-            App.g_Shell.GoToCheckout();
+            await App.g_Shell.GoToCheckout();
         }
 
         private async void btnSignIn_Clicked(object sender, EventArgs e)
         {
-            App.g_Shell.GoToLogin();
+            await App.g_Shell.GoToLogin();
         }
 
         private async void btnClearCart_Clicked(object sender, EventArgs e)
         {
-            bool bClear = await DisplayAlert("Profit Order", "Are you sure you wish to remove all the items from your shopping cart?", "Yes", "No");
+            bool bClear = await DisplayAlertAsync("Profit Order", "Are you sure you wish to remove all the items from your shopping cart?", "Yes", "No");
 
             if (bClear)
             {
                 App.g_db.ClearOrderCartItems();
-                App.g_Shell.GoToHome();
+                await App.g_Shell.GoToHome();
             }
         }
 

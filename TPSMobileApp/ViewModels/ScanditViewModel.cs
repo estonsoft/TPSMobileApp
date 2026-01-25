@@ -140,7 +140,7 @@ namespace TPSMobileApp.ViewModels
 
             try
             {
-                Device.BeginInvokeOnMainThread(async () =>
+                MainThread.BeginInvokeOnMainThread(async () =>
                 {
                     try
                     {

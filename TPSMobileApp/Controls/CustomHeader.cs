@@ -76,23 +76,23 @@ public class CustomHeader : StackLayout
         StackContainer.Children.Add(TitleText);
     }
 
-    void OnBackTapped(object sender, EventArgs e)
+    async void OnBackTapped(object sender, EventArgs e)
     {
         if (TitleText.Text == "Checkout")
         {
-            App.g_Shell.GoToShoppingCart();
+            await App.g_Shell.GoToShoppingCart();
         }
         else if (TitleText.Text == "Submit Order")
         {
-            App.g_Shell.GoToHome();
+            await App.g_Shell.GoToHome();
         }
         else if (TitleText.Text == "Order Detail")
         {
-            App.g_Shell.GoToMyPurchases();
+            await App.g_Shell.GoToMyPurchases();
         }
         else if (TitleText.Text == "Settings")
         {
-            App.g_Shell.GoToLogin();
+            await App.g_Shell.GoToLogin();
         }
         else if (TitleText.Text == "Product Categories")
         {
@@ -105,7 +105,7 @@ public class CustomHeader : StackLayout
             App.g_Subsubcategory.Code = "";
             App.g_Subsubcategory.Description = "ALL SUB-SUBCATEGORIES";
 
-            App.g_Shell.GoToHome();
+            await App.g_Shell.GoToHome();
         }
         else if (TitleText.Text == "Product Subcategories")
         {
@@ -118,7 +118,7 @@ public class CustomHeader : StackLayout
             App.g_Subsubcategory.Code = "";
             App.g_Subsubcategory.Description = "ALL SUB-SUBCATEGORIES";
 
-            App.g_Shell.GoToCategories();
+            await App.g_Shell.GoToCategories();
         }
         else if (TitleText.Text == "Product Sub-subcategories")
         {
@@ -128,17 +128,17 @@ public class CustomHeader : StackLayout
             App.g_Subsubcategory.Code = "";
             App.g_Subsubcategory.Description = "ALL SUB-SUBCATEGORIES";
 
-            App.g_Shell.GoToSubcategories();
+            await App.g_Shell.GoToSubcategories();
         }
         else if (TitleText.Text == "Search Products")
         {
             if (App.g_SearchFromPage == "PurchaseHistoryPage")
             {
-                App.g_Shell.GoToMyPurchases();
+                await App.g_Shell.GoToMyPurchases();
             }
             else if (App.g_SearchFromPage == "ReorderItemsPage")
             {
-                App.g_Shell.GoToReorderItems();
+                await App.g_Shell.GoToReorderItems();
             }
             else if (App.g_SearchFromPage == "HomePage")
             {
@@ -151,7 +151,7 @@ public class CustomHeader : StackLayout
                 App.g_Subsubcategory.Code = "";
                 App.g_Subsubcategory.Description = "ALL SUB-SUBCATEGORIES";
 
-                App.g_Shell.GoToHome();
+                await App.g_Shell.GoToHome();
             }
             else
             {
@@ -159,19 +159,19 @@ public class CustomHeader : StackLayout
                 {
                     App.g_Subsubcategory.Code = "";
                     App.g_Subsubcategory.Description = "ALL SUB-SUBCATEGORIES";
-                    App.g_Shell.GoToSubsubcategories();
+                    await App.g_Shell.GoToSubsubcategories();
                 }
                 else if (App.g_Subcategory.Code != "")
                 {
                     App.g_Subcategory.Code = "";
                     App.g_Subcategory.Description = "ALL SUBCATEGORIES";
-                    App.g_Shell.GoToSubcategories();
+                    await App.g_Shell.GoToSubcategories();
                 }
                 else
                 {
                     App.g_Category.Code = "";
                     App.g_Category.Description = "ALL CATEGORIES";
-                    App.g_Shell.GoToCategories();
+                    await App.g_Shell.GoToCategories();
                 }
             }
         }
@@ -186,7 +186,7 @@ public class CustomHeader : StackLayout
             App.g_Subsubcategory.Code = "";
             App.g_Subsubcategory.Description = "ALL SUB-SUBCATEGORIES";
 
-            App.g_Shell.GoToHome();
+            await App.g_Shell.GoToHome();
         }
     }
 }

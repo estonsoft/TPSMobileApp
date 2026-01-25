@@ -47,12 +47,12 @@ namespace TPSMobileApp.Views
            
         }
 
-        void OnTappedDetails(object sender, EventArgs args)
+        async void OnTappedDetails(object sender, EventArgs args)
         {
             var lbl = sender as OrderLabel;
             App.g_OrderNo = lbl.OrderNo;
 
-            App.g_Shell.GoToOrderDetail();
+            await App.g_Shell.GoToOrderDetail();
         }
 
         protected override bool OnBackButtonPressed()
