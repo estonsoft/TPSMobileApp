@@ -26,15 +26,15 @@ namespace TPSMobileApp.Views
             //Content = view;
         }
 
-        private async void OnBarcodeScanned(object sender, BarcodeCaptureEventArgs e)
+        private void OnBarcodeScanned(object sender, BarcodeCaptureEventArgs e)
         {
             //if (e.Session.NewlyRecognizedBarcodes.Count == 0)
             //    return;
 
             //var barcode = e.Session.NewlyRecognizedBarcodes[0];
 
-            //MainThread.BeginInvokeOnMainThread(() =>
-            //{
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
                 try
                 {
                     ResetCategories();
@@ -46,14 +46,14 @@ namespace TPSMobileApp.Views
                     catch { }
 
                     //App.g_ScanBarcode = barcode.Data;
-                    await App.g_Shell.GoToItemSearch();
+                    App.g_Shell.GoToItemSearch();
                 }
                 catch
                 {
                     App.g_ScanBarcode = "9999999999999999";
-                    await App.g_Shell.GoToItemSearch();
+                    App.g_Shell.GoToItemSearch();
                 }
-            //});
+            });
         }
 
         private void ResetCategories()

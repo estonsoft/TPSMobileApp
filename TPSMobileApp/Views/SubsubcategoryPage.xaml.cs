@@ -48,13 +48,13 @@ namespace TPSMobileApp.Views
             //Shell.Current.GoToAsync("//HomePage/ItemSearchPage");
         }
 
-        private async void OnSubsubcategoryTapped(object sender, ItemTappedEventArgs e)
+        private void OnSubsubcategoryTapped(object sender, ItemTappedEventArgs e)
         {
             App.g_Subsubcategory = (Subsubcategory) e.Item;
             App.g_ScanBarcode = "";
 
             App.g_SearchFromPage = "SubsubcategoryPage";
-            await App.g_Shell.GoToItemSearch();
+            App.g_Shell.GoToItemSearch();
         }
 
         protected override bool OnBackButtonPressed()

@@ -314,49 +314,49 @@ namespace TPSMobileApp
             base.OnNavigating(args);
         }
 
-        private async void MenuShoppingCart_Clicked(object sender, EventArgs e)
+        private void MenuShoppingCart_Clicked(object sender, EventArgs e)
         {
-            await GoToShoppingCart();
+            GoToShoppingCart();
             Shell.Current.FlyoutIsPresented = false;
         }
-        private async void MenuCreditCart_Clicked(object sender, EventArgs e)
+        private void MenuCreditCart_Clicked(object sender, EventArgs e)
         {
-            await GoToReturnCart();
+            GoToReturnCart();
             Shell.Current.FlyoutIsPresented = false;
         }
-        private async void MenuLabels_Clicked(object sender, EventArgs e)
+        private void MenuLabels_Clicked(object sender, EventArgs e)
         {
-            await GoToLabelCart();
+            GoToLabelCart();
             Shell.Current.FlyoutIsPresented = false;
         }
-        private async  void MenuScanBarcode_Clicked(object sender, EventArgs e)
+        private void MenuScanBarcode_Clicked(object sender, EventArgs e)
         {
-            await GoToScanBarcode();
+            GoToScanBarcode();
             Shell.Current.FlyoutIsPresented = false;
         }
-        private async void MenuCustomers_Clicked(object sender, EventArgs e)
+        private void MenuCustomers_Clicked(object sender, EventArgs e)
         {
-            await GoToCustomerList();
+            GoToCustomerList();
             Shell.Current.FlyoutIsPresented = false;
         }
-        private async void MenuQuickEntry_Clicked(object sender, EventArgs e)
+        private void MenuQuickEntry_Clicked(object sender, EventArgs e)
         {
-            await GoToQuickEntry();
+            GoToQuickEntry();
             Shell.Current.FlyoutIsPresented = false;
         }
-        private async void MenuMyPurchases_Clicked(object sender, EventArgs e)
+        private void MenuMyPurchases_Clicked(object sender, EventArgs e)
         {
-            await GoToMyPurchases();
+            GoToMyPurchases();
             Shell.Current.FlyoutIsPresented = false;
         }
-        private async void MenuCategories_Clicked(object sender, EventArgs e)
+        private void MenuCategories_Clicked(object sender, EventArgs e)
         {
-            await GoToCategories();
+            GoToCategories();
             Shell.Current.FlyoutIsPresented = false;
         }
-        private async void MenuLocations_Clicked(object sender, EventArgs e)
+        private void MenuLocations_Clicked(object sender, EventArgs e)
         {
-            await GoToLocations();
+            GoToLocations();
             Shell.Current.FlyoutIsPresented = false;
         }
         private async void MenuLogout_Clicked(object sender, EventArgs e)
@@ -371,14 +371,14 @@ namespace TPSMobileApp
                 App.g_HomePage.ConfirmLogout();
             }
         }
-        private async void MenuMyAccount_Clicked(object sender, EventArgs e)
+        private void MenuMyAccount_Clicked(object sender, EventArgs e)
         {
-            await GoToMyAccount();
+            GoToMyAccount();
             Shell.Current.FlyoutIsPresented = false;
         }
-        private async void MenuFlyerPDF_Clicked(object sender, EventArgs e)
+        private void MenuFlyerPDF_Clicked(object sender, EventArgs e)
         {
-            await GoToFlyerPDF();
+            GoToFlyerPDF();
             Shell.Current.FlyoutIsPresented = false;
         }
         public void SetMenu()

@@ -48,11 +48,11 @@ public class MySearchHandler : SearchHandler
         App.g_Shell.ShowNavBar();
     }
 
-    //private async Task QueryItems(string oldValue, string newValue)
-    //{
-    //    if (Application.Current?.MainPage is Shell shell)
-    //    {
-    //        await shell.GoToAsync("app:///HomePage");
-    //    }
-    //}
+    private async Task QueryItems(string oldValue, string newValue)
+    {
+        if (Application.Current?.MainPage is Shell shell)
+        {
+            await shell.GoToAsync("app:///HomePage");
+        }
+    }
 }

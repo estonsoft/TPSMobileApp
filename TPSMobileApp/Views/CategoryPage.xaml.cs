@@ -51,7 +51,7 @@ namespace TPSMobileApp.Views
             //App.g_Shell.GoToItemSearch();
         }
 
-        private async void CategoriesListSearch_ItemTapped(object sender, Syncfusion.Maui.ListView.ItemTappedEventArgs e)
+        private void CategoriesListSearch_ItemTapped(object sender, Syncfusion.Maui.ListView.ItemTappedEventArgs e)
         {
             App.g_Category = (Category) e.DataItem;
             App.g_ScanBarcode = "";
@@ -60,12 +60,12 @@ namespace TPSMobileApp.Views
 
             if (iSubcategories > 0)
             {
-                await App.g_Shell.GoToSubcategories();
+                App.g_Shell.GoToSubcategories();
             }
             else
             {
                 App.g_SearchFromPage = "CategoryPage";
-                await App.g_Shell.GoToItemSearch();
+                App.g_Shell.GoToItemSearch();
             }
         }
 
