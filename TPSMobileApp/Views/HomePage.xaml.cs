@@ -145,10 +145,10 @@ namespace TPSMobileApp.Views
             LoadCategories();
 
             BannerImage.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
-            Task.Run(async () =>
-            {
+            //Task.Run(async () =>
+            //{
                 RequestCameraPermission();
-            });
+            //});
             //InitializeTimer();
         }
 
