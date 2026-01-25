@@ -168,7 +168,7 @@ namespace TPSMobileApp.Views
                 if (Permissions.ShouldShowRationale<Permissions.Camera>())
                 {
                     // Show an alert to explain why you need it, then request again
-                    if (await DisplayAlert("Permission Needed", "We need camera access to take photos. Allow access?", "OK", "Cancel"))
+                    if (await DisplayAlertAsync("Permission Needed", "We need camera access to take photos. Allow access?", "OK", "Cancel"))
                     {
                         await Permissions.RequestAsync<Permissions.Camera>();
                     }
@@ -338,7 +338,7 @@ namespace TPSMobileApp.Views
             }
         }
 
-        void CategoryTapped(String Code, String Description)
+        async void CategoryTapped(String Code, String Description)
         {
             Category cat = new Category();
             cat.Code = Code;
@@ -350,7 +350,7 @@ namespace TPSMobileApp.Views
             App.g_Subcategory.Code = "";
             App.g_Subcategory.Description = "ALL SUBCATEGORIES";
 
-            App.g_Shell.GoToItemSearch();
+            await App.g_Shell.GoToItemSearch();
             //App.g_Shell.GoToSubcategories();
 
             try
@@ -382,7 +382,7 @@ namespace TPSMobileApp.Views
             CategoryTapped(Code4, Description4);
         }
 
-        void OnCategoryTapped(object sender, EventArgs e)
+        async void OnCategoryTapped(object sender, EventArgs e)
         {
             TappedEventArgs te = (TappedEventArgs)e;
 
@@ -398,14 +398,14 @@ namespace TPSMobileApp.Views
             App.g_ScanBarcode = "";
             App.g_SearchText = "";
 
-            App.g_Shell.GoToItemSearch();
+            await App.g_Shell.GoToItemSearch();
         }
 
         async void OnSignInClick(object sender, EventArgs e)
         {
             if (! App.g_IsLoggedIn)
             {
-                App.g_Shell.GoToLogin();
+                await App.g_Shell.GoToLogin();
             }
             else
             {
@@ -415,7 +415,7 @@ namespace TPSMobileApp.Views
 
         public async void ConfirmLogout()
         {
-            bool bLogout = await DisplayAlert("Profit Order", "Are you sure you wish to logout?", "Yes", "No");
+            bool bLogout = await DisplayAlertAsync("Profit Order", "Are you sure you wish to logout?", "Yes", "No");
 
             if (bLogout)
             {
@@ -427,13 +427,13 @@ namespace TPSMobileApp.Views
                 App.g_db.SaveSetting("LoggedIn", "0");
                 App.g_IsLoggedIn = false;
                 SetLoginControls();
-                App.g_Shell.GoToLogin();
+                await App.g_Shell.GoToLogin();
             }
         }
 
         async void OnShopNow(object sender, EventArgs e)
         {
-            App.g_Shell.GoToCategories();
+            await App.g_Shell.GoToCategories();
         }
 
         public async void RefreshCategoryList()
@@ -453,7 +453,7 @@ namespace TPSMobileApp.Views
             }
             else
             {
-                App.g_Shell.GoToReorderItems();
+                await App.g_Shell.GoToReorderItems();
             }
         }
 

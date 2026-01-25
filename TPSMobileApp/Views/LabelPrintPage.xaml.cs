@@ -64,17 +64,17 @@ namespace TPSMobileApp.Views
 
         private async void btnCheckout_Clicked(object sender, EventArgs e)
         {
-            App.g_Shell.GoToCheckout();
+            await App.g_Shell.GoToCheckout();
         }
 
         private async void btnClearCart_Clicked(object sender, EventArgs e)
         {
-            bool bClear = await DisplayAlert("Profit Order", "Are you sure you wish to remove all the items from your label print cart?", "Yes", "No");
+            bool bClear = await DisplayAlertAsync("Profit Order", "Are you sure you wish to remove all the items from your label print cart?", "Yes", "No");
 
             if (bClear)
             {
                 App.g_db.ClearLabelCartItems();
-                App.g_Shell.GoToHome();
+                await App.g_Shell.GoToHome();
             }
         }
 

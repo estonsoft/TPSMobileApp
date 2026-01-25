@@ -122,7 +122,7 @@ namespace TPSMobileApp.Views
 
             //App.g_Shell.GoToUpdatingPage();
 
-            App.g_Shell.GoToHome();
+            await App.g_Shell.GoToHome();
         }
 
         protected override bool OnBackButtonPressed()

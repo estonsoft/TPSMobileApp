@@ -50,7 +50,7 @@ namespace TPSMobileApp.Views
             }
         }
 
-        private void Save_Clicked(object sender, EventArgs e)
+        private async void Save_Clicked(object sender, EventArgs e)
         {
             if (DisableScanner.IsChecked) 
             {
@@ -63,7 +63,7 @@ namespace TPSMobileApp.Views
                 App.g_db.SaveSetting("ScannerDisabled", "0");
             }
 
-            App.g_Shell.GoToLogin();
+            await App.g_Shell.GoToLogin();
         }
 
         protected override bool OnBackButtonPressed()

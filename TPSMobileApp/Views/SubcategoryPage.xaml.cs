@@ -55,7 +55,7 @@ namespace TPSMobileApp.Views
             //Shell.Current.GoToAsync("//HomePage/ItemSearchPage");
         }
 
-        private void OnSubcategoryTapped(object sender, ItemTappedEventArgs e)
+        private async void OnSubcategoryTapped(object sender, ItemTappedEventArgs e)
         {
             App.g_Subcategory = (Subcategory) e.Item;
             App.g_ScanBarcode = "";
@@ -64,12 +64,12 @@ namespace TPSMobileApp.Views
 
             if (iSubsubcategories < 1)
             {
-                App.g_Shell.GoToSubsubcategories();
+                await App.g_Shell.GoToSubsubcategories();
             }
             else
             {
                 App.g_SearchFromPage = "SubcategoryPage";
-                App.g_Shell.GoToItemSearch();
+                await App.g_Shell.GoToItemSearch();
             }
         }
 

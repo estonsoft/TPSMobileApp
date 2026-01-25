@@ -44,7 +44,7 @@ namespace TPSMobileApp.Views
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Pitco Foods", ex.Message, "Ok");
+                await DisplayAlertAsync("Pitco Foods", ex.Message, "Ok");
             }
         }
 
@@ -53,7 +53,7 @@ namespace TPSMobileApp.Views
             return true;
         }
 
-        private void pdfViewerControl_Tapped(object sender, Syncfusion.Maui.PdfViewer.GestureEventArgs e)
+        private async void pdfViewerControl_Tapped(object sender, Syncfusion.Maui.PdfViewer.GestureEventArgs e)
         {
             try
             {
@@ -81,12 +81,12 @@ namespace TPSMobileApp.Views
                 if (lstItems.Count > 0)
                 {
                     App.g_SearchFromPage = "FlyerPDFPage";
-                    App.g_Shell.GoToItemSearch();
+                    await App.g_Shell.GoToItemSearch();
                 }
             }
             catch (Exception ex)
             {
-                DisplayAlert("Profit Order", ex.Message, "Ok");
+                await DisplayAlertAsync("Profit Order", ex.Message, "Ok");
             }
         }
     }
