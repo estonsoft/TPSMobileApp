@@ -22,7 +22,7 @@ namespace Profit_Order.Services
     {
         public Task ShowAsync(string message, Action handler = null)
         {
-            return Device.InvokeOnMainThreadAsync(() =>
+            return MainThread.InvokeOnMainThreadAsync(()=>
             {
                 var alertStatus = App.Current.MainPage.DisplayAlert("Scandit", message, "OK");
                 App.g_Shell.GoToHome();

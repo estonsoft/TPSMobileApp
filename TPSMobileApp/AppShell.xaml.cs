@@ -98,7 +98,7 @@ namespace TPSMobileApp
         {
             if (App.g_db.GetOrderCartItems().Count == 0)
             {
-                await App.Current.MainPage.DisplayAlert("Profit Order", "Your shopping cart is empty", "Ok");
+                await App.Current.MainPage.DisplayAlertAsync("Profit Order", "Your shopping cart is empty", "Ok");
                 return 0;
             }
 
