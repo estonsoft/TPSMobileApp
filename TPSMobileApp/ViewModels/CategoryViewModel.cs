@@ -68,7 +68,7 @@ public class CategoryViewModel : BaseViewModel
         if (category == null)
             return;
 
-        await Application.Current.MainPage.DisplayAlert(
+        await Shell.Current.DisplayAlertAsync(
             "Profit Order",
             "Category Selected (tapped)",
             "Ok");

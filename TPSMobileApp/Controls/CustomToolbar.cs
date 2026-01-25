@@ -145,35 +145,35 @@ public class CustomToolbar : StackLayout
         stack.GestureRecognizers.Add(tap);
     }
 
-    void OnHomeTapped(object sender, EventArgs e)
+    async void  OnHomeTapped(object sender, EventArgs e)
     {
         App.g_Shell.bStopNavigating = false;
-        App.g_Shell.GoToHome();
+        await App.g_Shell.GoToHome();
         App.g_Shell.bStopNavigating = true;
     }
 
-    void OnShoppingCartTapped(object sender, EventArgs e)
+    async void OnShoppingCartTapped(object sender, EventArgs e)
     {
         List<Item> items = App.g_db.GetOrderCartItems();
 
         if (items.Count == 0)
-            App.Current.MainPage.DisplayAlert("Profit Order", "Your shopping cart is empty", "Ok");
+            await Shell.Current.DisplayAlertAsync("Profit Order", "Your shopping cart is empty", "Ok");
         else
-            App.g_Shell.GoToShoppingCart();
+           await App.g_Shell.GoToShoppingCart();
     }
 
-    void OnShopNowTapped(object sender, EventArgs e)
+    async void OnShopNowTapped(object sender, EventArgs e)
     {
-        App.g_Shell.GoToCategories();
+        await App.g_Shell.GoToCategories();
     }
 
-    void OnScanBarcodeTapped(object sender, EventArgs e)
+    async void OnScanBarcodeTapped(object sender, EventArgs e)
     {
-        App.g_Shell.GoToScanBarcode();
+        await App.g_Shell.GoToScanBarcode();
     }
 
-    void OnPurchaseHistoryTapped(object sender, EventArgs e)
+    async void OnPurchaseHistoryTapped(object sender, EventArgs e)
     {
-        App.g_Shell.GoToMyPurchases();
+        await App.g_Shell.GoToMyPurchases();
     }
 }

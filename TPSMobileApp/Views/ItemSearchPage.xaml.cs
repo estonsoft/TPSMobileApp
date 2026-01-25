@@ -1,5 +1,7 @@
 ﻿
 
+using Microsoft.Maui.Controls;
+
 namespace TPSMobileApp.Views
 {
     public partial class ItemSearchPage : ContentPage
@@ -91,7 +93,7 @@ namespace TPSMobileApp.Views
             }
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
 
@@ -105,12 +107,15 @@ namespace TPSMobileApp.Views
                 InStockOnly.IsVisible = false;
                 InStockLabel.IsVisible = false;
             }
-
-            RefreshList();
+            Dispatcher.Dispatch(async () =>
+            {
+               RefreshList();
+            });
         }
 
         public async void RefreshList()
         {
+
             ItemsListSearch.ItemsSource = null;
 
             Category = App.g_Category.Description;
@@ -157,7 +162,7 @@ namespace TPSMobileApp.Views
 
             if (iItems == 0)
             {
-                App.Current.MainPage.DisplayAlert("Profit Order", "No items found matching search criteria", "Ok");
+                await Shell.Current.DisplayAlertAsync("Profit Order", "No items found matching search criteria", "Ok");
             }
         }
 
@@ -172,7 +177,7 @@ namespace TPSMobileApp.Views
             RefreshList();
         }
 
-        private void OnTappedCategory(object sender, EventArgs e)
+        private async void OnTappedCategory(object sender, EventArgs e)
         {
             App.g_Category.Code = "";
             App.g_Category.Description = "ALL CATEGORIES";
@@ -183,7 +188,7 @@ namespace TPSMobileApp.Views
             App.g_Subsubcategory.Code = "";
             App.g_Subsubcategory.Description = "ALL SUB-SUBCATEGORIES";
 
-            App.g_Shell.GoToCategories();
+            await App.g_Shell.GoToCategories();
         }
 
         private void OnTappedClearSubcategory(object sender, EventArgs e)
@@ -194,7 +199,7 @@ namespace TPSMobileApp.Views
             RefreshList();
         }
 
-        private void OnTappedSubcategory(object sender, EventArgs e)
+        private async void OnTappedSubcategory(object sender, EventArgs e)
         {
             App.g_Subcategory.Code = "";
             App.g_Subcategory.Description = "ALL SUBCATEGORIES";
@@ -202,15 +207,15 @@ namespace TPSMobileApp.Views
             App.g_Subsubcategory.Code = "";
             App.g_Subsubcategory.Description = "ALL SUB-SUBCATEGORIES";
 
-            App.g_Shell.GoToSubcategories();
+            await App.g_Shell.GoToSubcategories();
         }
 
-        private void OnTappedSubsubcategory(object sender, EventArgs e)
+        private async void OnTappedSubsubcategory(object sender, EventArgs e)
         {
             App.g_Subsubcategory.Code = "";
             App.g_Subsubcategory.Description = "ALL SUB-SUBCATEGORIES";
 
-            App.g_Shell.GoToSubsubcategories();
+            await App.g_Shell.GoToSubsubcategories();
         }
 
         async void OnTopSellersClick(object sender, EventArgs e)

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TPSMobileApp.ViewModels;
+﻿using TPSMobileApp.ViewModels;
 
 
 
@@ -20,10 +15,10 @@ namespace TPSMobileApp.Views
             App.g_LoginPage = this;
         }
 
-        private async void OnRegisterClicked(object obj)
-        {
-            App.g_Shell.GoToRegisterVerify();
-        }
+        //private async void OnRegisterClicked(object obj)
+        //{
+        //    await App.g_Shell.GoToRegisterVerify();
+        //}
 
         protected override void OnDisappearing()
         {

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TPSMobileApp.ViewModels;
-using TPSMobileApp;
-
-
-using TPSMobileApp.Controls;
+﻿using TPSMobileApp.ViewModels;
 
 namespace TPSMobileApp.Views
 {
@@ -41,7 +32,7 @@ namespace TPSMobileApp.Views
             await Task.Delay(100);
             EntryFocus();
 
-            _ = this.viewModel.OnResumeAsync();
+            await viewModel.OnResumeAsync();
         }
 
         private async void EntryFocus()

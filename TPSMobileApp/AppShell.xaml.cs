@@ -74,11 +74,11 @@ namespace TPSMobileApp
             }
         }
 
-        public void Logout()
+        public async void Logout()
         {
             App.g_db.SaveSetting("LoggedIn", "0");
             App.g_IsLoggedIn = false;
-            App.g_Shell.GoToLogin();
+            await App.g_Shell.GoToLogin();
         }
 
         public async Task<int> GoToHome()
@@ -98,7 +98,7 @@ namespace TPSMobileApp
         {
             if (App.g_db.GetOrderCartItems().Count == 0)
             {
-                await App.Current.MainPage.DisplayAlertAsync("Profit Order", "Your shopping cart is empty", "Ok");
+                await Shell.Current.DisplayAlertAsync("Profit Order", "Your shopping cart is empty", "Ok");
                 return 0;
             }
 
@@ -110,7 +110,7 @@ namespace TPSMobileApp
         {
             if (App.g_db.GetReturnCartItems().Count == 0)
             {
-                await App.Current.MainPage.DisplayAlert("Profit Order", "Your return cart is empty", "Ok");
+                await Shell.Current.DisplayAlertAsync("Profit Order", "Your return cart is empty", "Ok");
                 return 0;
             }
 
@@ -122,7 +122,7 @@ namespace TPSMobileApp
         {
             if (App.g_db.GetLabelCartItems().Count == 0)
             {
-                await App.Current.MainPage.DisplayAlert("Profit Order", "Your label print cart is empty", "Ok");
+                await Shell.Current.DisplayAlertAsync("Profit Order", "Your label print cart is empty", "Ok");
                 return 0;
             }
 
@@ -223,20 +223,20 @@ namespace TPSMobileApp
         {
             if (!App.g_IsMonthlyFlyer)
             {
-                await App.Current.MainPage.DisplayAlert("Profit Order", "No active monthly ads at this time", "Ok");
+                await Shell.Current.DisplayAlertAsync("Profit Order", "No active monthly ads at this time", "Ok");
                 return 0;
             }
 
             int iNow = Convert.ToInt32(DateTime.Now.ToString("1yyMMdd"));
             if ((iNow < App.g_FlyerStartDate) || (iNow > App.g_FlyerEndDate))
             {
-                await App.Current.MainPage.DisplayAlert("Profit Order", "No active monthly ads at this time", "Ok");
+                await Shell.Current.DisplayAlertAsync("Profit Order", "No active monthly ads at this time", "Ok");
                 return 0;
             }
 
             if (!File.Exists(App.g_FlyerFilename))
             {
-                await App.Current.MainPage.DisplayAlert("Profit Order", "No monthly ad PDF at this time", "Ok");
+                await Shell.Current.DisplayAlertAsync("Profit Order", "No monthly ad PDF at this time", "Ok");
                 return 0;
             }
 
@@ -359,12 +359,12 @@ namespace TPSMobileApp
             GoToLocations();
             Shell.Current.FlyoutIsPresented = false;
         }
-        private void MenuLogout_Clicked(object sender, EventArgs e)
+        private async void MenuLogout_Clicked(object sender, EventArgs e)
         {
             Shell.Current.FlyoutIsPresented = false;
             if (!App.g_IsLoggedIn)
             {
-                GoToLogin();
+                await GoToLogin();
             }
             else
             {

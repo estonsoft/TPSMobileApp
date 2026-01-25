@@ -110,7 +110,7 @@
             //OnQtyEntry_Completed(sender, args);
         }
 
-        private void OnQtyEntry_Completed(object sender, EventArgs e)
+        private async void OnQtyEntry_Completed(object sender, EventArgs e)
         {
             Boolean bOverAllocation = false;
             QtyEntry qtyEntry = (QtyEntry)sender;
@@ -145,7 +145,7 @@
 
             if (bOverAllocation)
             {
-                App.Current.MainPage.DisplayAlert("Profit Order", "Qty is greater than max allocation of " + qtyEntry.AllocationQty.ToString() + ", qty has been adjusted", "Ok");
+                await Shell.Current.DisplayAlertAsync("Profit Order", "Qty is greater than max allocation of " + qtyEntry.AllocationQty.ToString() + ", qty has been adjusted", "Ok");
             }
         }
 
@@ -153,7 +153,7 @@
         {
             CreditButton button = (CreditButton)sender;
 
-            bool bResult = await App.Current.MainPage.DisplayAlert("Profit Order", "Add this item for return?", "Yes", "No");
+            bool bResult = await Shell.Current.DisplayAlertAsync("Profit Order", "Add this item for return?", "Yes", "No");
 
             if (bResult)
             {
@@ -165,7 +165,7 @@
         {
             LabelButton button = (LabelButton)sender;
 
-            bool bResult = await App.Current.MainPage.DisplayAlert("Profit Order", "Add this item for label print?", "Yes", "No");
+            bool bResult = await Shell.Current.DisplayAlertAsync("Profit Order", "Add this item for label print?", "Yes", "No");
 
             if (bResult)
             {

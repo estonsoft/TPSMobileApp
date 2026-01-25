@@ -90,13 +90,11 @@ namespace TPSMobileApp.Views
             }
             else
             {
-                Device.StartTimer(TimeSpan.FromSeconds(0), () =>
+                Dispatcher.Dispatch(async () =>
                 {
-                    Shell.Current.Navigation.PopToRootAsync();
-                    App.g_Shell.GoToHome();
-                    App.Current.MainPage.DisplayAlert("Profit Order", "Your shopping cart is empty", "Ok");
-
-                    return false;
+                    await Shell.Current.Navigation.PopToRootAsync();
+                    await App.g_Shell.GoToHome();
+                    await Shell.Current.DisplayAlertAsync("Profit Order", "Your shopping cart is empty", "Ok");
                 });
             }
 

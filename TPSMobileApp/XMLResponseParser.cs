@@ -997,9 +997,10 @@ namespace TPSMobileApp
                         {
                             MainThread.BeginInvokeOnMainThread(async () =>
                             {
-                                await App.Current.MainPage.DisplayAlert("Profit Order", "Invalid password.  Please try again.", "Ok");
+                                await Shell.Current.DisplayAlertAsync("Profit Order", "Invalid password.  Please try again.", "Ok");
                                 App.g_LoginPage.HideAnimation();
                             });
+                            return;
                         }
                         catch
                         {
@@ -1011,9 +1012,10 @@ namespace TPSMobileApp
                         {
                             MainThread.BeginInvokeOnMainThread(async () =>
                             {
-                                await App.Current.MainPage.DisplayAlert("Profit Order", "Inactive account.  Please contact Customer Service.", "Ok");
+                                await Shell.Current.DisplayAlertAsync("Profit Order", "Inactive account.  Please contact Customer Service.", "Ok");
                                 App.g_LoginPage.HideAnimation();
                             });
+                            return;
                         }
                         catch
                         {
@@ -1025,9 +1027,10 @@ namespace TPSMobileApp
                         {
                             MainThread.BeginInvokeOnMainThread(async () =>
                             {
-                                await App.Current.MainPage.DisplayAlert("Profit Order", "Account does not exist.", "Ok");
+                                await Shell.Current.DisplayAlertAsync("Profit Order", "Account does not exist.", "Ok");
                                 App.g_LoginPage.HideAnimation();
                             });
+                            return;
                         }
                         catch
                         {
@@ -1039,9 +1042,10 @@ namespace TPSMobileApp
                         {
                             MainThread.BeginInvokeOnMainThread(async () =>
                             {
-                                await App.Current.MainPage.DisplayAlert("Profit Order", "Error attempting to login.", "Ok");
+                                await Shell.Current.DisplayAlertAsync("Profit Order", "Error attempting to login.", "Ok");
                                 App.g_LoginPage.HideAnimation();
                             });
+                            return;
                         }
                         catch
                         {
@@ -1054,14 +1058,19 @@ namespace TPSMobileApp
                     {
                         MainThread.BeginInvokeOnMainThread(async () =>
                         {
-                            await  App.Current.MainPage.DisplayAlert("Profit Order", "Error attempting to login.", "Ok");
+                            await Shell.Current.DisplayAlertAsync("Profit Order", "Error attempting to login.", "Ok");
                             App.g_LoginPage.HideAnimation();
                         });
+                        return;
                     }
                     catch
                     {
                     }
                 }
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await AppShell.Current.Navigation.PopAsync(true);
+                });
             }
             catch (Exception ex)
             {
@@ -1069,19 +1078,14 @@ namespace TPSMobileApp
                 {
                     MainThread.BeginInvokeOnMainThread(async () =>
                     {
-                        await App.Current.MainPage.DisplayAlert("Profit Order", "Error attempting to login.", "Ok");
+                        await Shell.Current.DisplayAlertAsync("Profit Order", "Error attempting to login.", "Ok");
                         App.g_LoginPage.HideAnimation();
                     });
                 }
                 catch
                 {
                 }
-            }
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                await AppShell.Current.Navigation.PopAsync(true);
-            });
-
+            }           
         }
 
         public static async void commService_GetSettingsCompletedAsync(String response)
@@ -1250,7 +1254,7 @@ namespace TPSMobileApp
 
                     MainThread.BeginInvokeOnMainThread(async () =>
                     {
-                        await App.Current.MainPage.DisplayAlert("Profit Order", "Thank you! Your order has been placed.", "OK");
+                        await Shell.Current.DisplayAlertAsync("Profit Order", "Thank you! Your order has been placed.", "OK");
                     });
 
 
@@ -1271,7 +1275,7 @@ namespace TPSMobileApp
                     {
                         MainThread.BeginInvokeOnMainThread(async () =>
                         {
-                            await App.Current.MainPage.DisplayAlert("Profit Order", "Account disabled.  Please contact customer support.", "Ok");
+                            await Shell.Current.DisplayAlertAsync("Profit Order", "Account disabled.  Please contact customer support.", "Ok");
                             await App.g_Shell.GoToHome();
                             App.g_Shell.Logout();
                         });
@@ -1284,7 +1288,7 @@ namespace TPSMobileApp
                 {
                     MainThread.BeginInvokeOnMainThread(async () =>
                     {
-                        await App.Current.MainPage.DisplayAlert("Profit Order", "Order has already been submitted.", "Ok");
+                        await Shell.Current.DisplayAlertAsync("Profit Order", "Order has already been submitted.", "Ok");
                     });
 
                     App.g_db.ClearOrderCartItems();
@@ -1307,7 +1311,7 @@ namespace TPSMobileApp
                     {
                         MainThread.BeginInvokeOnMainThread(async () =>
                         {
-                            await App.Current.MainPage.DisplayAlert("Profit Order", "Error submitting order.  Please try again.", "Ok");
+                            await Shell.Current.DisplayAlertAsync("Profit Order", "Error submitting order.  Please try again.", "Ok");
                         });
                     }
                     catch
@@ -1331,7 +1335,7 @@ namespace TPSMobileApp
 
                     MainThread.BeginInvokeOnMainThread(async () =>
                     {
-                        await App.Current.MainPage.DisplayAlert("Profit Order", "Thank you! Your return request has been submitted.", "OK");
+                        await Shell.Current.DisplayAlertAsync("Profit Order", "Thank you! Your return request has been submitted.", "OK");
                     });
 
 
@@ -1352,7 +1356,7 @@ namespace TPSMobileApp
                     {
                         MainThread.BeginInvokeOnMainThread(async () =>
                         {
-                            await App.Current.MainPage.DisplayAlert("Profit Order", "Account disabled.  Please contact customer support.", "Ok");
+                            await Shell.Current.DisplayAlertAsync("Profit Order", "Account disabled.  Please contact customer support.", "Ok");
                             await App.g_Shell.GoToHome();
                             App.g_Shell.Logout();
                         });
@@ -1367,7 +1371,7 @@ namespace TPSMobileApp
                     {
                         MainThread.BeginInvokeOnMainThread(async () =>
                         {
-                            await App.Current.MainPage.DisplayAlert("Profit Order", "Error submitting return request.  Please try again.", "Ok");
+                            await Shell.Current.DisplayAlertAsync("Profit Order", "Error submitting return request.  Please try again.", "Ok");
                         });
                     }
                     catch

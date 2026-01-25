@@ -73,15 +73,11 @@ namespace TPSMobileApp.ViewModels
 
         private void SubscribeToAppMessages()
         {
-            WeakReferenceMessenger.Default.Register<App>(
-            this,
-            async (_, _) => await OnResumeAsync());
-
-            WeakReferenceMessenger.Default.Register<App>(
-                this,
-                async (_, _) => await OnSleep());
-            //MessagingCenter.Subscribe(this, App.MessageKeys.OnResume, callback: async (App app) => await this.OnResumeAsync());
-            //MessagingCenter.Subscribe(this, App.MessageKeys.OnSleep, callback: async (App app) => await this.OnSleep());
+            WeakReferenceMessenger.Default.Register<App>(this,async (recipient, message) =>
+            {
+                await OnResumeAsync();
+                await OnSleep();
+            });
         }
 
         private void InitializeScanner()

@@ -1,12 +1,4 @@
-﻿using TPSMobileApp.Views;
-using TPSMobileApp;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TPSMobileApp.Data;
-using TPSMobileApp;
-
-namespace TPSMobileApp.ViewModels
+﻿namespace TPSMobileApp.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {

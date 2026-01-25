@@ -156,7 +156,7 @@ namespace TPSMobileApp.Views
 
             if (iQty == 0)
             {
-                await App.Current.MainPage.DisplayAlert("Profit Order", "Invalid Qty", "Ok");
+                await Shell.Current.DisplayAlertAsync("Profit Order", "Invalid Qty", "Ok");
                 return;
             }
 

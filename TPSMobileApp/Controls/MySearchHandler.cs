@@ -33,11 +33,11 @@ public class MySearchHandler : SearchHandler
         GoToSearchPage();
     }
 
-    protected void GoToSearchPage()
+    protected async void GoToSearchPage()
     {
         App.g_ScanBarcode = string.Empty;
         App.g_SearchFromPage = App.g_CurrentPage;
-        App.g_Shell.GoToItemSearch();
+        await App.g_Shell.GoToItemSearch();
     }
 
     protected override async void OnItemSelected(object item)

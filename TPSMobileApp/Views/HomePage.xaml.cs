@@ -248,7 +248,7 @@ namespace TPSMobileApp.Views
 
             if (! App.g_IsLoggedIn)
             {
-                App.g_Shell.GoToLogin();
+                await App.g_Shell.GoToLogin();
                 return;
             }
 
@@ -256,8 +256,8 @@ namespace TPSMobileApp.Views
 
             if ((App.g_ServerURL.ToLower() == "http://muswicksales.ddns.net:8040") && (App.g_UserName != "MANDANI"))
             {
-                await App.Current.MainPage.DisplayAlert("Profit Order", "Muswick Wholesale Grocers customers must download and use the Muswick app", "Ok");
-                App.g_Shell.GoToLogin();
+                await Shell.Current.DisplayAlertAsync("Profit Order", "Muswick Wholesale Grocers customers must download and use the Muswick app", "Ok");
+                await App.g_Shell.GoToLogin();
                 return;
             }
 
@@ -267,7 +267,7 @@ namespace TPSMobileApp.Views
 
             if (App.g_Customer.Status == "3")
             {
-                await App.Current.MainPage.DisplayAlert("Profit Order", "Registration request has been completed.  Please check your email for instructions.", "Ok");
+                await Shell.Current.DisplayAlertAsync("Profit Order", "Registration request has been completed.  Please check your email for instructions.", "Ok");
                 return;
             }
 
@@ -449,7 +449,7 @@ namespace TPSMobileApp.Views
 
             if (iReorderItems == 0)
             {
-                await App.Current.MainPage.DisplayAlert("Profit Order", "Past purchases not found", "Ok");
+                await Shell.Current.DisplayAlertAsync("Profit Order", "Past purchases not found", "Ok");
             }
             else
             {
@@ -463,22 +463,22 @@ namespace TPSMobileApp.Views
             {
                 if (App.g_Customer.Status == "3")
                 {
-                    await App.Current.MainPage.DisplayAlert("Profit Order", "Registration request has been completed.  Please check your email for instructions.", "Ok");
+                    await Shell.Current.DisplayAlertAsync("Profit Order", "Registration request has been completed.  Please check your email for instructions.", "Ok");
                     return;
                 }
                 else if (App.g_Customer.Status == "4")
                 {
-                    await App.Current.MainPage.DisplayAlert("Profit Order", "Registration request needs further review.  Please check your email for instructions.", "Ok");
+                    await Shell.Current.DisplayAlertAsync("Profit Order", "Registration request needs further review.  Please check your email for instructions.", "Ok");
                     return;
                 }
                 else if (App.g_Customer.Status == "8")
                 {
-                    await App.Current.MainPage.DisplayAlert("Profit Order", "Registration request denied.  Please contact customer service for assistance.", "Ok");
+                    await Shell.Current.DisplayAlertAsync("Profit Order", "Registration request denied.  Please contact customer service for assistance.", "Ok");
                     return;
                 }
                 else if (App.g_Customer.Status == "9")
                 {
-                    await App.Current.MainPage.DisplayAlert("Profit Order", "Registration active.", "Ok");
+                    await Shell.Current.DisplayAlertAsync("Profit Order", "Registration active.", "Ok");
                     return;
                 }
             }
@@ -486,7 +486,7 @@ namespace TPSMobileApp.Views
             {
             }
 
-            App.g_Shell.GoToRegister();
+            await App.g_Shell.GoToRegister();
         }
 
         protected override bool OnBackButtonPressed()
@@ -510,11 +510,11 @@ namespace TPSMobileApp.Views
 
             if (SearchText.Text.Length < 3)
             {
-                await App.Current.MainPage.DisplayAlert("Profit Order", "Please enter at least 3 characters for search criteria", "Ok");
+                await Shell.Current.DisplayAlertAsync("Profit Order", "Please enter at least 3 characters for search criteria", "Ok");
                 return;
             }
 
-            App.g_Shell.GoToItemSearch();
+            await  App.g_Shell.GoToItemSearch();
         }
 
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
@@ -524,7 +524,7 @@ namespace TPSMobileApp.Views
                 App.g_SearchText = SearchText.Text;
                 App.g_SearchFromPage = "HomePage";
 
-                //App.g_Shell.GoToHome();
+                //await App.g_Shell.GoToHome();
             }
         }
     }

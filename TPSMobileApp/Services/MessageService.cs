@@ -20,14 +20,10 @@ namespace Profit_Order.Services
 {
     public class MessageService : IMessageService
     {
-        public Task ShowAsync(string message, Action handler = null)
-        {
-            return MainThread.InvokeOnMainThreadAsync(()=>
-            {
-                var alertStatus = App.Current.MainPage.DisplayAlert("Scandit", message, "OK");
-                App.g_Shell.GoToHome();
-                //alertStatus.ContinueWith((Task) => handler?.Invoke());
-            });
+        public async Task ShowAsync(string message, Action handler = null)
+        {            
+                await Shell.Current.DisplayAlertAsync("Scandit", message, "OK");
+                await App.g_Shell.GoToHome();
         }
     }
 }

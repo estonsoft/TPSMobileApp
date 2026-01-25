@@ -65,7 +65,7 @@ namespace TPSMobileApp.Views
                 App.g_IsMonthlyAdPDFClick = true;
                 App.g_MonthlyAdPage = e.PageNumber;
 
-                if (Device.RuntimePlatform == Device.iOS)
+                if (DeviceInfo.Current.Platform == DevicePlatform.iOS)
                 {
                     App.g_MonthlyAdX = (int)(e.Position.X * 1.33);
                     App.g_MonthlyAdY = (int)(e.Position.Y * 1.33);

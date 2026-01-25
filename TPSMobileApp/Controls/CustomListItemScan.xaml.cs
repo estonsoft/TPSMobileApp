@@ -102,7 +102,7 @@ namespace TPSMobileApp.Controls
             }
         }
 
-        private void OnQtyEntry_Completed(object sender, EventArgs e)
+        private async void OnQtyEntry_Completed(object sender, EventArgs e)
         {
             bool bOverAllocation = false;
             QtyEntry qtyEntry = (QtyEntry)sender;
@@ -134,7 +134,7 @@ namespace TPSMobileApp.Controls
 
             if (bOverAllocation)
             {
-                App.Current.MainPage.DisplayAlert(
+                await Shell.Current.DisplayAlertAsync(
                     "Profit Order",
                     $"Qty is greater than max allocation of {qtyEntry.AllocationQty}, qty has been adjusted",
                     "Ok");
@@ -145,7 +145,7 @@ namespace TPSMobileApp.Controls
         {
             CreditButton button = (CreditButton)sender;
 
-            bool bResult = await App.Current.MainPage.DisplayAlert(
+            bool bResult = await Shell.Current.DisplayAlertAsync(
                 "Profit Order",
                 "Add this item for return?",
                 "Yes",
@@ -159,7 +159,7 @@ namespace TPSMobileApp.Controls
         {
             LabelButton button = (LabelButton)sender;
 
-            bool bResult = await App.Current.MainPage.DisplayAlert(
+            bool bResult = await Shell.Current.DisplayAlertAsync(
                 "Profit Order",
                 "Add this item for label print?",
                 "Yes",

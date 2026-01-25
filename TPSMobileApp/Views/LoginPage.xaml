@@ -132,14 +132,11 @@
                             Text="       Sign In       "
                             TextColor="White"
                             TextTransform="None" />
-                        <ffimageloading:CachedImage
+                        <ActivityIndicator
                             x:Name="WaitImage"
-                            Margin="0,-50,0,0"
-                            Aspect="AspectFill"
                             HeightRequest="80"
                             HorizontalOptions="Center"
                             IsVisible="{Binding IsLoggingIn}"
-                            Source="ani_wait.gif"
                             VerticalOptions="Center" />
                     </StackLayout>
                 </StackLayout>

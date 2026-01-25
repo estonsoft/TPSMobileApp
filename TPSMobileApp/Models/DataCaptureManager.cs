@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using Microsoft.Maui.Devices;
-using Scandit.DataCapture.Barcode.Capture;
+﻿using Scandit.DataCapture.Barcode.Capture;
 using Scandit.DataCapture.Barcode.Data;
 using Scandit.DataCapture.Core.Capture;
 using Scandit.DataCapture.Core.Source;
@@ -21,11 +17,11 @@ namespace TPSMobileApp.Models
         [Obsolete]
         private DataCaptureManager()
         {
-            if (Device.RuntimePlatform == Device.Android)
+            if (DeviceInfo.Current.Platform == DevicePlatform.Android)
             {
                 this.DataCaptureContext = DataCaptureContext.ForLicenseKey("AajWhqWBMbiEC9TwbzOrIiVC9bwaGN2XjFgSPG5JfcmYZQSPBmjR8tQHV9HxUSlS8UbFAw4969tNVPetAXr574kHbdI6X40gmhcVPQhwN4VOa8H7yFLfeS1AfQK1bAPEniAHWmIykj66GFqTLxFPaTImTU9OOz3w6s7mx6uU5w9Mtuo/+qw/MIQeYi2PLQipaJiF3rjuSTUSRI9oPDqS4c9TLVtVOyFxdRWuz6AGlqvZ6kXfhiHrZOrghTxdvNxMGh9Shn9xmdfCAd8H8skKVMOiespzTztSOZJ/c6ZOZvcN4vNzziIjzSwRk6ZM/0N2Oi/gABfR9N8S5BdsBSIG7uu8OcRDFFV7bD0iSmEAmEirPMvIQPcvNtx+2GwDYvQccx1tT7W7bWwy8Ljo/Mg5xx8Cn3EYeYGB/9JQJZOHGsNDLFEMF/7wKkdXDvb3MAOaDbpPwZs8xYbpe87jFLGJWuHG6b82Zuo+Q42GQQPaXhF1esOG0e1bhAdXd3K7+jozi6FisKdZzS758vJAWEwMI4QlwALB8kMzD+9ldsEsngVaMoA8eiUec7+yj6DJFDM1wqxCS4ci/vlXPUojBznNi9rfKc4Q1qYnV7t558PLX6nLlrakz8MbYsKeEm5XHncnWQVndrK20NRqLGc3tHDn4nZ0W94gcvmf205omHDgdk9RWIzYV3wEItXD41l4ht4lYDCixScq2r75CUQvJEUP3dCw8CaP8qks9by/i/geYysFxd1cE9m3DIzxawTE/2klyqJIdXRM1A4tr0TdGC9ggrfN9JnDxbBdShXu0E+q5bNI06PuCtAKF6wow8EOGvVEjg==");
             }
-            else if (Device.RuntimePlatform == Device.iOS)
+            else if (DeviceInfo.Current.Platform == DevicePlatform.iOS)
             {
                 this.DataCaptureContext = DataCaptureContext.ForLicenseKey("AajWhqWBMbiEC9TwbzOrIiVC9bwaGN2XjFgSPG5JfcmYZQSPBmjR8tQHV9HxUSlS8UbFAw4969tNVPetAXr574kHbdI6X40gmhcVPQhwN4VOa8H7yFLfeS1AfQK1bAPEniAHWmIykj66GFqTLxFPaTImTU9OOz3w6s7mx6uU5w9Mtuo/+qw/MIQeYi2PLQipaJiF3rjuSTUSRI9oPDqS4c9TLVtVOyFxdRWuz6AGlqvZ6kXfhiHrZOrghTxdvNxMGh9Shn9xmdfCAd8H8skKVMOiespzTztSOZJ/c6ZOZvcN4vNzziIjzSwRk6ZM/0N2Oi/gABfR9N8S5BdsBSIG7uu8OcRDFFV7bD0iSmEAmEirPMvIQPcvNtx+2GwDYvQccx1tT7W7bWwy8Ljo/Mg5xx8Cn3EYeYGB/9JQJZOHGsNDLFEMF/7wKkdXDvb3MAOaDbpPwZs8xYbpe87jFLGJWuHG6b82Zuo+Q42GQQPaXhF1esOG0e1bhAdXd3K7+jozi6FisKdZzS758vJAWEwMI4QlwALB8kMzD+9ldsEsngVaMoA8eiUec7+yj6DJFDM1wqxCS4ci/vlXPUojBznNi9rfKc4Q1qYnV7t558PLX6nLlrakz8MbYsKeEm5XHncnWQVndrK20NRqLGc3tHDn4nZ0W94gcvmf205omHDgdk9RWIzYV3wEItXD41l4ht4lYDCixScq2r75CUQvJEUP3dCw8CaP8qks9by/i/geYysFxd1cE9m3DIzxawTE/2klyqJIdXRM1A4tr0TdGC9ggrfN9JnDxbBdShXu0E+q5bNI06PuCtAKF6wow8EOGvVEjg==");
             }
