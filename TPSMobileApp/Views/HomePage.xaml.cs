@@ -1,14 +1,4 @@
-﻿using TPSMobileApp.Data;
-using TPSMobileApp;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-
-
-namespace TPSMobileApp.Views
+﻿namespace TPSMobileApp.Views
 {
     public partial class HomePage : ContentPage
     {
@@ -219,7 +209,7 @@ namespace TPSMobileApp.Views
             int iNextIndex = 0;
             String CurrentBanner = BannerImage.Source.ToString();
 
-            foreach(var b in banners)
+            foreach (var b in banners)
             {
                 iNextIndex++;
 
@@ -243,7 +233,7 @@ namespace TPSMobileApp.Views
         {
             base.OnAppearing();
 
-            if (! App.g_IsLoggedIn)
+            if (!App.g_IsLoggedIn)
             {
                 await App.g_Shell.GoToLogin();
                 return;
@@ -292,7 +282,7 @@ namespace TPSMobileApp.Views
         public void LoadCategories()
         {
             List<Category> categories = App.g_HomePageCategoryList;
-            if(categories!=null)
+            if (categories != null)
             {
                 int i = 0;
 
@@ -300,37 +290,37 @@ namespace TPSMobileApp.Views
                 {
                     i++;
 
-                        switch (i)
-                        {
-                            case 1:
-                                {
-                                    Code1 = cat.Code;
-                                    Description1 = cat.Description;
-                                    ImageURL1 = cat.ImageURL;
-                                    break;
-                                }
-                            case 2:
-                                {
-                                    Code2 = cat.Code;
-                                    Description2 = cat.Description;
-                                    ImageURL2 = cat.ImageURL;
-                                    break;
-                                }
-                            case 3:
-                                {
-                                    Code3 = cat.Code;
-                                    Description3 = cat.Description;
-                                    ImageURL3 = cat.ImageURL;
-                                    break;
-                                }
-                            case 4:
-                                {
-                                    Code4 = cat.Code;
-                                    Description4 = cat.Description;
-                                    ImageURL4 = cat.ImageURL;
-                                    break;
-                                }
-                        }
+                    switch (i)
+                    {
+                        case 1:
+                            {
+                                Code1 = cat.Code;
+                                Description1 = cat.Description;
+                                ImageURL1 = cat.ImageURL;
+                                break;
+                            }
+                        case 2:
+                            {
+                                Code2 = cat.Code;
+                                Description2 = cat.Description;
+                                ImageURL2 = cat.ImageURL;
+                                break;
+                            }
+                        case 3:
+                            {
+                                Code3 = cat.Code;
+                                Description3 = cat.Description;
+                                ImageURL3 = cat.ImageURL;
+                                break;
+                            }
+                        case 4:
+                            {
+                                Code4 = cat.Code;
+                                Description4 = cat.Description;
+                                ImageURL4 = cat.ImageURL;
+                                break;
+                            }
+                    }
                 }
             }
         }
@@ -400,7 +390,7 @@ namespace TPSMobileApp.Views
 
         async void OnSignInClick(object sender, EventArgs e)
         {
-            if (! App.g_IsLoggedIn)
+            if (!App.g_IsLoggedIn)
             {
                 await App.g_Shell.GoToLogin();
             }
@@ -511,7 +501,7 @@ namespace TPSMobileApp.Views
                 return;
             }
 
-            await  App.g_Shell.GoToItemSearch();
+            await App.g_Shell.GoToItemSearch();
         }
 
         private void Search_TextChanged(object sender, TextChangedEventArgs e)

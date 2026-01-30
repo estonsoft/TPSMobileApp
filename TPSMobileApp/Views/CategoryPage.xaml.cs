@@ -1,14 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using TPSMobileApp.ViewModels;
-using TPSMobileApp;
-using System.IO;
-using TPSMobileApp;
+﻿using TPSMobileApp.ViewModels;
 
 namespace TPSMobileApp.Views
 {
@@ -53,7 +43,7 @@ namespace TPSMobileApp.Views
 
         private async void CategoriesListSearch_ItemTapped(object sender, Syncfusion.Maui.ListView.ItemTappedEventArgs e)
         {
-            App.g_Category = (Category) e.DataItem;
+            App.g_Category = (Category)e.DataItem;
             App.g_ScanBarcode = "";
 
             int iSubcategories = App.g_db.GetSubcategoryCount(App.g_Category.Code);

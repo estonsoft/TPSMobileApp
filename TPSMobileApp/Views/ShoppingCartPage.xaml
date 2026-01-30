@@ -6,8 +6,6 @@
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
     xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
     xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-    xmlns:view="clr-namespace:TPSMobileApp.Views"
-    x:Name="ShoppingCart"
     Title="Shopping Cart"
     Shell.TabBarIsVisible="False">
 
@@ -17,181 +15,134 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="60" />
-            </Grid.RowDefinitions>
+    <Grid RowDefinitions="40,Auto,*,80">
 
-            <controls:CustomHeader Grid.Row="0" />
+        <!--  HEADER  -->
+        <controls:CustomHeader Grid.Row="0" />
 
-            <VerticalStackLayout
-                Grid.Row="1"
-                Margin="0,0,0,0"
-                Spacing="0"
-                VerticalOptions="Start">
-                <HorizontalStackLayout
-                    Margin="0,0,0,0"
-                    HorizontalOptions="Start"
-                    VerticalOptions="Center">
-                    <VerticalStackLayout
-                        Margin="0,0,0,0"
-                        Spacing="0"
-                        VerticalOptions="Start"
-                        WidthRequest="225">
-                        <HorizontalStackLayout
-                            Margin="0,0,0,0"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Center">
-                            <Label
-                                Margin="15,15,0,0"
-                                BackgroundColor="White"
-                                FontSize="14"
-                                HorizontalOptions="Start"
-                                Text="Items:"
-                                TextColor="Black"
-                                VerticalOptions="Start"
-                                WidthRequest="55" />
-                            <Label
-                                Margin="0,15,0,0"
-                                BackgroundColor="White"
-                                FontAttributes="Bold"
-                                FontSize="14"
-                                HorizontalOptions="Start"
-                                Text="{Binding CartItems}"
-                                TextColor="Black" />
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout
-                            Margin="0,0,0,0"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Center">
-                            <Label
-                                Margin="15,0,0,0"
-                                BackgroundColor="White"
-                                FontSize="14"
-                                HorizontalOptions="Start"
-                                Text="Pieces:"
-                                TextColor="Black"
-                                VerticalOptions="Start"
-                                WidthRequest="55" />
-                            <Label
-                                Margin="0,0,0,0"
-                                BackgroundColor="White"
-                                FontAttributes="Bold"
-                                FontSize="14"
-                                HorizontalOptions="Start"
-                                Text="{Binding CartPieces}"
-                                TextColor="Black" />
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout
-                            Margin="0,0,0,0"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Center">
-                            <Label
-                                Margin="15,0,0,0"
-                                BackgroundColor="White"
-                                FontSize="14"
-                                HorizontalOptions="Start"
-                                Text="Total:"
-                                TextColor="Black"
-                                VerticalOptions="Start"
-                                WidthRequest="55" />
-                            <Label
-                                Margin="0,0,0,0"
-                                BackgroundColor="White"
-                                FontAttributes="Bold"
-                                FontSize="14"
-                                HorizontalOptions="Start"
-                                Text="{Binding CartTotal}"
-                                TextColor="Black" />
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                    <HorizontalStackLayout
-                        Margin="0,15,0,0"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Center">
-                        <Button
-                            x:Name="btnCheckout"
-                            Margin="0"
-                            Padding="0"
-                            BackgroundColor="Blue"
-                            Clicked="btnCheckout_Clicked"
-                            Command="{Binding OpenCheckout}"
-                            CornerRadius="10"
-                            FontAttributes="Bold"
-                            FontSize="14"
-                            HeightRequest="35"
-                            HorizontalOptions="Start"
-                            Text="Checkout"
-                            TextColor="White"
-                            VerticalOptions="Start"
-                            WidthRequest="130" />
-                        <Button
-                            x:Name="btnSignIn"
-                            Margin="0"
-                            Padding="0"
-                            BackgroundColor="Blue"
-                            Clicked="btnSignIn_Clicked"
-                            Command="{Binding OpenSignIn}"
-                            CornerRadius="10"
-                            FontAttributes="Bold"
-                            FontSize="14"
-                            HeightRequest="35"
-                            HorizontalOptions="Start"
-                            Text="Sign In"
-                            TextColor="White"
-                            VerticalOptions="Start"
-                            WidthRequest="130" />
-                    </HorizontalStackLayout>
+        <!--  SUMMARY + ACTIONS  -->
+        <Grid
+            Grid.Row="1"
+            Padding="10"
+            ColumnDefinitions="*,Auto">
+
+            <!--  LEFT INFO  -->
+            <VerticalStackLayout Spacing="4">
+                <HorizontalStackLayout>
+                    <Label Text="Items:" WidthRequest="70" />
+                    <Label FontAttributes="Bold" Text="{Binding CartItems}" />
                 </HorizontalStackLayout>
-                <HorizontalStackLayout
-                    Margin="0,0,0,0"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center">
-                    <Label
-                        Margin="0,15,0,5"
-                        BackgroundColor="White"
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        HorizontalOptions="Center"
-                        Text="Items"
-                        TextColor="Blue" />
-                    <ImageButton
-                        x:Name="btnClearCart"
-                        Margin="40,10,0,10"
-                        BackgroundColor="Transparent"
-                        Clicked="btnClearCart_Clicked"
-                        HeightRequest="30"
-                        HorizontalOptions="Center"
-                        Source="delete.png"
-                        VerticalOptions="Center"
-                        WidthRequest="30" />
+
+                <HorizontalStackLayout>
+                    <Label Text="Pieces:" WidthRequest="70" />
+                    <Label FontAttributes="Bold" Text="{Binding CartPieces}" />
                 </HorizontalStackLayout>
-                <BoxView
-                    BackgroundColor="gray"
-                    HeightRequest="3"
-                    HorizontalOptions="Fill"
-                    VerticalOptions="Fill"
-                    Color="lightgray" />
-                <syncfusion:SfListView
-                    x:Name="ItemsListCart"
-                    AutoFitMode="DynamicHeight"
-                    ItemAppearing="ItemsListCart_ItemAppearing"
-                    ItemsSourceChangeCachingStrategy="ClearItems"
-                    SelectionMode="None">
-                    <syncfusion:SfListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <controls:CustomListItem x:Name="CustomListItem" Grid.Row="0" />
-                            </ViewCell>
-                        </DataTemplate>
-                    </syncfusion:SfListView.ItemTemplate>
-                </syncfusion:SfListView>
+
+                <HorizontalStackLayout>
+                    <Label Text="Total:" WidthRequest="70" />
+                    <Label FontAttributes="Bold" Text="{Binding CartTotal}" />
+                </HorizontalStackLayout>
             </VerticalStackLayout>
 
-            <controls:CustomToolbar Grid.Row="2" />
+            <!--  BUTTONS  -->
+            <VerticalStackLayout Grid.Column="1" Spacing="6">
+                <Button
+                    x:Name="btnCheckout"
+                    BackgroundColor="Blue"
+                    Clicked="btnCheckout_Clicked"
+                    Command="{Binding OpenCheckout}"
+                    CornerRadius="10"
+                    HeightRequest="35"
+                    Text="Checkout"
+                    TextColor="White"
+                    WidthRequest="130" />
+
+                <Button
+                    x:Name="btnSignIn"
+                    BackgroundColor="Blue"
+                    Clicked="btnSignIn_Clicked"
+                    Command="{Binding OpenSignIn}"
+                    CornerRadius="10"
+                    HeightRequest="35"
+                    Text="Sign In"
+                    TextColor="White"
+                    WidthRequest="130" />
+            </VerticalStackLayout>
+
         </Grid>
-    </ContentPage.Content>
+
+        <!--  TITLE BAR  -->
+        <Grid Grid.Row="2" RowDefinitions="Auto,1,*">
+
+            <HorizontalStackLayout
+                Grid.Row="0"
+                Padding="10"
+                HorizontalOptions="Center">
+
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    Text="Items"
+                    TextColor="Blue"
+                    VerticalOptions="Center" />
+
+                <ImageButton
+                    x:Name="btnClearCart"
+                    Margin="20,0,0,0"
+                    BackgroundColor="Transparent"
+                    Clicked="btnClearCart_Clicked"
+                    HeightRequest="28"
+                    Source="delete.png"
+                    WidthRequest="28" />
+
+
+
+            </HorizontalStackLayout>
+            <BoxView
+                Grid.Row="1"
+                BackgroundColor="LightGray"
+                HeightRequest="1" />
+            <!--  LIST
+            <syncfusion:SfListView
+                x:Name="ItemsListCart"
+                Grid.Row="2"
+                AutoFitMode="DynamicHeight"
+                ItemsSourceChangeCachingStrategy="ClearItems"
+                SelectionMode="None">
+
+                <syncfusion:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <controls:CustomListItem />
+                        </ViewCell>
+                    </DataTemplate>
+                </syncfusion:SfListView.ItemTemplate>
+
+            </syncfusion:SfListView>-->
+
+            <CollectionView
+                x:Name="ItemsListCart"
+                Grid.Row="2"
+                Margin="0,10,0,0"
+                ItemsSource="{Binding CartItemList}"
+                SelectionMode="None">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <controls:CustomListItem />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </Grid>
+
+        <!--  BOTTOM TOOLBAR (FIXED 80)  -->
+        <controls:CustomToolbar Grid.Row="3" HeightRequest="80" />
+
+    </Grid>
 </ContentPage>

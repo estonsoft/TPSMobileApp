@@ -1,9 +1,4 @@
-﻿using Syncfusion.Maui.ListView;
-using Microsoft.Maui.Controls;
-using System;
-using TPSMobileApp.Views;
-
-namespace TPSMobileApp.Controls
+﻿namespace TPSMobileApp.Controls
 {
     public partial class CustomListLabelItem : ContentView
     {

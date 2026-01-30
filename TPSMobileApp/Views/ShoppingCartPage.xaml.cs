@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.Messaging;
-using TPSMobileApp;
-using TPSMobileApp.Controls;
-using TPSMobileApp.ViewModels;
-using TPSMobileApp.Views;
+﻿using CommunityToolkit.Mvvm.Messaging;
 
 namespace TPSMobileApp.Views
 {
@@ -193,6 +182,11 @@ namespace TPSMobileApp.Views
                 item.IsStepperVisible = false;
                 item.IsAddToOrderVisible = true;
             }
+        }
+
+        private void btnCheckout_Clicked_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

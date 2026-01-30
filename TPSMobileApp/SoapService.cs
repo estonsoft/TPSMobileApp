@@ -24,9 +24,9 @@ namespace TPSMobileApp.Data
             var response = await _httpClient.PostAsync(SoapUrl, content);
             response.EnsureSuccessStatusCode();
             string responseValue = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("Login Response"+responseValue);
+            Console.WriteLine("Login Response" + responseValue);
             responseValue = ExtractSoapResult(responseValue);
-            return  responseValue;
+            return responseValue;
         }
 
         private string ExtractSoapResult(string soapXml)

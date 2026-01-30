@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
-
-using TPSMobileApp.Views;
-using TPSMobileApp;
-using System.IO;
-using TPSMobileApp.Data;
 
 namespace TPSMobileApp.ViewModels
 {

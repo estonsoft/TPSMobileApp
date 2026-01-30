@@ -1,9 +1,4 @@
-﻿using TPSMobileApp;
-using System;
-using System.IO;
-using TPSMobileApp;
-
-namespace TPSMobileApp
+﻿namespace TPSMobileApp
 {
     public static class Constants
     {
@@ -22,7 +17,7 @@ namespace TPSMobileApp
         public static string UserName = "";
         public static string LastUserName = "";
         public static string CustomerNo = "";
-        
+
         public static string LastCategoryUpdate = "";
         public static string LastItemUpdate = "";
 

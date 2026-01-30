@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
-using TPSMobileApp.ViewModels;
-using TPSMobileApp;
 
 namespace TPSMobileApp.ViewModels;
 

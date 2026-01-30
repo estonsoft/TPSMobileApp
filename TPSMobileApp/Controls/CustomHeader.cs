@@ -1,9 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using TPSMobileApp;
-using TPSMobileApp;
-
-namespace TPSMobileApp.Controls;
+﻿namespace TPSMobileApp.Controls;
 
 public class CustomHeader : StackLayout
 {

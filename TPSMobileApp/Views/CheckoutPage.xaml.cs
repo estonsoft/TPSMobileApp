@@ -1,19 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-
-using TPSMobileApp.Views;
-using TPSMobileApp.ViewModels;
-using TPSMobileApp;
-using TPSMobileApp.Data;
-using TPSMobileApp;
-
-namespace TPSMobileApp.Views
+﻿namespace TPSMobileApp.Views
 {
     public partial class CheckoutPage : ContentPage
     {

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using SQLite;
+﻿using SQLite;
 
 namespace TPSMobileApp
 {
     public class FlyerItem
     {
-        [PrimaryKey] 
+        [PrimaryKey]
         public int ItemNo { get; set; }
         public String Section { get; set; }
         public int Page { get; set; }

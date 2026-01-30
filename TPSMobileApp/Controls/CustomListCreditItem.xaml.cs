@@ -1,6 +1,4 @@
-﻿using TPSMobileApp;
-
-namespace TPSMobileApp.Controls
+﻿namespace TPSMobileApp.Controls
 {
     public partial class CustomListCreditItem : ContentView
     {

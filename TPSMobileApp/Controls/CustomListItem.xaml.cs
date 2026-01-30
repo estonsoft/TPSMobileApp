@@ -1,5 +1,5 @@
-﻿namespace TPSMobileApp.Controls 
-{ 
+﻿namespace TPSMobileApp.Controls
+{
     public partial class CustomListItem : ContentView
     {
         public CustomListItem()
@@ -105,7 +105,7 @@
                     ((Entry)sender).Text = iValue.ToString();
                 }
             }
-            
+
 
             //OnQtyEntry_Completed(sender, args);
         }

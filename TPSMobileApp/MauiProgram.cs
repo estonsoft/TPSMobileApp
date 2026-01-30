@@ -30,7 +30,7 @@ namespace TPSMobileApp
                 })
                 .ConfigureMauiHandlers(handlers =>
                 {
-                     // Explicitly register the Scandit DataCaptureView handler
+                    // Explicitly register the Scandit DataCaptureView handler
                     handlers.AddHandler(typeof(DataCaptureView), typeof(DataCaptureViewHandler));
                 })
 

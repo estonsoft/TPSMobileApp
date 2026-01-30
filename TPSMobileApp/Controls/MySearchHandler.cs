@@ -1,12 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
-
-using TPSMobileApp.Views;
-using TPSMobileApp.ViewModels;
-using TPSMobileApp;
-
-namespace TPSMobileApp.Controls;
+﻿namespace TPSMobileApp.Controls;
 
 public class MySearchHandler : SearchHandler
 {

@@ -329,7 +329,7 @@ namespace TPSMobileApp
             await GoToLabelCart();
             Shell.Current.FlyoutIsPresented = false;
         }
-        private async  void MenuScanBarcode_Clicked(object sender, EventArgs e)
+        private async void MenuScanBarcode_Clicked(object sender, EventArgs e)
         {
             await GoToScanBarcode();
             Shell.Current.FlyoutIsPresented = false;

@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Scandit.DataCapture.Barcode.Capture;
 using TPSMobileApp.Models;
-using Scandit.DataCapture.Barcode.Capture;
-using Scandit.DataCapture.Core.UI;
-using TPSMobileApp;
 
 namespace TPSMobileApp.Views
 {
@@ -35,24 +32,24 @@ namespace TPSMobileApp.Views
 
             //MainThread.BeginInvokeOnMainThread(() =>
             //{
+            try
+            {
+                ResetCategories();
+
                 try
                 {
-                    ResetCategories();
-
-                    try
-                    {
-                        Vibration.Vibrate(TimeSpan.FromMilliseconds(100));
-                    }
-                    catch { }
-
-                    //App.g_ScanBarcode = barcode.Data;
-                    await App.g_Shell.GoToItemSearch();
+                    Vibration.Vibrate(TimeSpan.FromMilliseconds(100));
                 }
-                catch
-                {
-                    App.g_ScanBarcode = "9999999999999999";
-                    await App.g_Shell.GoToItemSearch();
-                }
+                catch { }
+
+                //App.g_ScanBarcode = barcode.Data;
+                await App.g_Shell.GoToItemSearch();
+            }
+            catch
+            {
+                App.g_ScanBarcode = "9999999999999999";
+                await App.g_Shell.GoToItemSearch();
+            }
             //});
         }
 

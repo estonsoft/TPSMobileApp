@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using TPSMobileApp;
-
-namespace TPSMobileApp.Data
+﻿namespace TPSMobileApp.Data
 {
     public class CommManager
     {

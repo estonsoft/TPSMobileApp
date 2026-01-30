@@ -1,20 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-
-using TPSMobileApp.Views;
-using TPSMobileApp.ViewModels;
-using System.Windows.Input;
-using TPSMobileApp;
-using System.IO;
-using TPSMobileApp.Controls;
-
-namespace TPSMobileApp.Views
+﻿namespace TPSMobileApp.Views
 {
     public partial class ReorderItemsPage : ContentPage
     {

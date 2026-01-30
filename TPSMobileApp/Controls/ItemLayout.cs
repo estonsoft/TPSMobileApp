@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TPSMobileApp.Controls
+﻿namespace TPSMobileApp.Controls
 {
     public class ItemLayout : StackLayout
     {

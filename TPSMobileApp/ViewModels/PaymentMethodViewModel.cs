@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Input;
-
-namespace TPSMobileApp.ViewModels
+﻿namespace TPSMobileApp.ViewModels
 {
     public class PaymentMethodViewModel : BaseViewModel
     {

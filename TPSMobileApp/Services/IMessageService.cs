@@ -12,9 +12,6 @@
  * limitations under the License.
  */
 
-using System;
-using System.Threading.Tasks;
-
 namespace Profit_Order.Services
 {
     public interface IMessageService

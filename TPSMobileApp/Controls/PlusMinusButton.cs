@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-
-namespace TPSMobileApp.Controls;
+﻿namespace TPSMobileApp.Controls;
 
 public class PlusMinusButton : ImageButton
 {

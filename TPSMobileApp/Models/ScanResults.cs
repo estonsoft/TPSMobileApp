@@ -12,8 +12,6 @@
  * limitations under the License.
  */
 
-using System;
-
 namespace TPSMobileApp.Models
 {
     public class ScanResult : IEquatable<ScanResult>

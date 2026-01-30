@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TPSMobileApp
+﻿namespace TPSMobileApp
 {
     internal class XMLResponseParser
     {
@@ -150,7 +144,7 @@ namespace TPSMobileApp
                     // for now always refresh all items
                     sDate = "0";
                     if (App.g_Customer.CustNo == "0")
-                    {                        
+                    {
                         App.CommManager.GetItems("0", sDate);
                     }
                     else
@@ -218,7 +212,7 @@ namespace TPSMobileApp
                             subcat.Code = aCategory[1];
                             subcat.Description = aCategory[2].Trim();
                             subcat.Rank = Convert.ToInt32(aCategory[3].Trim());
-                            subcategories.Add(subcat);                            
+                            subcategories.Add(subcat);
                         }
                         else // add subsubcategory
                         {
@@ -228,13 +222,13 @@ namespace TPSMobileApp
                             subsubcat.Code = sSubsubcategory;
                             subsubcat.Description = aCategory[2].Trim();
                             subsubcat.Rank = Convert.ToInt32(aCategory[3].Trim());
-                            subsubcategories.Add(subsubcat);                            
+                            subsubcategories.Add(subsubcat);
                         }
-                    }                                      
+                    }
                 }
                 try
                 {
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -249,7 +243,7 @@ namespace TPSMobileApp
                     App.g_db.SaveCategory(categories);
                     App.g_db.SaveSubcategory(subcategories);
                     App.g_db.SaveSubsubcategory(subsubcategories);
-                    
+
                     String CustNo = "0";
                     try
                     {
@@ -284,11 +278,11 @@ namespace TPSMobileApp
                 catch (Exception ex)
                 {
                     Console.WriteLine("Fetch Items Categories and SubCategories" + ex.Message);
-                }                
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("SAVE Categories and SubCategories"+ ex.Message);
+                Console.WriteLine("SAVE Categories and SubCategories" + ex.Message);
             }
         }
 
@@ -578,7 +572,7 @@ namespace TPSMobileApp
             }
         }
 
-        
+
         public static async void commService_GetItemQOHCompletedAsync(String response)
         {
             try
@@ -972,7 +966,7 @@ namespace TPSMobileApp
                             }
                         }
 
-                        
+
                         App.CommManager?.GetOrderHistory(App.g_Customer.CustNo);
 
                         App.RefreshAll();
@@ -1085,7 +1079,7 @@ namespace TPSMobileApp
                 catch
                 {
                 }
-            }           
+            }
         }
 
         public static async void commService_GetSettingsCompletedAsync(String response)
@@ -1246,7 +1240,7 @@ namespace TPSMobileApp
         public static async void commService_SubmitOrderCompletedAsync(String response)
         {
             try
-            {                
+            {
                 if (response == "S")
                 {
                     App.g_db.ClearOrderCartItems();
@@ -1328,7 +1322,7 @@ namespace TPSMobileApp
         {
             try
             {
-                
+
                 if (response == "S")
                 {
                     App.g_db.ClearReturnCartItems();
@@ -1401,7 +1395,7 @@ namespace TPSMobileApp
                     App.g_db.BeginTransaction();
 
                     foreach (String s in aOrders)
-                    {                        
+                    {
                         String[] aOrder = s.Split("|");
                         if (aOrder.Count() < 2)
                         {

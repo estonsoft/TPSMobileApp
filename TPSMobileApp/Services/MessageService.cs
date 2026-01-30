@@ -21,9 +21,9 @@ namespace Profit_Order.Services
     public class MessageService : IMessageService
     {
         public async Task ShowAsync(string message, Action handler = null)
-        {            
-                await Shell.Current.DisplayAlertAsync("Scandit", message, "OK");
-                await App.g_Shell.GoToHome();
+        {
+            await Shell.Current.DisplayAlertAsync("Scandit", message, "OK");
+            await App.g_Shell.GoToHome();
         }
     }
 }

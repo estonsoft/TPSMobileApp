@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq;
-using TPSMobileApp;
-using SQLite;
-
-using TPSMobileApp;
+﻿using SQLite;
 
 namespace TPSMobileApp
 {
@@ -19,7 +10,7 @@ namespace TPSMobileApp
         public Database()
         {
             //string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.DBName);
-            string dbPath = Path.Combine(FileSystem.AppDataDirectory,Constants.DBName);
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, Constants.DBName);
             _database = new SQLiteConnection(dbPath);
             _database.CreateTable<Item>();
             _database.CreateTable<Customer>();
@@ -41,7 +32,7 @@ namespace TPSMobileApp
             _database.CreateTable<Server>();
 
             _database.EnableWriteAheadLogging();
-            _database.Execute("PRAGMA synchronous = NORMAL");            
+            _database.Execute("PRAGMA synchronous = NORMAL");
         }
 
         public void BeginTransaction()
@@ -585,7 +576,7 @@ namespace TPSMobileApp
                 catch (Exception e)
                 {
                 }
-         
+
                 return 1;
             }
         }

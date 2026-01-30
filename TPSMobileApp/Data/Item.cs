@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using SQLite;
-using TPSMobileApp;
+﻿using SQLite;
 
 namespace TPSMobileApp
 {
@@ -106,7 +101,7 @@ namespace TPSMobileApp
 
             i.IsStepperVisible = false;
             i.IsAddToOrderVisible = true;
-            i.IsBoxViewVisible = true;            
+            i.IsBoxViewVisible = true;
 
             try
             {

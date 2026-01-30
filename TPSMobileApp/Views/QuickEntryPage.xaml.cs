@@ -113,7 +113,7 @@ namespace TPSMobileApp.Views
                 return;
             }
 
-            if (App.g_db.GetItemQty(item.ItemNo) > 0) 
+            if (App.g_db.GetItemQty(item.ItemNo) > 0)
             {
                 SetMessage("Item Already In Shopping Cart");
             }

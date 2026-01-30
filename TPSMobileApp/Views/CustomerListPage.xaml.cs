@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Microsoft.Maui.Controls;
-
-using TPSMobileApp.Views;
-using TPSMobileApp.Controls;
-using TPSMobileApp;
+﻿using TPSMobileApp.Controls;
 
 namespace TPSMobileApp.Views
 {
@@ -112,8 +104,8 @@ namespace TPSMobileApp.Views
             try
             {
                 if (!string.IsNullOrEmpty(App.g_Customer.CustNo) && App.g_Customer.CustNo != "0")
-                {                   
-                   App.CommManager.GetItems(App.g_Customer.CustNo, "0");
+                {
+                    App.CommManager.GetItems(App.g_Customer.CustNo, "0");
                 }
             }
             catch

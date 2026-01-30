@@ -1,20 +1,5 @@
-﻿using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-
-using TPSMobileApp.Views;
-using TPSMobileApp.ViewModels;
-using TPSMobileApp;
-using TPSMobileApp.Controls;
-using System.Globalization;
+﻿using System.Collections.ObjectModel;
 using Zebra.Sdk.Printer.Discovery;
-using Zebra.Sdk.Printer;
-using System.Collections.ObjectModel;
 
 namespace TPSMobileApp.Views
 {

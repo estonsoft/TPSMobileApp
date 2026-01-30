@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using SQLite;
-
-namespace TPSMobileApp
+﻿namespace TPSMobileApp
 {
     public class SuspendItem
     {

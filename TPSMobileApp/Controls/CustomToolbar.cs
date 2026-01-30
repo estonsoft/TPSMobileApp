@@ -1,7 +1,4 @@
-﻿using System.Drawing.Printing;
-using Microsoft.Maui.Controls;
-
-namespace TPSMobileApp.Controls;
+﻿namespace TPSMobileApp.Controls;
 
 public class CustomToolbar : StackLayout
 {
@@ -71,7 +68,7 @@ public class CustomToolbar : StackLayout
 
         StackShoppingCart = CreateStack(out LabelShoppingCartIcon, out LabelShoppingCartText, "\uF07A", "Shopping\nCart");
         TapShoppingCart = new TapGestureRecognizer();
-        TapShoppingCart.Tapped += OnShoppingCartTapped;        
+        TapShoppingCart.Tapped += OnShoppingCartTapped;
         AddTap(StackShoppingCart, TapShoppingCart);
 
         LabelShoppingCartItems = new Label
@@ -113,8 +110,8 @@ public class CustomToolbar : StackLayout
         };
         if (DeviceInfo.Platform == DevicePlatform.iOS)
             stack.Margin = new Thickness(0, 10, 0, 0);
-        
-        glyph = glyph.Replace("/u","0x");
+
+        glyph = glyph.Replace("/u", "0x");
         icon = new Image
         {
             Margin = new Thickness(0, 8, 0, 0),
@@ -149,7 +146,7 @@ public class CustomToolbar : StackLayout
         stack.GestureRecognizers.Add(tap);
     }
 
-    async void  OnHomeTapped(object sender, EventArgs e)
+    async void OnHomeTapped(object sender, EventArgs e)
     {
         App.g_Shell.bStopNavigating = false;
         await App.g_Shell.GoToHome();
@@ -163,7 +160,7 @@ public class CustomToolbar : StackLayout
         if (items.Count == 0)
             await Shell.Current.DisplayAlertAsync("Profit Order", "Your shopping cart is empty", "Ok");
         else
-           await App.g_Shell.GoToShoppingCart();
+            await App.g_Shell.GoToShoppingCart();
     }
 
     async void OnShopNowTapped(object sender, EventArgs e)

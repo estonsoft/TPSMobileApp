@@ -12,18 +12,11 @@
  * limitations under the License.
  */
 
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Messaging;
 using Scandit.DataCapture.Barcode.Capture;
-using Scandit.DataCapture.Barcode.Data;
 using Scandit.DataCapture.Core.Capture;
 using Scandit.DataCapture.Core.Data;
 using Scandit.DataCapture.Core.Source;
-using TPSMobileApp;
-using TPSMobileApp;
-using TPSMobileApp.Controls;
 using TPSMobileApp.Models;
 using TPSMobileApp.Views;
 
@@ -73,7 +66,7 @@ namespace TPSMobileApp.ViewModels
 
         private void SubscribeToAppMessages()
         {
-            WeakReferenceMessenger.Default.Register<App>(this,async (recipient, message) =>
+            WeakReferenceMessenger.Default.Register<App>(this, async (recipient, message) =>
             {
                 await OnResumeAsync();
                 await OnSleep();
@@ -132,7 +125,7 @@ namespace TPSMobileApp.ViewModels
             // or even -1 if you do not want codes to be scanned more than once.
 
             // Get the human readable name of the symbology and assemble the result to be shown.
-            
+
             //SymbologyDescription description = new SymbologyDescription(barcode.Symbology);
             //string result = string.Format(AppResources.ScanResultFormat, description.ReadableName, barcode.Data, barcode.SymbolCount);
 

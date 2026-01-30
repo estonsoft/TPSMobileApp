@@ -1,12 +1,4 @@
-﻿using Syncfusion.Maui.ListView;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Dispatching;
-using Microsoft.Maui.ApplicationModel;
-using System;
-using TPSMobileApp.Views;
-using TPSMobileApp;
-
-namespace TPSMobileApp.Controls
+﻿namespace TPSMobileApp.Controls
 {
     public partial class CustomListItemScan : ContentView
     {

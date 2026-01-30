@@ -1,15 +1,8 @@
-﻿using TPSMobileApp;
-using TPSMobileApp.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TPSMobileApp;
+﻿using TPSMobileApp.ViewModels;
 
 namespace TPSMobileApp.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 
     public partial class BarcodeScannerScandit : ContentPage
     {

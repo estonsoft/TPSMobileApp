@@ -1,19 +1,14 @@
-﻿using TPSMobileApp;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace TPSMobileApp.Data
+﻿namespace TPSMobileApp.Data
 {
 
-	public interface ISoapService
-	{
-		Task<string> GetBannersAsync();
-		Task<string> GetCategoriesAndSubcategoriesAsync();
-		Task<string> GetCategoriesAndSubcategoriesCustAsync(string sCust);
-		Task<string> GetItemsAsync(string sCustomer, string sDate);
-		Task<string> GetItemQOHAsync(string sCustomer);
-		Task<string> GetItemQOH2Async(string sUser, string sCustomer);
+    public interface ISoapService
+    {
+        Task<string> GetBannersAsync();
+        Task<string> GetCategoriesAndSubcategoriesAsync();
+        Task<string> GetCategoriesAndSubcategoriesCustAsync(string sCust);
+        Task<string> GetItemsAsync(string sCustomer, string sDate);
+        Task<string> GetItemQOHAsync(string sCustomer);
+        Task<string> GetItemQOH2Async(string sUser, string sCustomer);
         Task<string> ValidateLoginAsync(String sUser, String sPassword, String sDeviceId);
         Task<string> ValidateUserActiveAsync(String sUser);
         Task<string> GetSettingsAsync();

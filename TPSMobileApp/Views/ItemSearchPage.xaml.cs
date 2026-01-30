@@ -1,8 +1,4 @@
-﻿
-
-using Microsoft.Maui.Controls;
-
-namespace TPSMobileApp.Views
+﻿namespace TPSMobileApp.Views
 {
     public partial class ItemSearchPage : ContentPage
     {
@@ -17,8 +13,8 @@ namespace TPSMobileApp.Views
         public string Category
         {
             get { return _category; }
-            set 
-            { 
+            set
+            {
                 _category = value;
                 OnPropertyChanged();
             }
@@ -109,7 +105,7 @@ namespace TPSMobileApp.Views
             }
             Dispatcher.Dispatch(async () =>
             {
-               RefreshList();
+                RefreshList();
             });
         }
 

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using TPSMobileApp.ViewModels;
-using TPSMobileApp;
-
-namespace TPSMobileApp.Views
+﻿namespace TPSMobileApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingsPage : ContentPage
@@ -52,7 +43,7 @@ namespace TPSMobileApp.Views
 
         private async void Save_Clicked(object sender, EventArgs e)
         {
-            if (DisableScanner.IsChecked) 
+            if (DisableScanner.IsChecked)
             {
                 App.g_IsScannerDisabled = "1";
                 App.g_db.SaveSetting("ScannerDisabled", "1");

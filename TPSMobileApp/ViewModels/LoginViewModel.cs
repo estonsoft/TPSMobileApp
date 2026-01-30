@@ -37,7 +37,7 @@
 
             //Database db = new Database();
             App.g_db.SaveCustomer(App.g_Customer);
-            
+
             App.CommManager.ValidateLogin(User, Password, App.g_Customer.UniqueId);
         }
     }

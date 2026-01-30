@@ -1,13 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Dispatching;
-using TPSMobileApp.Views;
-using TPSMobileApp.Data;
+﻿using TPSMobileApp.Data;
 using TPSMobileApp.ViewModels;
-using TPSMobileApp;
+using TPSMobileApp.Views;
 
 namespace TPSMobileApp
 {
@@ -304,9 +297,9 @@ namespace TPSMobileApp
                 catch { }
 
                 RefreshAll();
-                
+
                 RefreshOrderHistory();
-                
+
                 if (g_IsSalesUser || g_IsChainManager)
                 {
                     App.CommManager.GetSalespersonCustomers(g_UserName);

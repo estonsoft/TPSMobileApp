@@ -1,17 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-
-using TPSMobileApp.ViewModels;
-using TPSMobileApp;
-using System.IO;
-
-namespace TPSMobileApp.Views
+﻿namespace TPSMobileApp.Views
 {
     public partial class SubsubcategoryPage : ContentPage
     {
@@ -31,7 +18,7 @@ namespace TPSMobileApp.Views
             App.g_Subsubcategory.Code = "";
             App.g_Subsubcategory.Description = "ALL SUB-SUBCATEGORIES";
 
-            App.g_SearchText = ""; 
+            App.g_SearchText = "";
 
             App.g_CurrentPage = "SubsubcategoryPage";
 
@@ -50,7 +37,7 @@ namespace TPSMobileApp.Views
 
         private async void OnSubsubcategoryTapped(object sender, ItemTappedEventArgs e)
         {
-            App.g_Subsubcategory = (Subsubcategory) e.Item;
+            App.g_Subsubcategory = (Subsubcategory)e.Item;
             App.g_ScanBarcode = "";
 
             App.g_SearchFromPage = "SubsubcategoryPage";

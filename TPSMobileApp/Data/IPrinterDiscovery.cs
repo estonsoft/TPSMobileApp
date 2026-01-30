@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TPSMobileApp.Data
+﻿namespace TPSMobileApp.Data
 {
     public interface IPrinterDiscovery
     {

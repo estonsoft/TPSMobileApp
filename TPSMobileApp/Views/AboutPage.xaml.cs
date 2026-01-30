@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-
-namespace TPSMobileApp.Views
+﻿namespace TPSMobileApp.Views
 {
     public partial class AboutPage : ContentPage
     {
