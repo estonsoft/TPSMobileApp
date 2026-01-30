@@ -137,8 +137,7 @@
                 IsVisible="{Binding IsAddToOrderVisible}"
                 ItemNo="{Binding ItemNo}"
                 Text="Add To Order"
-                TextColor="RoyalBlue"
-                WidthRequest="110" />
+                TextColor="RoyalBlue" />
 
             <!--  SALESPERSON  -->
 

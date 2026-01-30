@@ -145,11 +145,8 @@ namespace TPSMobileApp.Views
             LoadCategories();
 
             BannerImage.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
-            //Task.Run(async () =>
-            //{
-                RequestCameraPermission();
-            //});
-            //InitializeTimer();
+            RequestCameraPermission();
+            InitializeTimer();
         }
 
         async void RequestCameraPermission()
@@ -453,7 +450,7 @@ namespace TPSMobileApp.Views
             }
             else
             {
-                await App.g_Shell.GoToReorderItems();
+                await App.g_Shell.GoToMyPurchases();
             }
         }
 
