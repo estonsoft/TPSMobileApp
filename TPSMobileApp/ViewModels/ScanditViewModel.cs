@@ -14,6 +14,7 @@
 
 using CommunityToolkit.Mvvm.Messaging;
 using Scandit.DataCapture.Barcode.Capture;
+using Scandit.DataCapture.Barcode.Data;
 using Scandit.DataCapture.Core.Capture;
 using Scandit.DataCapture.Core.Data;
 using Scandit.DataCapture.Core.Source;
@@ -66,11 +67,11 @@ namespace TPSMobileApp.ViewModels
 
         private void SubscribeToAppMessages()
         {
-            WeakReferenceMessenger.Default.Register<App>(this, async (recipient, message) =>
-            {
-                await OnResumeAsync();
-                await OnSleep();
-            });
+            //WeakReferenceMessenger.Default.Register<ScanditViewModelBase>(this, async (recipient, message) =>
+            //{
+            //    await OnResumeAsync();
+            //    await OnSleep();
+            //});
         }
 
         private void InitializeScanner()
@@ -98,22 +99,22 @@ namespace TPSMobileApp.ViewModels
 
         public void OnBarcodeScanned(BarcodeCapture barcodeCapture, BarcodeCaptureSession session, IFrameData frameData)
         {
-            //if (!session.NewlyRecognizedBarcodes.Any())
+            //if (!session.NewlyLocalizedBarcodes.Any())
             //{
             //    session.Reset();
             //    return;
             //}
 
-            //Barcode barcode = null;
+            Barcode barcode = null;
 
-            //try
-            //{
-            //    barcode = session.NewlyRecognizedBarcodes[0];
-            //}
-            //catch
-            //{
-            //    return;
-            //}
+            try
+            {
+                barcode = session.NewlyRecognizedBarcode;
+            }
+            catch
+            {
+                return;
+            }
 
             // Stop recognizing barcodes for as long as we are displaying the result. There won't be any new results until
             // the capture mode is enabled again. Note that disabling the capture mode does not stop the camera, the camera
@@ -146,7 +147,7 @@ namespace TPSMobileApp.ViewModels
                     try
                     {
                         //ScannerPage.SetScanItem(barcode.Data);
-                        ScannerPage.ScanComplete();
+                        ScannerPage.ScanComplete(barcode.Data);
                         //ScannerPage.FindItem(barcode.Data);
                     }
                     catch

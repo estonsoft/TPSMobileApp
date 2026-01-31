@@ -78,6 +78,7 @@ namespace TPSMobileApp
         public App(CommManager _commManager)
         {
             InitializeComponent();
+            Application.Current.UserAppTheme = AppTheme.Light;
             CommManager = _commManager;
 
             // 19.2 version Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NTAzNTg1QDMxMzkyZTMyMmUzMGMySndvR0x2aHJwSHJWcFpwSG93MVMxMFRub1pFRkhTbnRHakhEVTd3WlE9");

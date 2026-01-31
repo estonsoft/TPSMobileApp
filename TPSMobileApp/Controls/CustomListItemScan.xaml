@@ -29,6 +29,7 @@
                 Aspect="AspectFit"
                 HeightRequest="110"
                 HorizontalOptions="Fill"
+                LoadingPlaceholder="missing_item.jpg"
                 Source="{Binding ImageURL}"
                 VerticalOptions="Fill"
                 WidthRequest="110" />

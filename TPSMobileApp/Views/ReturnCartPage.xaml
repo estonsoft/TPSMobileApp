@@ -20,9 +20,10 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="60" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <controls:CustomHeader Grid.Row="0" />
@@ -113,22 +114,23 @@
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill"
                     Color="lightgray" />
-                <syncfusion:SfListView
-                    x:Name="ItemsListCart"
-                    AutoFitMode="DynamicHeight"
-                    ItemsSourceChangeCachingStrategy="ClearItems"
-                    SelectionMode="None">
-                    <syncfusion:SfListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <controls:CustomListCreditItem x:Name="CustomListCreditItem" Grid.Row="0" />
-                            </ViewCell>
-                        </DataTemplate>
-                    </syncfusion:SfListView.ItemTemplate>
-                </syncfusion:SfListView>
-            </VerticalStackLayout>
 
-            <controls:CustomToolbar Grid.Row="2" />
+            </VerticalStackLayout>
+            <syncfusion:SfListView
+                x:Name="ItemsListCart"
+                Grid.Row="2"
+                AutoFitMode="DynamicHeight"
+                ItemsSourceChangeCachingStrategy="ClearItems"
+                SelectionMode="None">
+                <syncfusion:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <controls:CustomListCreditItem x:Name="CustomListCreditItem" Grid.Row="0" />
+                        </ViewCell>
+                    </DataTemplate>
+                </syncfusion:SfListView.ItemTemplate>
+            </syncfusion:SfListView>
+            <controls:CustomToolbar Grid.Row="3" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

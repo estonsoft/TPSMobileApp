@@ -49,7 +49,7 @@ namespace TPSMobileApp
                 });
             try
             {
-                Batteries.Init();
+                Batteries_V2.Init();
                 System.Diagnostics.Debug.WriteLine("SQLite Batteries.Init OK");
             }
             catch (Exception ex)
@@ -69,6 +69,7 @@ namespace TPSMobileApp
 
             // Optional manager
             builder.Services.AddSingleton<CommManager>();
+           
             return builder.Build();
         }
     }

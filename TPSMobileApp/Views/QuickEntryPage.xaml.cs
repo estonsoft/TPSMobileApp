@@ -1,4 +1,6 @@
-﻿using TPSMobileApp.ViewModels;
+﻿using System.Diagnostics;
+using Scandit.DataCapture.Barcode.Data;
+using TPSMobileApp.ViewModels;
 
 namespace TPSMobileApp.Views
 {
@@ -64,6 +66,7 @@ namespace TPSMobileApp.Views
         private void ShowItemInfo(Item item)
         {
             Item.SetListItem(item, "O");
+            
             item.IsBoxViewVisible = false;
 
             lstItems.Clear();
@@ -96,8 +99,10 @@ namespace TPSMobileApp.Views
             Message.IsVisible = true;
         }
 
-        public void ScanComplete()
+        public void ScanComplete(String barcode)
         {
+            ClearItemInfo();
+            ScanItem.Text = barcode;
             viewModel.OnSleep();
 
             TapToScan.IsVisible = true;
@@ -123,7 +128,7 @@ namespace TPSMobileApp.Views
 
         private void ScanItem_Completed(object sender, EventArgs e)
         {
-            ScanComplete();
+            ScanComplete(ScanItem.Text.Trim());
         }
 
         public void SetScanItem(string barcode)
@@ -134,7 +139,7 @@ namespace TPSMobileApp.Views
         private void EnterButton_Clicked(object sender, EventArgs e)
         {
             Message.Text = "";
-            ScanComplete();
+            ScanComplete(ScanItem.Text.Trim());
         }
 
         private Item FindItem()

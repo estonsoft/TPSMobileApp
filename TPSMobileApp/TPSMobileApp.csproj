@@ -20,7 +20,7 @@
     <!-- Display name -->
     <ApplicationTitle>TPSMobileApp</ApplicationTitle>
     <!-- App Identifier -->
-    <ApplicationId>com.sales.ramdistributorsmaui</ApplicationId>
+    <ApplicationId>com.sales.ramdistributors</ApplicationId>
     <!-- Versions -->
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
@@ -52,6 +52,7 @@
     <PackageReference Include="Scandit.DataCapture.Barcode.Maui" Version="8.1.0" />
     <PackageReference Include="Scandit.DataCapture.Core.Maui" Version="8.1.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
     <PackageReference Include="Syncfusion.Maui.ListView" Version="32.1.24" />
 	<PackageReference Include="Syncfusion.Maui.PdfViewer" Version="32.1.24" />
 	<PackageReference Include="System.ServiceModel.Security" Version="6.0.0" />

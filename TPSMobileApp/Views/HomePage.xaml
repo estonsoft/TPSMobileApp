@@ -49,9 +49,9 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="60" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <StackLayout Grid.Row="0">
@@ -331,6 +331,6 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <controls:CustomToolbar Grid.Row="2" />
+        <controls:CustomToolbar Grid.Row="2" VerticalOptions="End" />
     </Grid>
 </ContentPage>

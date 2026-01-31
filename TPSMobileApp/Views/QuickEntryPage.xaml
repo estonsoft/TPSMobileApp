@@ -15,9 +15,9 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="60" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <controls:CustomHeader Grid.Row="0" />
@@ -27,39 +27,48 @@
                     Padding="0,10,0,0"
                     BackgroundColor="White"
                     VerticalOptions="Start">
-
-                    <scanditCore:DataCaptureView
-                        x:Name="ScannerView"
-                        DataCaptureContext="{Binding DataCaptureContext}"
-                        HeightRequest="180"
-                        WidthRequest="200" />
-                    <!--<Label Text="" TextDecorations="Underline" Margin="0,-105,0,0" HeightRequest="2" WidthRequest="200" FontSize="14" HorizontalOptions="Fill" BackgroundColor="RoyalBlue" TextColor="RoyalBlue"/>-->
-                    <StackLayout
-                        x:Name="TapToScan"
-                        Margin="5,-150,0,55"
+                    <Grid>
+                        <scanditCore:DataCaptureView
+                            x:Name="ScannerView"
+                            DataCaptureContext="{Binding DataCaptureContext}"
+                            HeightRequest="180"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            WidthRequest="200" />
+                        <!--<Label Text="" TextDecorations="Underline" Margin="0,-105,0,0" HeightRequest="2" WidthRequest="200" FontSize="14" HorizontalOptions="Fill" BackgroundColor="RoyalBlue" TextColor="RoyalBlue"/>-->
+                        <StackLayout
+                            x:Name="TapToScan"
+                            HorizontalOptions="Center"
+                            IsVisible="false"
+                            VerticalOptions="Center">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnScannerEnable" />
+                            </StackLayout.GestureRecognizers>
+                            <Label
+                                FontAttributes="Bold"
+                                FontFamily="FontAwesomePro6Regular"
+                                FontSize="48"
+                                HorizontalOptions="Center"
+                                Text="&#xF030;"
+                                TextColor="Red"
+                                VerticalOptions="Center" />
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="20"
+                                HorizontalOptions="Center"
+                                Text="Tap To Scan"
+                                TextColor="Red"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+                    </Grid>
+                    <Label
+                        x:Name="Message"
+                        Margin="0,5,0,0"
+                        BackgroundColor="White"
+                        FontSize="16"
                         HorizontalOptions="Center"
-                        IsVisible="false">
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnScannerEnable" />
-                        </StackLayout.GestureRecognizers>
-                        <Label
-                            Padding="0,0,0,0"
-                            FontAttributes="Bold"
-                            FontFamily="FontAwesomePro6Regular"
-                            FontSize="48"
-                            HorizontalOptions="Center"
-                            Text="&#xF030;"
-                            TextColor="Red"
-                            VerticalOptions="Center" />
-                        <Label
-                            Margin="0,0,0,0"
-                            FontAttributes="Bold"
-                            FontSize="20"
-                            HorizontalOptions="Center"
-                            Text="Tap To Scan"
-                            TextColor="Red"
-                            VerticalOptions="Center" />
-                    </StackLayout>
+                        IsVisible="false"
+                        TextColor="Red" />
                     <StackLayout
                         Margin="0,10,0,0"
                         HorizontalOptions="Center"
@@ -90,29 +99,18 @@
                             Text="  Enter  "
                             TextColor="White"
                             TextTransform="None" />
-                        <Label
-                            x:Name="Message"
-                            Margin="0,5,0,0"
-                            BackgroundColor="White"
-                            FontSize="16"
-                            HorizontalOptions="Center"
-                            IsVisible="false"
-                            TextColor="Red" />
+
                     </StackLayout>
-                    <syncfusion:SfListView
+                    <CollectionView
                         x:Name="ItemsListSearch"
                         Margin="0,30,0,0"
-                        AutoFitMode="DynamicHeight"
-                        ItemsSourceChangeCachingStrategy="ClearItems"
                         SelectionMode="None">
-                        <syncfusion:SfListView.ItemTemplate>
+                        <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <ViewCell>
-                                    <controls:CustomListItemScan x:Name="CustomListItemScan" Grid.Row="0" />
-                                </ViewCell>
+                                <controls:CustomListItemScan x:Name="CustomListItemScan" Grid.Row="0" />
                             </DataTemplate>
-                        </syncfusion:SfListView.ItemTemplate>
-                    </syncfusion:SfListView>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </StackLayout>
             </ScrollView>
 

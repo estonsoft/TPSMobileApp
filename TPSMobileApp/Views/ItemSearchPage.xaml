@@ -47,10 +47,18 @@
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="46" />
+                <RowDefinition Height="Auto" />
+                <!--  Header  -->
+                <RowDefinition Height="Auto" />
+                <!--  Search Box  -->
+                <RowDefinition Height="Auto" />
+                <!--  Category Labels (Fix: 120 is risky)  -->
+                <RowDefinition Height="3" />
+                <!--  Divider  -->
                 <RowDefinition Height="*" />
-                <RowDefinition Height="60" />
+                <!--  मुख्य लिस्ट: यह '*' होना अनिवार्य है  -->
+                <RowDefinition Height="Auto" />
+                <!--  Footer  -->
             </Grid.RowDefinitions>
 
             <controls:CustomHeader Grid.Row="0" />
@@ -90,7 +98,6 @@
             </StackLayout>
             <StackLayout
                 Grid.Row="2"
-                Margin="0,0,0,0"
                 Orientation="Vertical"
                 Spacing="0"
                 VerticalOptions="Start">
@@ -250,26 +257,25 @@
                     </Frame>
                 </StackLayout>
                 <BoxView
+                    Grid.Row="3"
                     BackgroundColor="gray"
                     HeightRequest="3"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill"
                     Color="lightgray" />
-                <syncfusion:SfListView
-                    x:Name="ItemsListSearch"
-                    AutoFitMode="DynamicHeight"
-                    ItemAppearing="ItemsListSearch_ItemAppearing"
-                    ItemsSourceChangeCachingStrategy="ClearItems"
-                    SelectionMode="None">
-                    <syncfusion:SfListView.ItemTemplate>
-                        <DataTemplate>
-                            <controls:CustomListItem />
-                        </DataTemplate>
-                    </syncfusion:SfListView.ItemTemplate>
-                </syncfusion:SfListView>
-
             </StackLayout>
-            <controls:CustomToolbar Grid.Row="3" />
+            <CollectionView
+                x:Name="ItemsListSearch"
+                Grid.Row="4"
+                VerticalOptions="Fill">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <controls:CustomListItem />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <controls:CustomToolbar Grid.Row="5" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

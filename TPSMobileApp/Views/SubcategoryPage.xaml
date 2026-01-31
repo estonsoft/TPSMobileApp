@@ -19,15 +19,15 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
+                <RowDefinition Height="55" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="40" />
+                <RowDefinition Height="80" />
             </Grid.RowDefinitions>
 
             <controls:CustomHeader Grid.Row="0" />
 
             <StackLayout
                 Grid.Row="1"
-                Margin="0,0,0,0"
                 Orientation="Vertical"
                 Spacing="0"
                 VerticalOptions="Start">
@@ -44,49 +44,49 @@
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill"
                     Color="lightgray" />
-                <ListView
-                    x:Name="SubcategoriesListSearch"
-                    CachingStrategy="RetainElement"
-                    HasUnevenRows="true"
-                    ItemTapped="OnSubcategoryTapped"
-                    RowHeight="{Binding RowHeight, Mode=TwoWay}"
-                    SelectionMode="None">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout
-                                    Margin="0,0,0,0"
-                                    Orientation="Vertical"
-                                    Spacing="0"
-                                    VerticalOptions="Start">
-                                    <Label
-                                        Margin="0,0,0,0"
-                                        IsVisible="false"
-                                        Text="{Binding Code}" />
-                                    <Label
-                                        Margin="60,15,0,15"
-                                        BackgroundColor="White"
-                                        FontAttributes="Bold"
-                                        FontSize="16"
-                                        HorizontalOptions="Start"
-                                        LineBreakMode="WordWrap"
-                                        Text="{Binding Description}"
-                                        TextColor="black"
-                                        VerticalOptions="Start" />
-                                    <BoxView
-                                        BackgroundColor="gray"
-                                        HeightRequest="3"
-                                        HorizontalOptions="Fill"
-                                        VerticalOptions="Fill"
-                                        Color="lightgray" />
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
             </StackLayout>
 
-            <controls:CustomToolbar Grid.Row="2" />
+            <ListView
+                x:Name="SubcategoriesListSearch"
+                Grid.Row="2"
+                CachingStrategy="RetainElement"
+                HasUnevenRows="true"
+                ItemTapped="OnSubcategoryTapped"
+                RowHeight="{Binding RowHeight, Mode=TwoWay}"
+                SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout
+                                Orientation="Vertical"
+                                Spacing="0"
+                                VerticalOptions="Start">
+                                <Label
+                                    Margin="0,0,0,0"
+                                    IsVisible="false"
+                                    Text="{Binding Code}" />
+                                <Label
+                                    Margin="60,15,0,15"
+                                    BackgroundColor="White"
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    HorizontalOptions="Start"
+                                    LineBreakMode="WordWrap"
+                                    Text="{Binding Description}"
+                                    TextColor="black"
+                                    VerticalOptions="Start" />
+                                <BoxView
+                                    BackgroundColor="gray"
+                                    HeightRequest="3"
+                                    HorizontalOptions="Fill"
+                                    VerticalOptions="Fill"
+                                    Color="lightgray" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <controls:CustomToolbar Grid.Row="3" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>
