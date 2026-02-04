@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using FluentFTP.Helpers;
 using Scandit.DataCapture.Barcode.Data;
 using TPSMobileApp.ViewModels;
 
@@ -151,29 +152,34 @@ namespace TPSMobileApp.Views
             int ItemNo = 0;
 
             string ScanText = ScanItem.Text.Trim();
-            int.TryParse(ScanItem.Text, out ItemNo);
-
-            if (ItemNo > 0)
+            if (ScanText.IsBlank() || ScanText.Length == 0)
+                return item;
+            else
             {
-                item = App.g_db.FindItem(ItemNo, ItemNo.ToString());
-            }
+                int.TryParse(ScanItem.Text, out ItemNo);
 
-            if (item == null)
-            {
-                items = App.g_db.SearchItemsQuickEntry(ScanText);
-
-                if (items.Count >= 1)
+                if (ItemNo > 0)
                 {
-                    item = items[0];
+                    item = App.g_db.FindItem(ItemNo, ItemNo.ToString());
                 }
-            }
 
-            if (item != null)
-            {
-                if (App.g_IsAutoAdd1)
+                if (item == null)
                 {
-                    item.QtyOrder += 1;
-                    App.g_db.UpdateItemQtySet(item.ItemNo, item.QtyOrder);
+                    items = App.g_db.SearchItemsQuickEntry(ScanText);
+
+                    if (items.Count >= 1)
+                    {
+                        item = items[0];
+                    }
+                }
+
+                if (item != null)
+                {
+                    if (App.g_IsAutoAdd1)
+                    {
+                        item.QtyOrder += 1;
+                        App.g_db.UpdateItemQtySet(item.ItemNo, item.QtyOrder);
+                    }
                 }
             }
 
