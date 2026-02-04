@@ -166,7 +166,7 @@ public class CustomHeader : StackLayout
                 {
                     App.g_Category.Code = "";
                     App.g_Category.Description = "ALL CATEGORIES";
-                    await App.g_Shell.GoToCategories();
+                    await App.g_Shell.GoToHome();
                 }
             }
         }
