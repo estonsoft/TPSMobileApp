@@ -268,22 +268,20 @@ namespace TPSMobileApp
                 g_Customer = new Customer();
                 g_ShoppingCartItems = App.g_db.GetCartPieces();
 
-                Task.Run(async () =>
+
+                try
                 {
-                    try
-                    {
-                        g_Customer = new Customer();
-                        g_Customer = App.g_db.GetCustomer();
-                        if (g_Customer == null)
-                        {
-                            g_Customer = new Customer();
-                        }
-                    }
-                    catch
+                    g_Customer = new Customer();
+                    g_Customer = App.g_db.GetCustomer();
+                    if (g_Customer == null)
                     {
                         g_Customer = new Customer();
                     }
-                });
+                }
+                catch
+                {
+                    g_Customer = new Customer();
+                }
 
                 //g_CategoryList = App.g_db.GetCategories();
                 g_HomePageCategoryList = App.g_db.GetHomePageCategories();

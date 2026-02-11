@@ -44,25 +44,31 @@
                             <TapGestureRecognizer Tapped="OnDelivery" />
                         </Border.GestureRecognizers>
 
-                        <VerticalStackLayout>
-                            <HorizontalStackLayout HeightRequest="60">
+                        <VerticalStackLayout Margin="10">
+                            <HorizontalStackLayout>
                                 <Label
+                                    Margin="5"
                                     FontFamily="FontAwesomeFreeSolid"
                                     FontSize="18"
                                     Text="&#xF0D1;"
-                                    TextColor="Blue" />
+                                    TextColor="Blue"
+                                    VerticalOptions="Center" />
                                 <Label
+                                    Margin="5"
                                     FontSize="16"
                                     Text="Delivery"
-                                    TextColor="Blue" />
+                                    TextColor="Blue"
+                                    VerticalOptions="Center" />
                                 <Label
+                                    Margin="5"
                                     FontFamily="FontAwesomeFreeSolid"
                                     IsVisible="{Binding IsDeliveryHighlighted}"
                                     Text="&#xF00C;"
-                                    TextColor="Blue" />
+                                    TextColor="Blue"
+                                    VerticalOptions="Center" />
                             </HorizontalStackLayout>
 
-                            <VerticalStackLayout Margin="15,10,0,0">
+                            <VerticalStackLayout Margin="5,10,0,0">
                                 <Label FontSize="11" Text="{Binding CompanyName}" />
                                 <Label
                                     x:Name="DeliveryAddress"
@@ -86,25 +92,31 @@
                             <TapGestureRecognizer Tapped="OnPickup" />
                         </Border.GestureRecognizers>
 
-                        <VerticalStackLayout>
-                            <HorizontalStackLayout HeightRequest="60">
+                        <VerticalStackLayout Margin="10">
+                            <HorizontalStackLayout>
                                 <Label
+                                    Margin="5"
                                     FontFamily="FontAwesomeFreeSolid"
                                     FontSize="18"
                                     Text="&#xF474;"
-                                    TextColor="Blue" />
+                                    TextColor="Blue"
+                                    VerticalOptions="Center" />
                                 <Label
+                                    Margin="5"
                                     FontSize="16"
                                     Text="Pickup"
-                                    TextColor="Blue" />
+                                    TextColor="Blue"
+                                    VerticalOptions="Center" />
                                 <Label
+                                    Margin="5"
                                     FontFamily="FontAwesomeFreeSolid"
                                     IsVisible="{Binding IsPickupHighlighted}"
                                     Text="&#xF00C;"
-                                    TextColor="Blue" />
+                                    TextColor="Blue"
+                                    VerticalOptions="Center" />
                             </HorizontalStackLayout>
 
-                            <VerticalStackLayout Margin="15,10,0,0">
+                            <VerticalStackLayout Margin="5,10,0,0">
                                 <Label FontSize="11" Text="{Binding LocationName}" />
                                 <Label FontSize="11" Text="{Binding LocationAddress}" />
                                 <Label FontSize="11" Text="{Binding LocationCityStateZip}" />
@@ -154,7 +166,7 @@
                 <HorizontalStackLayout
                     x:Name="ItemStack"
                     Margin="20,0,0,0"
-                    VerticalOptions="Start">
+                    HorizontalOptions="Center">
                     <Label
                         FontAttributes="Bold"
                         FontSize="20"

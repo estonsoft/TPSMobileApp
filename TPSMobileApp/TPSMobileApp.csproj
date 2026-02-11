@@ -61,6 +61,9 @@
     <MauiXaml Update="Controls\CustomListCreditItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Controls\HomePageItems.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Controls\CustomListItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

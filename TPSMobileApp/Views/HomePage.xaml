@@ -232,102 +232,25 @@
                         Text="Top Categories"
                         TextColor="blue" />
                 </StackLayout>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <VerticalStackLayout
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        BackgroundColor="White">
-                        <VerticalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnTapped1" />
-                        </VerticalStackLayout.GestureRecognizers>
-                        <ffimageloading:CachedImage
-                            Aspect="AspectFit"
-                            HeightRequest="100"
-                            Source="{Binding ImageURL1}"
-                            WidthRequest="100" />
-                        <Label
-                            BackgroundColor="White"
-                            FontAttributes="Bold"
-                            FontSize="14"
-                            HorizontalTextAlignment="Center"
-                            LineBreakMode="WordWrap"
-                            Text="{Binding Description1}"
-                            TextColor="Blue" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout
-                        Grid.Row="0"
-                        Grid.Column="1"
-                        BackgroundColor="White">
-                        <VerticalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnTapped2" />
-                        </VerticalStackLayout.GestureRecognizers>
-                        <ffimageloading:CachedImage
-                            Aspect="AspectFit"
-                            HeightRequest="100"
-                            Source="{Binding ImageURL2}"
-                            WidthRequest="100" />
-                        <Label
-                            BackgroundColor="White"
-                            FontAttributes="Bold"
-                            FontSize="14"
-                            HorizontalTextAlignment="Center"
-                            LineBreakMode="WordWrap"
-                            Text="{Binding Description2}"
-                            TextColor="Blue" />
-                    </VerticalStackLayout>
-
-                    <VerticalStackLayout
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        BackgroundColor="White">
-                        <VerticalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnTapped3" />
-                        </VerticalStackLayout.GestureRecognizers>
-                        <ffimageloading:CachedImage
-                            Aspect="AspectFit"
-                            HeightRequest="100"
-                            Source="{Binding ImageURL3}"
-                            WidthRequest="100" />
-                        <Label
-                            BackgroundColor="White"
-                            FontAttributes="Bold"
-                            FontSize="14"
-                            HorizontalTextAlignment="Center"
-                            LineBreakMode="WordWrap"
-                            Text="{Binding Description3}"
-                            TextColor="Blue" />
-                    </VerticalStackLayout>
-
-                    <VerticalStackLayout
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        BackgroundColor="White">
-                        <VerticalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnTapped4" />
-                        </VerticalStackLayout.GestureRecognizers>
-                        <ffimageloading:CachedImage
-                            Aspect="AspectFit"
-                            HeightRequest="100"
-                            Source="{Binding ImageURL4}"
-                            WidthRequest="100" />
-                        <Label
-                            BackgroundColor="White"
-                            FontAttributes="Bold"
-                            FontSize="14"
-                            HorizontalTextAlignment="Center"
-                            LineBreakMode="WordWrap"
-                            Text="{Binding Description4}"
-                            TextColor="Blue" />
-                    </VerticalStackLayout>
-                </Grid>
+                <CollectionView
+                    x:Name="TopCategoriesCollectionView"
+                    HorizontalOptions="Fill"
+                    SelectionChanged="TopCategoriesCollectionView_SelectionChanged"
+                    SelectionMode="Single"
+                    VerticalOptions="Start">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            HorizontalItemSpacing="20"
+                            Orientation="Vertical"
+                            Span="2"
+                            VerticalItemSpacing="20" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:HomePageItems />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
 

@@ -53,8 +53,10 @@
                                 <ffimageloading:CachedImage
                                     Margin="5,5,5,5"
                                     Aspect="AspectFit"
+                                    ErrorPlaceholder="missing_item.jpg"
                                     HeightRequest="90"
                                     HorizontalOptions="Fill"
+                                    LoadingPlaceholder="missing_item.jpg"
                                     Source="{Binding ImageURL}"
                                     VerticalOptions="Fill"
                                     WidthRequest="90" />

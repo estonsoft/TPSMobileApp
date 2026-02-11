@@ -2,128 +2,6 @@
 {
     public partial class HomePage : ContentPage
     {
-        public String code1;
-        public String description1;
-        public String imageURL1;
-        public String code2;
-        public String description2;
-        public String imageURL2;
-        public String code3;
-        public String description3;
-        public String imageURL3;
-        public String code4;
-        public String description4;
-        public String imageURL4;
-
-        public string Code1
-        {
-            get { return code1; }
-            set
-            {
-                code1 = value;
-                OnPropertyChanged();
-            }
-        }
-        public string Description1
-        {
-            get { return description1; }
-            set
-            {
-                description1 = value;
-                OnPropertyChanged();
-            }
-        }
-        public string ImageURL1
-        {
-            get { return imageURL1; }
-            set
-            {
-                imageURL1 = value;
-                OnPropertyChanged();
-            }
-        }
-        public string Code2
-        {
-            get { return code2; }
-            set
-            {
-                code2 = value;
-                OnPropertyChanged();
-            }
-        }
-        public string Description2
-        {
-            get { return description2; }
-            set
-            {
-                description2 = value;
-                OnPropertyChanged();
-            }
-        }
-        public string ImageURL2
-        {
-            get { return imageURL2; }
-            set
-            {
-                imageURL2 = value;
-                OnPropertyChanged();
-            }
-        }
-        public string Code3
-        {
-            get { return code3; }
-            set
-            {
-                code3 = value;
-                OnPropertyChanged();
-            }
-        }
-        public string Description3
-        {
-            get { return description3; }
-            set
-            {
-                description3 = value;
-                OnPropertyChanged();
-            }
-        }
-        public string ImageURL3
-        {
-            get { return imageURL3; }
-            set
-            {
-                imageURL3 = value;
-                OnPropertyChanged();
-            }
-        }
-        public string Code4
-        {
-            get { return code4; }
-            set
-            {
-                code4 = value;
-                OnPropertyChanged();
-            }
-        }
-        public string Description4
-        {
-            get { return description4; }
-            set
-            {
-                description4 = value;
-                OnPropertyChanged();
-            }
-        }
-        public string ImageURL4
-        {
-            get { return imageURL4; }
-            set
-            {
-                imageURL4 = value;
-                OnPropertyChanged();
-            }
-        }
-
         public HomePage()
         {
             InitializeComponent();
@@ -282,47 +160,7 @@
         public void LoadCategories()
         {
             List<Category> categories = App.g_HomePageCategoryList;
-            if (categories != null)
-            {
-                int i = 0;
-
-                foreach (Category cat in categories)
-                {
-                    i++;
-
-                    switch (i)
-                    {
-                        case 1:
-                            {
-                                Code1 = cat.Code;
-                                Description1 = cat.Description;
-                                ImageURL1 = cat.ImageURL;
-                                break;
-                            }
-                        case 2:
-                            {
-                                Code2 = cat.Code;
-                                Description2 = cat.Description;
-                                ImageURL2 = cat.ImageURL;
-                                break;
-                            }
-                        case 3:
-                            {
-                                Code3 = cat.Code;
-                                Description3 = cat.Description;
-                                ImageURL3 = cat.ImageURL;
-                                break;
-                            }
-                        case 4:
-                            {
-                                Code4 = cat.Code;
-                                Description4 = cat.Description;
-                                ImageURL4 = cat.ImageURL;
-                                break;
-                            }
-                    }
-                }
-            }
+            TopCategoriesCollectionView.ItemsSource = categories;
         }
 
         async void CategoryTapped(String Code, String Description)
@@ -349,26 +187,15 @@
             }
         }
 
-        void OnTapped1(object sender, EventArgs e)
-        {
-            CategoryTapped(Code1, Description1);
-        }
 
-        void OnTapped2(object sender, EventArgs e)
+        private void TopCategoriesCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CategoryTapped(Code2, Description2);
+            var selectedCategory = e.CurrentSelection.FirstOrDefault() as Category;
+            if (selectedCategory != null)
+            {
+                CategoryTapped(selectedCategory.Code, selectedCategory.Description);
+            }
         }
-
-        void OnTapped3(object sender, EventArgs e)
-        {
-            CategoryTapped(Code3, Description3);
-        }
-
-        void OnTapped4(object sender, EventArgs e)
-        {
-            CategoryTapped(Code4, Description4);
-        }
-
         async void OnCategoryTapped(object sender, EventArgs e)
         {
             TappedEventArgs te = (TappedEventArgs)e;
@@ -440,7 +267,7 @@
             }
             else
             {
-                await App.g_Shell.GoToMyPurchases();
+                await App.g_Shell.GoToReorderItems();
             }
         }
 
