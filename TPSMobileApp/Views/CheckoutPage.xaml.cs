@@ -278,7 +278,42 @@
 
         async void OnPlaceOrderClicked(object sender, EventArgs e)
         {
-            await App.g_Shell.GoToSubmitOrderPage();
+            if (App.g_IsSalesUser)
+            {
+                if (dCartTotal >= App.g_Customer.MinOrderAmount)
+                {
+                    if (iCartItems >= App.g_Customer.MinOrderQty)
+                    {
+                        await App.g_Shell.GoToSubmitOrderPage();
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlertAsync("Profit Order", "Order minimum of quantity min " + App.g_Customer.MinOrderQty + "not met, please add additional items/quantities to order", "Ok");
+                    }
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlertAsync("Profit Order", "Order minimum of order min " + App.g_Customer.MinOrderAmount + "not met, please add additional items/quantities to order", "Ok");
+                }
+            }
+            else
+            {
+                if (dCartTotal >= App.g_Customer.MinOrderAmount)
+                {
+                    if (iCartItems >= App.g_Customer.MinOrderQty)
+                    {
+                        await App.g_Shell.GoToSubmitOrderPage();
+                    }
+                    else
+                    {
+                        await Shell.Current.DisplayAlertAsync("Profit Order", "Order minimum of quantity min "+App.g_Customer.MinOrderQty+"not met, please add additional items/quantities to order", "Ok");
+                    }
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlertAsync("Profit Order", "Order minimum of order min " + App.g_Customer.MinOrderAmount + "not met, please add additional items/quantities to order", "Ok");
+                }
+            }
         }
 
         async void OnDelivery(object sender, EventArgs e)

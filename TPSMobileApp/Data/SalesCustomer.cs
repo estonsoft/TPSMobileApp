@@ -30,5 +30,9 @@ namespace TPSMobileApp
         public int ShoppingCartItems { get; set; }
         public string ShoppingCartItemsDisplay { get; set; }
         public bool IsShoppingCart { get; set; }
+        public decimal MinOrderAmount { get; set; }
+        public decimal ShippingFee { get; set; }
+
+        public decimal MinOrderQty { get; set; }
     }
 }
