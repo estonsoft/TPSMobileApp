@@ -1,4 +1,6 @@
-﻿namespace TPSMobileApp
+﻿using System.Diagnostics;
+
+namespace TPSMobileApp
 {
     internal class XMLResponseParser
     {
@@ -6,7 +8,7 @@
         {
             try
             {
-                Console.WriteLine("Get Banners returned");
+                Debug.WriteLine("Get Banners returned");
 
                 String sBanners = response;
                 String[] aBanners = sBanners.Split('|');
@@ -46,7 +48,7 @@
 
         public static async void commService_GetCategoriesAndSubcategoriesCompleted(String response)
         {
-            Console.WriteLine("Get Categories and Subcategories returned");
+            Debug.WriteLine("Get Categories and Subcategories returned");
 
             try
             {
@@ -163,7 +165,7 @@
 
         public static async void commService_GetCategoriesAndSubcategoriesCustCompleted(String response)
         {
-            Console.WriteLine("Get Categories and Subcategories Cust returned");
+            Debug.WriteLine("Get Categories and Subcategories Cust returned");
 
             try
             {
@@ -277,12 +279,12 @@
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Fetch Items Categories and SubCategories" + ex.Message);
+                    Debug.WriteLine("Fetch Items Categories and SubCategories" + ex.Message);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("SAVE Categories and SubCategories" + ex.Message);
+                Debug.WriteLine("SAVE Categories and SubCategories" + ex.Message);
             }
         }
 
@@ -290,7 +292,7 @@
         {
             try
             {
-                Console.WriteLine(DateTime.Now.ToString() + " - Get Items returned");
+                Debug.WriteLine(DateTime.Now.ToString() + " - Get Items returned");
 
                 String sItems = response;
                 String[] aItems = sItems.Split('~');
@@ -632,7 +634,7 @@
 
         public static async void commService_GetItemQOH2CompletedAsync(String response)
         {
-            Console.WriteLine("Get Item QOH 2 returned");
+            Debug.WriteLine("Get Item QOH 2 returned");
 
             try
             {
@@ -691,7 +693,7 @@
 
         public static async void commService_ValidateLoginCompletedAsync(String response)
         {
-            Console.WriteLine("ValidateLogin Complete");
+            Debug.WriteLine("ValidateLogin Complete");
             try
             {
                 String sUser = response;
@@ -924,6 +926,11 @@
                                 App.g_Customer.CreditLimit = Convert.ToDecimal(aCust[12]);
                                 App.g_Customer.ARBalance = Convert.ToDecimal(aCust[13]);
 
+                                App.g_Customer.MinOrderAmount = Convert.ToDecimal(aCust[20]);
+                                App.g_Customer.ShippingFee = Convert.ToDecimal(aCust[21]);
+                                App.g_Customer.MinOrderQty = Convert.ToDecimal(aCust[22]);
+
+
                                 Location loc = new Location();
                                 loc.LocationId = 1;
                                 loc.Name = aCust[14];
@@ -1084,7 +1091,7 @@
 
         public static async void commService_GetSettingsCompletedAsync(String response)
         {
-            Console.WriteLine("GetSettings Complete");
+            Debug.WriteLine("GetSettings Complete");
 
             try
             {
@@ -1382,7 +1389,7 @@
         {
             try
             {
-                Console.WriteLine("Get Order History returned");
+                Debug.WriteLine("Get Order History returned");
 
                 String sOrders = response;
                 String[] aOrders = sOrders.Split('~');
@@ -1577,18 +1584,18 @@
 
                 }
 
-                Console.WriteLine("Get Order History Updated");
+                Debug.WriteLine("Get Order History Updated");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Get Order History Error");
-                Console.WriteLine(ex.Message);
+                Debug.WriteLine("Get Order History Error");
+                Debug.WriteLine(ex.Message);
             }
         }
 
         public static async void commService_GetOrderHistoryCompletedAsync(String response)
         {
-            Console.WriteLine("Get Order History Complete");
+            Debug.WriteLine("Get Order History Complete");
 
             try
             {
@@ -1777,8 +1784,8 @@
         {
             try
             {
-                Console.WriteLine("Get Salesperson Customers returned");
-                Console.WriteLine(response);
+                Debug.WriteLine("Get Salesperson Customers returned");
+                Debug.WriteLine(response);
 
                 String sCustomers = response;
                 String[] aCustomers = sCustomers.Split('~');
@@ -1853,10 +1860,17 @@
                             }
                             else
                             {
-                                c.LastOrderDate = aCust[14].Substring(3, 2) + "/";
-                                c.LastOrderDate += aCust[14].Substring(5, 2) + "/";
-                                c.LastOrderDate += aCust[14].Substring(1, 2);
+                                c.LastOrderDate = aCust[17].Substring(3, 2) + "/";
+                                c.LastOrderDate += aCust[17].Substring(5, 2) + "/";
+                                c.LastOrderDate += aCust[17].Substring(1, 2);
                             }
+                        }
+                        catch { }
+                        try
+                        {
+                            c.MinOrderAmount = Decimal.Parse(aCust[15]);
+                            c.ShippingFee = Decimal.Parse(aCust[16]);
+                            c.MinOrderQty = Decimal.Parse(aCust[17]);
                         }
                         catch { }
 
@@ -1880,7 +1894,7 @@
 
         public static async void commService_GetFlyerItemsPDFCompleted(String response)
         {
-            Console.WriteLine("GetFlyerItemsPDFCompleted");
+            Debug.WriteLine("GetFlyerItemsPDFCompleted");
 
             try
             {

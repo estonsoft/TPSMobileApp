@@ -89,6 +89,9 @@ namespace TPSMobileApp.Views
             App.g_Customer.CreditLimit = cust.CreditLimit;
             App.g_Customer.LastPaymentDate = cust.LastPaymentDate;
             App.g_Customer.LastOrderDate = cust.LastOrderDate;
+            App.g_Customer.MinOrderAmount = cust.MinOrderAmount;
+            App.g_Customer.MinOrderQty = cust.MinOrderQty;
+            App.g_Customer.ShippingFee = cust.ShippingFee;
 
             App.g_db.SaveCustomer(App.g_Customer);
 
