@@ -73,7 +73,7 @@
                 </ffimageloading:CachedImage>
                 <Entry
                     x:Name="SearchText"
-                    Margin="60,5,5,0"
+                    Margin="60,10,60,0"
                     ClearButtonVisibility="WhileEditing"
                     Completed="OnSearchTapped"
                     FontSize="14"
@@ -107,7 +107,7 @@
             <VerticalStackLayout HorizontalOptions="Fill" VerticalOptions="Start">
                 <VerticalStackLayout
                     x:Name="lblLoginInfo"
-                    Margin="0,45,0,0"
+                    Margin="0,20,0,0"
                     HeightRequest="50"
                     HorizontalOptions="Center"
                     VerticalOptions="Center">
@@ -218,22 +218,95 @@
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
                 </Frame>
-                <StackLayout
-                    Padding="0,20,0,10"
-                    HorizontalOptions="Center"
-                    Orientation="Vertical"
+                <Grid
+                    Padding="27,15,0,0"
+                    HorizontalOptions="Fill"
                     VerticalOptions="Fill">
                     <Label
                         Margin="0,0,0,0"
                         FontAttributes="Bold"
-                        FontSize="16"
-                        HeightRequest="30"
-                        HorizontalOptions="Center"
+                        FontSize="22"
+                        HorizontalOptions="Start"
+                        Text="Start Your Cart"
+                        TextColor="black"
+                        VerticalOptions="Center"
+                        WidthRequest="255" />
+                    <HorizontalStackLayout HorizontalOptions="End">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Fill"
+                            Text="Shop All Items"
+                            TextColor="blue"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnShopNow" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label
+                            Margin="20"
+                            FontAttributes="Bold"
+                            FontFamily="FontAwesomeFreeSolid"
+                            FontSize="11"
+                            HorizontalOptions="End"
+                            Text="&#xF061;"
+                            TextColor="blue"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnShopNow" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNewItemsAll" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <Grid
+                    Padding="27,5,0,0"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill">
+                    <Label
+                        Margin="0,0,0,0"
+                        FontAttributes="Bold"
+                        FontSize="22"
+                        HorizontalOptions="Start"
                         Text="Top Categories"
-                        TextColor="blue" />
-                </StackLayout>
+                        TextColor="black"
+                        VerticalOptions="Center"
+                        WidthRequest="255" />
+                    <HorizontalStackLayout HorizontalOptions="End">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Fill"
+                            Text="View All"
+                            TextColor="blue"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnNewItemsAll" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label
+                            Margin="20"
+                            FontAttributes="Bold"
+                            FontFamily="FontAwesomeFreeSolid"
+                            FontSize="11"
+                            HorizontalOptions="End"
+                            Text="&#xF061;"
+                            TextColor="blue"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnNewItemsAll" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNewItemsAll" />
+                    </Grid.GestureRecognizers>
+                </Grid>
                 <CollectionView
                     x:Name="TopCategoriesCollectionView"
+                    Margin="10,0,0,0"
                     HorizontalOptions="Fill"
                     SelectionChanged="TopCategoriesCollectionView_SelectionChanged"
                     SelectionMode="Single"
@@ -241,8 +314,7 @@
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout
                             HorizontalItemSpacing="20"
-                            Orientation="Vertical"
-                            Span="2"
+                            Orientation="Horizontal"
                             VerticalItemSpacing="20" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>

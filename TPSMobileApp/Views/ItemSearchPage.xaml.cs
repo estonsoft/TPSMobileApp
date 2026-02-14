@@ -81,6 +81,7 @@
             {
                 TopSellersValue = App.g_IsTopSellers;
                 InStockOnlyValue = App.g_InStockOnly;
+                App.g_IsTopSellers = false;
             }
             catch
             {

@@ -65,6 +65,19 @@
             });
         }
 
+        async void OnShopNow(object sender, EventArgs e)
+        {
+            await App.g_Shell.GoToCategories();
+        }
+
+        async void OnNewItemsAll(object sender, EventArgs e)
+        {
+            //App.g_Category.Code = "Top Categrories";
+            //App.g_Category.Description = "Top Categrories";
+            App.g_IsTopSellers = true;
+            await App.g_Shell.GoToItemSearch();
+        }
+
         private async void UpdateBanner()
         {
             //Database db = new Database();
@@ -243,11 +256,6 @@
                 SetLoginControls();
                 await App.g_Shell.GoToLogin();
             }
-        }
-
-        async void OnShopNow(object sender, EventArgs e)
-        {
-            await App.g_Shell.GoToCategories();
         }
 
         public async void RefreshCategoryList()
