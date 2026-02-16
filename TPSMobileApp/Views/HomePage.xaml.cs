@@ -72,10 +72,7 @@
 
         async void OnNewItemsAll(object sender, EventArgs e)
         {
-            //App.g_Category.Code = "Top Categrories";
-            //App.g_Category.Description = "Top Categrories";
-            App.g_IsTopSellers = true;
-            await App.g_Shell.GoToItemSearch();
+            await App.g_Shell.GoToCategories();
         }
 
         private async void UpdateBanner()
