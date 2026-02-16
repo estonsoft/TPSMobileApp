@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36811.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfitOrder", "ProfitOrder\ProfitOrder.csproj", "{155BEDCB-29CD-4E3F-AF3C-CF1A35A0A8E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPSMobileApp", "TPSMobileApp\TPSMobileApp.csproj", "{155BEDCB-29CD-4E3F-AF3C-CF1A35A0A8E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
