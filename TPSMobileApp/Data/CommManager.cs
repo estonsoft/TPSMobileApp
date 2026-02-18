@@ -29,7 +29,7 @@
             XMLResponseParser.commService_GetCategoriesAndSubcategoriesCustCompleted(response);
         }
 
-        public async void GetItems(String sCustomer, String sDate)
+        public async Task GetItems(String sCustomer, String sDate)
         {
             String response = await soapService.GetItemsAsync(sCustomer, sDate);
             XMLResponseParser.commService_GetItemsCompletedAsync(response);

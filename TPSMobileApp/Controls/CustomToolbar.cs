@@ -11,7 +11,7 @@ public class CustomToolbar : StackLayout
         set => SetValue(CartItemsProperty, value);
     }
 
-    //static int ColumnWidth = 70;
+    //static int ColumnWidth = 60;
 
     Grid gridContainer;
 
@@ -41,7 +41,7 @@ public class CustomToolbar : StackLayout
 
     public CustomToolbar()
     {
-        HeightRequest = 80;
+        HeightRequest = 60;
         BackgroundColor = Colors.Blue;
 
         gridContainer = new Grid
@@ -51,7 +51,7 @@ public class CustomToolbar : StackLayout
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Start,
             BackgroundColor = Colors.Blue,
-            HeightRequest = 80,
+            HeightRequest = 60,
         };
         gridContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
         gridContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
@@ -104,12 +104,12 @@ public class CustomToolbar : StackLayout
         {
             BackgroundColor = Colors.Blue,
             //WidthRequest = ColumnWidth,            
-            HeightRequest = 80,
+            HeightRequest = 60,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         };
         if (DeviceInfo.Platform == DevicePlatform.iOS)
-            stack.Margin = new Thickness(0, 10, 0, 0);
+            stack.Margin = new Thickness(0, 20, 0, 0);
 
         glyph = glyph.Replace("/u", "0x");
         icon = new Image
@@ -127,7 +127,6 @@ public class CustomToolbar : StackLayout
         text = new Label
         {
             Text = label,
-            Margin = new Thickness(5, 5, 5, 5),
             TextColor = Colors.White,
             FontSize = 10,
             HorizontalTextAlignment = TextAlignment.Center

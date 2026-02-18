@@ -19,7 +19,6 @@
 
         public async void RefreshList()
         {
-            ReorderItemsList.ItemsSource = null;
             ReorderItemsList.ItemsSource = App.g_ReorderItemList;
 
             List<Item> lstItem = App.g_db.GetItems();

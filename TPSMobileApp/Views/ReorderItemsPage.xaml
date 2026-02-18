@@ -53,9 +53,7 @@
                     SelectionMode="None">
                     <syncfusion:SfListView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <controls:CustomListItem x:Name="CustomListItem" Grid.Row="0" />
-                            </ViewCell>
+                            <controls:CustomListItem x:Name="CustomListItem" />
                         </DataTemplate>
                     </syncfusion:SfListView.ItemTemplate>
                 </syncfusion:SfListView>

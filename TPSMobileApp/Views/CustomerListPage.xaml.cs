@@ -1,4 +1,5 @@
-﻿using TPSMobileApp.Controls;
+﻿using System.Diagnostics;
+using TPSMobileApp.Controls;
 
 namespace TPSMobileApp.Views
 {
@@ -98,17 +99,20 @@ namespace TPSMobileApp.Views
             App.g_HomePage.SetLoginControls();
 
             App.g_db.SuspendCartItems(OldCustNo);
+            Console.WriteLine("Suspended Cart Items for " + OldCustNo);
             App.g_db.ClearCartItems();
+            Console.WriteLine("Clear Cart Items for " + OldCustNo);
             //App.g_db.ClearFavorites();
             App.g_db.DeleteOrderHistory();
-
+            Console.WriteLine("Delete Cart Items for " + OldCustNo);
             App.g_db.RestoreCartItems(App.g_Customer.CustNo);
-
+            Console.WriteLine("Restore Cart Items for " + OldCustNo);
             try
             {
                 if (!string.IsNullOrEmpty(App.g_Customer.CustNo) && App.g_Customer.CustNo != "0")
                 {
-                    App.CommManager.GetItems(App.g_Customer.CustNo, "0");
+                    await App.CommManager.GetItems(App.g_Customer.CustNo, "0");
+                    Console.WriteLine("Get Cart Items for " + OldCustNo);
                 }
             }
             catch
