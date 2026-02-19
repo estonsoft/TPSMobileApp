@@ -11,7 +11,7 @@
     Shell.TabBarIsVisible="False">
 
     <ContentPage.Content>
-        <Grid SafeAreaEdges="Top">
+        <Grid Margin="0,50,0,0" SafeAreaEdges="None">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="*" />
