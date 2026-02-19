@@ -111,7 +111,7 @@ public class CustomToolbar : StackLayout
 
         if (DeviceInfo.Platform == DevicePlatform.iOS)
         {
-            stack.Margin = new Thickness(0, 30, 0, 0);
+            stack.Margin = new Thickness(0, 40, 0, 0);
         }
             
 
