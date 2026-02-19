@@ -108,8 +108,6 @@ public class CustomToolbar : StackLayout
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         };
-        if (DeviceInfo.Platform == DevicePlatform.iOS)
-            stack.Margin = new Thickness(0, 20, 0, 0);
 
         glyph = glyph.Replace("/u", "0x");
         icon = new Image
