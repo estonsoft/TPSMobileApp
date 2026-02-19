@@ -18,7 +18,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>10.0</string>
+	<string>15.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>RAM Distributors</string>
 	<key>CFBundleIdentifier</key>

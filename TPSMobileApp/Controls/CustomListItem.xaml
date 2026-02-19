@@ -13,7 +13,7 @@
         <!--  TITLE  -->
         <Label
             Grid.Row="0"
-            Grid.ColumnSpan="3"
+            Grid.Column="0"
             FontAttributes="Bold"
             FontSize="16"
             Text="{Binding Description}"
@@ -156,7 +156,7 @@
         <!--  LAST PURCHASE  -->
         <HorizontalStackLayout
             Grid.Row="3"
-            Grid.ColumnSpan="3"
+            Grid.Column="0"
             IsVisible="{Binding IsLastPurchStack}"
             Spacing="5">
 
