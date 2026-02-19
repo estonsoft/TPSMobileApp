@@ -10,7 +10,7 @@
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
 
-    <Grid SafeAreaEdges="None">
+    <Grid SafeAreaEdges="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />

@@ -19,7 +19,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid SafeAreaEdges="None">
+    <Grid SafeAreaEdges="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

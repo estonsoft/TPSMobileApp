@@ -47,7 +47,7 @@
             ShowsResults="false" />
     </Shell.SearchHandler>
 
-    <Grid SafeAreaEdges="None">
+    <Grid SafeAreaEdges="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

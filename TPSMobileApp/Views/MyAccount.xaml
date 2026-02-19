@@ -7,7 +7,7 @@
     Title="My Account">
 
     <ContentPage.Content>
-        <Grid SafeAreaEdges="None">
+        <Grid SafeAreaEdges="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="*" />
