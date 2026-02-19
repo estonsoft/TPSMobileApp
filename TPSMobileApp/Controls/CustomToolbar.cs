@@ -48,15 +48,11 @@ public class CustomToolbar : StackLayout
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Start,
             BackgroundColor = Colors.Blue,
-            HeightRequest = 60,
+            HeightRequest = 80,
         };
-        HeightRequest = 60;
+        HeightRequest = 80;
         BackgroundColor = Colors.Blue;
-        if (DeviceInfo.Platform == DevicePlatform.iOS)
-        {
-            gridContainer.HeightRequest = 75;
-            HeightRequest = 75;
-        }
+        
         gridContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
         gridContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
         gridContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
@@ -108,15 +104,14 @@ public class CustomToolbar : StackLayout
         {
             BackgroundColor = Colors.Blue,
             //WidthRequest = ColumnWidth,            
-            HeightRequest = 60,
+            HeightRequest = 80,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         };
 
         if (DeviceInfo.Platform == DevicePlatform.iOS)
         {
-            stack.Margin = new Thickness(0, 20, 0, 0);
-            stack.HeightRequest = 75;
+            stack.Margin = new Thickness(0, 30, 0, 0);
         }
             
 
