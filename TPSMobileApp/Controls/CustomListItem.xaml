@@ -14,6 +14,7 @@
         <Label
             Grid.Row="0"
             Grid.Column="0"
+            Grid.ColumnSpan="3"
             FontAttributes="Bold"
             FontSize="16"
             Text="{Binding Description}"
@@ -157,6 +158,7 @@
         <HorizontalStackLayout
             Grid.Row="3"
             Grid.Column="0"
+            Grid.ColumnSpan="3"
             IsVisible="{Binding IsLastPurchStack}"
             Spacing="5">
 

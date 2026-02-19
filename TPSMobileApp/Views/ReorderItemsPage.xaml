@@ -40,24 +40,20 @@
 
             <controls:CustomHeader Grid.Row="0" />
 
-            <StackLayout Grid.Row="1">
-                <!--
+            <!--
                 <Label Text="Reorder Items" Margin="0,15,0,10" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"  BackgroundColor="White" TextColor="Blue"/>
                 <BoxView BackgroundColor="gray" Color="lightgray" HeightRequest="3" HorizontalOptions="Fill" VerticalOptions="Fill" />
-                -->
-                <syncfusion:SfListView
-                    x:Name="ReorderItemsList"
-                    AutoFitMode="DynamicHeight"
-                    ItemAppearing="ReorderItemsList_ItemAppearing"
-                    ItemsSourceChangeCachingStrategy="ClearItems"
-                    SelectionMode="None">
-                    <syncfusion:SfListView.ItemTemplate>
-                        <DataTemplate>
-                            <controls:CustomListItem x:Name="CustomListItem" />
-                        </DataTemplate>
-                    </syncfusion:SfListView.ItemTemplate>
-                </syncfusion:SfListView>
-            </StackLayout>
+            -->
+            <CollectionView
+                x:Name="ReorderItemsList"
+                Grid.Row="1"
+                SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <controls:CustomListItem x:Name="CustomListItem" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <controls:CustomToolbar Grid.Row="2" />
         </Grid>
