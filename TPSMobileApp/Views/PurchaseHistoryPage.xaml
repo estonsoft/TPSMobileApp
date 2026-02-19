@@ -43,7 +43,7 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <Grid>
+        <Grid SafeAreaEdges="None">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

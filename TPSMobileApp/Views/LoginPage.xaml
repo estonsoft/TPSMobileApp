@@ -14,7 +14,7 @@
     mc:Ignorable="d">
 
     <ContentPage.Content>
-        <Grid>
+        <Grid SafeAreaEdges="None">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>

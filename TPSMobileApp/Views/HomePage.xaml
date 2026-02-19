@@ -10,8 +10,7 @@
     xmlns:vm="clr-namespace:TPSMobileApp.ViewModels"
     Title="Profit Order"
     BackgroundColor="White"
-    NavigationPage.HasNavigationBar="False"
-    SafeAreaEdges="None">
+    NavigationPage.HasNavigationBar="False">
 
     <NavigationPage.TitleView>
         <StackLayout

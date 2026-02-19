@@ -9,7 +9,7 @@
     Shell.NavBarIsVisible="False">
 
     <ContentPage.Content>
-        <Grid>
+        <Grid SafeAreaEdges="None">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="60" />

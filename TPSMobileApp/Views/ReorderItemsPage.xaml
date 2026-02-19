@@ -31,7 +31,7 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <Grid>
+        <Grid SafeAreaEdges="None">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="*" />
@@ -39,11 +39,6 @@
             </Grid.RowDefinitions>
 
             <controls:CustomHeader Grid.Row="0" />
-
-            <!--
-                <Label Text="Reorder Items" Margin="0,15,0,10" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"  BackgroundColor="White" TextColor="Blue"/>
-                <BoxView BackgroundColor="gray" Color="lightgray" HeightRequest="3" HorizontalOptions="Fill" VerticalOptions="Fill" />
-            -->
             <CollectionView
                 x:Name="ReorderItemsList"
                 Grid.Row="1"
