@@ -6,7 +6,7 @@ namespace TPSMobileApp.Data
     public class SoapService : ISoapService
     {
         private readonly HttpClient _httpClient;
-        private const string SoapUrl = "https://ramtest.qwikpoint.net/RemotePhoneApp.asmx";
+        private string SoapUrl = "https://ramtest.qwikpoint.net/RemotePhoneApp.asmx";
 
         public SoapService(HttpClient httpClient)
         {
@@ -15,6 +15,7 @@ namespace TPSMobileApp.Data
 
         private async Task<string> SendSoapRequestAsync(string soapAction, string soapBody)
         {
+            SoapUrl = App.g_ServerURL + "/RemotePhoneApp.asmx";
             var content = new StringContent(soapBody, Encoding.UTF8, "text/xml");
 
             content.Headers.Clear();

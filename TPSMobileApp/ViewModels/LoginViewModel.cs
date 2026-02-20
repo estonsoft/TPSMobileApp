@@ -25,9 +25,15 @@
         {
             if (User.ToLower() == "app_test")
             {
-                App.g_ServerURL = "https://ramtest.qwikpoint.net";
-                App.UpdateServerLinks();
+                App.g_ServerURL = "https://store.qwikpoint.net";
             }
+            else
+            {
+                App.g_ServerURL = "https://ramtest.qwikpoint.net";
+            }
+
+
+            App.UpdateServerLinks();
 
             App.g_IsLoggedIn = true;
             App.g_UserName = User;
