@@ -15,10 +15,13 @@ public partial class SplashScreen : ContentPage
         {
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                App.g_App.MainPage = new AppShell();
+                App.g_IsSplashShown = true;
+                App.g_Shell.GoToHome();
             });
         }, TaskScheduler.FromCurrentSynchronizationContext());
     }
+
+
 
     private async Task LoadSettings()
     {

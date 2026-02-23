@@ -44,7 +44,9 @@ namespace TPSMobileApp
         public static Boolean g_HoldForReview { get; set; }
         public static Boolean g_ForceSubmit { get; set; }
         public static Boolean g_BlockItemsNoQOH { get; set; }
+
         public static Boolean g_IsScandit { get; set; }
+        public static Boolean g_IsSplashShown { get; set; }
         public static Boolean g_IsSalesUser { get; set; }
         public static Boolean g_IsChainManager { get; set; }
         public static Boolean g_IsAutoAdd1 { get; set; }
@@ -80,13 +82,16 @@ namespace TPSMobileApp
             InitializeComponent();
             Application.Current.UserAppTheme = AppTheme.Light;
             g_App = this;
+            g_IsSplashShown = false;
             CommManager = _commManager;
 
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjQ0OTcyOEAzMTM5MmUzNDJlMzBoTVFSazNhbDdpOTVGMVE3VXExSzNPZENwUFJ5WmhnT2ZxaDQrK2dBQ0hJPQ==");
-            
-            MainPage = new SplashScreen();
         }
 
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            return new Window(new AppShell());
+        }
         public static void UpdateServerLinks()
         {
             Constants.BaseURL = App.g_ServerURL;

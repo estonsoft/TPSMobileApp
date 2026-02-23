@@ -23,6 +23,7 @@ namespace TPSMobileApp
             //LogoURL = Constants.LogoUrl;
 
             Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
+            Routing.RegisterRoute(nameof(SplashScreen), typeof(SplashScreen));
             Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
             Routing.RegisterRoute(nameof(DeliveryOptionsPage), typeof(DeliveryOptionsPage));
             Routing.RegisterRoute(nameof(LocationsPage), typeof(LocationsPage));
@@ -83,7 +84,7 @@ namespace TPSMobileApp
 
         public async Task<int> GoToHome()
         {
-            App.g_HeaderTitle = "Profit Order";
+            App.g_HeaderTitle = "Profit Order";            
             try
             {
                 await Current.GoToAsync("//HomePage");
@@ -128,6 +129,13 @@ namespace TPSMobileApp
 
             App.g_HeaderTitle = "Print Labels";
             await Current.GoToAsync("//HomePage/LabelCartPage");
+            return 0;
+        }
+
+        public async Task<int> GoToSplash()
+        {   
+            App.g_HeaderTitle = "Settings";
+            await Current.GoToAsync("//HomePage/SplashScreen");
             return 0;
         }
         public async Task<int> GoToSettings()

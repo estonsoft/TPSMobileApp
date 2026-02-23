@@ -1721,9 +1721,8 @@ namespace TPSMobileApp
                         String[] aCust = s.Split("|");
                         if (aCust.Count() < 2)
                         {
-                            return;
+                            continue;
                         }
-                        Debug.WriteLine("Sales Customer");
                         SalesCustomer c = new SalesCustomer();
                         c.CustNo = aCust[0];
                         c.CompanyName = aCust[1];
@@ -1760,7 +1759,6 @@ namespace TPSMobileApp
                         c.TermsDesc = aCust[12];
                         try
                         {
-                            Debug.WriteLine("Payment date");
                             if (aCust[13] == "0")
                             {
                                 c.LastPaymentDate = "N/A";
@@ -1775,7 +1773,6 @@ namespace TPSMobileApp
                         catch { }
                         try
                         {
-                            Debug.WriteLine("Last Order");
                             if (aCust[14] == "0")
                             {
                                 c.LastOrderDate = "N/A";
@@ -1790,7 +1787,6 @@ namespace TPSMobileApp
                         catch { }
                         try
                         {
-                            Debug.WriteLine("Min Order");
                             c.MinOrderAmount = Decimal.Parse(aCust[15]);
                             c.ShippingFee = Decimal.Parse(aCust[16]);
                             c.MinOrderQty = Decimal.Parse(aCust[17]);
