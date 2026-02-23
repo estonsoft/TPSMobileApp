@@ -10,8 +10,6 @@
 
             App.g_HomePage = this;
 
-            LoadCategories();
-
             BannerImage.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
             RequestCameraPermission();
             InitializeTimer();
@@ -159,6 +157,8 @@
             SearchText.Text = "";
 
             RefreshCategoryList();
+
+            LoadCategories();
         }
 
         public void SetLoginControls()
@@ -169,8 +169,23 @@
 
         public void LoadCategories()
         {
-            List<Category> categories = App.g_HomePageCategoryList;
-            TopCategoriesCollectionView.ItemsSource = categories;
+            Task.Run(() =>
+            {
+                //Database db = new Database();
+                App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
+            }).ContinueWith(t =>
+            {
+                if (t.Exception != null)
+                {
+                    // Handle exceptions if needed
+                    return;
+                }
+                // Update UI on the main thread
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    TopCategoriesCollectionView.ItemsSource = App.g_HomePageCategoryList;
+                });
+            });
         }
 
         async void CategoryTapped(String Code, String Description)

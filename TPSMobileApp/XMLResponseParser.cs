@@ -54,15 +54,10 @@ namespace TPSMobileApp
             {
                 String sCategories = response;
                 String[] aCategories = sCategories.Split('~');
+                List<Category> categories = new List<Category>();
+                List<Subcategory> subcategories = new List<Subcategory>();
                 if (aCategories.Length > 1)
                 {
-                    //Database db = new Database();
-
-                    App.g_db.BeginTransaction();
-
-                    App.g_db.DeleteCategories();
-                    App.g_db.DeleteSubcategories();
-
                     foreach (String s in aCategories)
                     {
                         String[] aCategory = s.Split("|");
@@ -80,15 +75,7 @@ namespace TPSMobileApp
                             cat.ImageURL = Constants.CategoryImageUrl + cat.Code + ".png";
                             cat.Rank = Convert.ToInt32(aCategory[3].Trim());
                             cat.HomePage = Convert.ToInt32(aCategory[4].Trim());
-
-                            try
-                            {
-                                //App.g_db.SaveCategory(cat);
-                            }
-                            catch (Exception ex)
-                            {
-                                String sMsg = ex.Message;
-                            }
+                            categories.Add(cat);
                         }
                         else
                         {
@@ -97,22 +84,19 @@ namespace TPSMobileApp
                             subcat.Code = aCategory[1];
                             subcat.Description = aCategory[2].Trim();
                             subcat.Rank = Convert.ToInt32(aCategory[3].Trim());
-
-                            try
-                            {
-                                //App.g_db.SaveSubcategory(subcat);
-                            }
-                            catch (Exception ex)
-                            {
-                                String sMsg = ex.Message;
-                            }
+                            subcategories.Add(subcat);
                         }
                     }
+                    App.g_db.BeginTransaction();
+
+                    App.g_db.DeleteCategories();
+                    App.g_db.DeleteSubcategories();
+                    App.g_db.SaveCategory(categories);
+                    App.g_db.SaveSubcategory(subcategories);
+
+                    App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
 
                     App.g_db.CommitTransaction();
-
-                    //App.g_CategoryList = App.g_db.GetCategories();
-                    App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
                 }
 
                 try
@@ -219,13 +203,6 @@ namespace TPSMobileApp
                             subsubcategories.Add(subsubcat);
                         }
                     }
-                }
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
                 }
 
                 try
@@ -953,11 +930,6 @@ namespace TPSMobileApp
 
                         if (App.g_Customer.CustNo != OldCustNo)
                         {
-                            //App.g_db.ClearCartItems();
-                            //App.g_db.DeleteOrderHistory();
-                            //App.g_db.DeleteReorderItems();
-                            //await App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
-
                             if (App.g_UserName.ToLower() == "app_test")
                             {
                                 App.g_db.DeleteCategories();
