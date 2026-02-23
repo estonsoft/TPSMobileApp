@@ -45,11 +45,9 @@
             //Database db = new Database();
             App.g_db.SaveCustomer(App.g_Customer);
 
-            Task.Run(async () =>
-            {
-                await App.CommManager.ValidateLogin(User, Password, App.g_Customer.UniqueId);
-            });
-            
+
+            App.CommManager.ValidateLogin(User, Password, App.g_Customer.UniqueId);
+
         }
     }
 }

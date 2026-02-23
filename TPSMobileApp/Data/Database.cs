@@ -844,7 +844,6 @@ namespace TPSMobileApp
 
         public int SaveSalesCustomer(List<SalesCustomer> cust)
         {
-            _database.Delete(cust);
             return _database.InsertAll(cust);
         }
 

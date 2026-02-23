@@ -10,6 +10,7 @@
 
             App.g_HomePage = this;
 
+            BannerImage.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
             RequestCameraPermission();
             InitializeTimer();
         }
@@ -75,62 +76,48 @@
         private async void UpdateBanner()
         {
             //Database db = new Database();
+
+            var banners = App.g_db.GetBanners();
+
             try
             {
-                if (App.g_IsSplashShown)
+                if (banners.Count == 0)
                 {
-                    var banners = App.g_db.GetBanners();
-
-                    try
-                    {
-                        if (banners.Count == 0)
-                        {
-                            BannerImage.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
-                            return;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        BannerImage.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
-                        return;
-                    }
-
-                    int iNextIndex = 0;
-                    String CurrentBanner = BannerImage.Source.ToString();
-
-                    foreach (var b in banners)
-                    {
-                        iNextIndex++;
-
-                        if (CurrentBanner.Contains(b.BannerName))
-                        {
-                            break;
-                        }
-                    }
-
-                    if (iNextIndex >= banners.Count)
-                    {
-                        iNextIndex = 0;
-                    }
-
-                    Banner banner = banners[iNextIndex];
-
-                    BannerImage.Source = ImageSource.FromUri(new Uri(banner.BannerURL));
+                    BannerImage.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
+                    return;
                 }
             }
             catch (Exception ex)
             {
-                // Handle exceptions if needed
+                BannerImage.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
+                return;
             }
+
+            int iNextIndex = 0;
+            String CurrentBanner = BannerImage.Source.ToString();
+
+            foreach (var b in banners)
+            {
+                iNextIndex++;
+
+                if (CurrentBanner.Contains(b.BannerName))
+                {
+                    break;
+                }
+            }
+
+            if (iNextIndex >= banners.Count)
+            {
+                iNextIndex = 0;
+            }
+
+            Banner banner = banners[iNextIndex];
+
+            BannerImage.Source = ImageSource.FromUri(new Uri(banner.BannerURL));
         }
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            if (!App.g_IsSplashShown)
-            {
-                await App.g_Shell.GoToSplash();
-                return;
-            }
             if (!App.g_IsLoggedIn)
             {
                 await App.g_Shell.GoToLogin();
