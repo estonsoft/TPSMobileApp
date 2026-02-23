@@ -21,8 +21,9 @@
             }
         }
 
-        private async void OnLoginClicked(object obj)
+        private void OnLoginClicked(object obj)
         {
+            App.g_LoginPage.ShowAnimation();
             if (User.ToLower() == "app_test")
             {
                 App.g_ServerURL = "https://store.qwikpoint.net";
@@ -44,7 +45,11 @@
             //Database db = new Database();
             App.g_db.SaveCustomer(App.g_Customer);
 
-            await App.CommManager.ValidateLogin(User, Password, App.g_Customer.UniqueId);
+            Task.Run(async () =>
+            {
+                await App.CommManager.ValidateLogin(User, Password, App.g_Customer.UniqueId);
+            });
+            
         }
     }
 }

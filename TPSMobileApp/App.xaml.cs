@@ -97,34 +97,34 @@ namespace TPSMobileApp
             Constants.ItemImageUrl = App.g_ServerURL + "/images/items/";
         }
 
-        public static void RefreshAll()
+        public static async Task RefreshAll()
         {
             if (App.g_ServerURL != "")
             {
                 // start with banners  services will call next when one is done
-                App.CommManager.GetBanners();
+                await App.CommManager.GetBanners();
             }
         }
 
-        public static void RefreshQOH()
+        public static async Task RefreshQOH()
         {
             try
             {
                 if ((App.g_Customer.CustNo != null) && (App.g_Customer.CustNo != "") && (App.g_Customer.CustNo != "0"))
                 {
-                    App.CommManager.GetItemQOH2(App.g_UserName, App.g_Customer.CustNo);
+                    await App.CommManager.GetItemQOH2(App.g_UserName, App.g_Customer.CustNo);
                 }
             }
             catch { }
         }
 
-        public static void RefreshOrderHistory()
+        public static async Task RefreshOrderHistory()
         {
             try
             {
                 if ((App.g_Customer.CustNo != null) && (App.g_Customer.CustNo != "") && (App.g_Customer.CustNo != "0"))
                 {
-                    App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
+                    await App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
                 }
             }
             catch { }

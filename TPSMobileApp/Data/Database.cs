@@ -160,7 +160,7 @@ namespace TPSMobileApp
             {
                 sQuery += " order by Description";
             }
-            lock (locker)
+            
             {
                 return _database.Query<Item>(sQuery);
             }
@@ -168,7 +168,7 @@ namespace TPSMobileApp
 
         public int InsertDiscontinuedItems()
         {
-            lock (locker)
+            
             {
                 String sQuery = "delete from [DiscontinuedItem]";
                 _database.Execute(sQuery);
@@ -180,7 +180,7 @@ namespace TPSMobileApp
 
         public int DeleteDiscontinuedItem(string ItemNo)
         {
-            lock (locker)
+            
             {
                 String sQuery = "delete from [DiscontinuedItem] where ItemNo = " + ItemNo;
                 return _database.Execute(sQuery);
@@ -189,7 +189,7 @@ namespace TPSMobileApp
 
         public int UpdateDiscontinuedItems()
         {
-            lock (locker)
+            
             {
                 String sQuery = "update [Item] set Status = 'D' where ItemNo in (select ItemNo from [DiscontinuedItem])";
                 return _database.Execute(sQuery);
@@ -198,7 +198,7 @@ namespace TPSMobileApp
 
         public List<Item> GetCartItems()
         {
-            lock (locker)
+            
             {
                 String sQuery = "select * from [Item] where QtyOrder > 0 or QtyCredit > 0 or QtyLabel > 0";
                 return _database.Query<Item>(sQuery);
@@ -207,7 +207,7 @@ namespace TPSMobileApp
 
         public List<Item> GetOrderCartItems()
         {
-            lock (locker)
+            
             {
                 String sQuery = "select * from [Item] where QtyOrder > 0 ";
                 if (App.g_ShoppingCartSort == "F")
@@ -228,7 +228,7 @@ namespace TPSMobileApp
 
         public List<Item> GetReturnCartItems()
         {
-            lock (locker)
+            
             {
                 String sQuery = "select * from [Item] where QtyCredit > 0 order by Description";
                 return _database.Query<Item>(sQuery);
@@ -237,7 +237,7 @@ namespace TPSMobileApp
 
         public List<Item> GetLabelCartItems()
         {
-            lock (locker)
+            
             {
                 String sQuery = "select * from [Item] where QtyLabel > 0 order by Description";
                 return _database.Query<Item>(sQuery);
@@ -246,7 +246,7 @@ namespace TPSMobileApp
 
         public int GetCartPieces()
         {
-            lock (locker)
+            
             {
                 String sQuery = "select sum(QtyOrder) from [Item]";
                 return _database.ExecuteScalar<int>(sQuery);
@@ -255,7 +255,7 @@ namespace TPSMobileApp
 
         public int ClearCartItems()
         {
-            lock (locker)
+            
             {
                 String sQuery = "update [Item] set QtyOrder = 0, QtyCredit = 0, QtyLabel = 0, PriceOrder = 0, LineNo = 0";
                 return _database.Execute(sQuery);
@@ -264,7 +264,7 @@ namespace TPSMobileApp
 
         public int ClearOrderCartItems()
         {
-            lock (locker)
+            
             {
                 String sQuery = "update [Item] set QtyOrder = 0, PriceOrder = 0, LineNo = 0";
                 return _database.Execute(sQuery);
@@ -273,7 +273,7 @@ namespace TPSMobileApp
 
         public int ClearReturnCartItems()
         {
-            lock (locker)
+            
             {
                 String sQuery = "update [Item] set QtyCredit = 0";
                 return _database.Execute(sQuery);
@@ -282,7 +282,7 @@ namespace TPSMobileApp
 
         public int ClearLabelCartItems()
         {
-            lock (locker)
+            
             {
                 String sQuery = "update [Item] set QtyLabel = 0";
                 return _database.Execute(sQuery);
@@ -291,7 +291,7 @@ namespace TPSMobileApp
 
         public int GetItemCount()
         {
-            lock (locker)
+            
             {
                 String sQuery = "select count(*) from [Item]";
                 return _database.ExecuteScalar<int>(sQuery);
@@ -300,7 +300,7 @@ namespace TPSMobileApp
 
         public Item FindItem(int item_no, string item_ref_no)
         {
-            lock (locker)
+            
             {
                 if (App.g_IsRefNoLookup)
                 {
@@ -315,7 +315,7 @@ namespace TPSMobileApp
 
         public Item FindItemUPC_1(string UPC)
         {
-            lock (locker)
+            
             {
                 return _database.Find<Item>(s => s.UPC_1 == UPC);
             }
@@ -323,7 +323,7 @@ namespace TPSMobileApp
 
         public Item FindItemUPC_2(string UPC)
         {
-            lock (locker)
+            
             {
                 return _database.Find<Item>(s => s.UPC_1 == UPC);
             }
@@ -331,7 +331,7 @@ namespace TPSMobileApp
 
         public Item FindItemUPC_3(string UPC)
         {
-            lock (locker)
+            
             {
                 return _database.Find<Item>(s => s.UPC_3 == UPC);
             }
@@ -339,7 +339,7 @@ namespace TPSMobileApp
 
         public Item FindItemUPC_4(string UPC)
         {
-            lock (locker)
+            
             {
                 return _database.Find<Item>(s => s.UPC_4 == UPC);
             }
@@ -347,7 +347,7 @@ namespace TPSMobileApp
 
         public List<Item> SearchItemsQuickEntry(String sSearch)
         {
-            lock (locker)
+            
             {
                 Decimal dItemNo = 0;
                 try
@@ -517,7 +517,7 @@ namespace TPSMobileApp
 
         public int SaveItem(Item item)
         {
-            lock (locker)
+            
             {
                 int i = _database.InsertOrReplace(item);
                 return i;
@@ -548,7 +548,7 @@ namespace TPSMobileApp
 
         public int UpdateItem(Item item)
         {
-            lock (locker)
+            
             {
                 return _database.Update(item);
             }
@@ -556,7 +556,7 @@ namespace TPSMobileApp
 
         public int DeleteItems()
         {
-            lock (locker)
+            
             {
                 return _database.Execute("delete from Item");
             }
@@ -564,7 +564,7 @@ namespace TPSMobileApp
 
         public List<Item> GetItems()
         {
-            lock (locker)
+            
             {
                 String sQuery = "select * from [Item] ";
                 return _database.Query<Item>(sQuery);
@@ -573,7 +573,7 @@ namespace TPSMobileApp
 
         public int UpdateItemQty(int iItem, int iQty)
         {
-            lock (locker)
+            
             {
                 _database.Execute("update Item set QtyOrder = QtyOrder + " + iQty.ToString() + " where ItemNo = " + iItem.ToString());
                 _database.Execute("update Item set LineNo = ifnull((select max(LineNo) from Item), 0) + 1 where LineNo = 0 and ItemNo = " + iItem.ToString());
@@ -592,7 +592,7 @@ namespace TPSMobileApp
 
         public int UpdateItemCreditQty(int iItem, int iQty)
         {
-            lock (locker)
+            
             {
                 _database.Execute("update Item set QtyCredit = QtyCredit + " + iQty.ToString() + " where ItemNo = " + iItem.ToString());
 
@@ -611,7 +611,7 @@ namespace TPSMobileApp
         public int UpdateItemLabelQty(int iItem, int iQty)
         {
 
-            lock (locker)
+            
             {
                 _database.Execute("update Item set QtyLabel = QtyLabel + " + iQty.ToString() + " where ItemNo = " + iItem.ToString());
 
@@ -629,7 +629,7 @@ namespace TPSMobileApp
 
         public int UpdateItemQty(int iItem, int iQtyOrder, int iQtyCredit, int iQtyLabel)
         {
-            lock (locker)
+            
             {
                 _database.Execute("update Item set QtyOrder = QtyOrder + " + iQtyOrder.ToString() + " where ItemNo = " + iItem.ToString());
                 _database.Execute("update Item set QtyCredit = QtyCredit + " + iQtyCredit.ToString() + " where ItemNo = " + iItem.ToString());
@@ -642,7 +642,7 @@ namespace TPSMobileApp
 
         public int UpdateItemQtySet(int iItem, int iQty)
         {
-            lock (locker)
+            
             {
                 _database.Execute("update Item set QtyOrder = " + iQty.ToString() + " where ItemNo = " + iItem.ToString());
                 _database.Execute("update Item set LineNo = ifnull((select max(LineNo) from Item), 0) + 1 where LineNo = 0 and ItemNo = " + iItem.ToString());
@@ -661,7 +661,7 @@ namespace TPSMobileApp
 
         public int UpdateItemCreditQtySet(int iItem, int iQty)
         {
-            lock (locker)
+            
             {
                 _database.Execute("update Item set QtyCredit = " + iQty.ToString() + " where ItemNo = " + iItem.ToString());
 
@@ -679,7 +679,7 @@ namespace TPSMobileApp
 
         public int UpdateItemLabelQtySet(int iItem, int iQty)
         {
-            lock (locker)
+            
             {
                 _database.Execute("update Item set QtyLabel = " + iQty.ToString() + " where ItemNo = " + iItem.ToString());
 
@@ -697,7 +697,7 @@ namespace TPSMobileApp
 
         public int UpdateItemQtySet(int iItem, int iQtyOrder, int iQtyCredit, int iQtyLabel, int iLineNo)
         {
-            lock (locker)
+            
             {
                 _database.Execute("update Item set QtyOrder = " + iQtyOrder.ToString() + " where ItemNo = " + iItem.ToString());
                 _database.Execute("update Item set QtyCredit = " + iQtyCredit.ToString() + " where ItemNo = " + iItem.ToString());
@@ -710,7 +710,7 @@ namespace TPSMobileApp
 
         public int UpdateItemQOH(int iItem, int iQOH)
         {
-            lock (locker)
+            
             {
                 _database.Execute("update Item set QOH = " + iQOH.ToString() + " where ItemNo = " + iItem.ToString());
                 _database.Execute("update ReorderItem set QOH = " + iQOH.ToString() + " where ItemNo = " + iItem.ToString());
@@ -722,7 +722,7 @@ namespace TPSMobileApp
 
         public int GetItemQty(int iItem)
         {
-            lock (locker)
+            
             {
                 return _database.ExecuteScalar<int>("select QtyOrder from Item where ItemNo = " + iItem.ToString());
             }
@@ -730,7 +730,7 @@ namespace TPSMobileApp
 
         public int DeleteSalesCustomers()
         {
-            lock (locker)
+            
             {
                 return _database.Execute("delete from [SalesCustomer]");
             }
@@ -744,7 +744,7 @@ namespace TPSMobileApp
 
         public List<SalesCustomer> GetSalesCustomers(string SearchCustomer)
         {
-            lock (locker)
+            
             {
                 String sOrderBy = " order by CompanyName ";
                 String sQuery = "select * from [SalesCustomer] ";
@@ -766,7 +766,7 @@ namespace TPSMobileApp
 
         public void UpdateCustomerCartItems()
         {
-            lock (locker)
+            
             {
                 int iRows = 0;
 
@@ -794,7 +794,7 @@ namespace TPSMobileApp
 
         public List<SalesCustomer> GetSalesCustomersWithPendingOrders(string SearchCustomer)
         {
-            lock (locker)
+            
             {
                 String sOrderBy = " order by CompanyName ";
                 String sQuery = "select * from [SalesCustomer] ";
@@ -827,7 +827,7 @@ namespace TPSMobileApp
 
         public SalesCustomer FindSalesCustomer(string CustNo)
         {
-            lock (locker)
+            
             {
                 return _database.Find<SalesCustomer>(s => s.CustNo == CustNo);
             }
@@ -835,25 +835,22 @@ namespace TPSMobileApp
 
         public List<Category> GetCategories()
         {
-            lock (locker)
+            
             {
                 String sQuery = "select * from Category order by Rank";
                 return _database.Query<Category>(sQuery);
             }
         }
 
-        public int SaveSalesCustomer(SalesCustomer cust)
+        public int SaveSalesCustomer(List<SalesCustomer> cust)
         {
-            lock (locker)
-            {
-                _database.Delete(cust);
-                return _database.Insert(cust);
-            }
+            _database.Delete(cust);
+            return _database.InsertAll(cust);
         }
 
         public List<Category> GetHomePageCategories()
         {
-            lock (locker)
+            
             {
                 String sQuery = "select * from Category where HomePage > 0 order by HomePage limit 4";
                 return _database.Query<Category>(sQuery);
@@ -862,7 +859,7 @@ namespace TPSMobileApp
 
         public Category GetCategory(string sCategoryCode)
         {
-            lock (locker)
+            
             {
                 return _database.Find<Category>(s => s.Code == sCategoryCode);
             }
@@ -870,7 +867,7 @@ namespace TPSMobileApp
 
         public int SaveCategory(List<Category> category)
         {
-            lock (locker)
+            
             {
                 int i = _database.InsertAll(category);
                 return i;
@@ -879,7 +876,7 @@ namespace TPSMobileApp
 
         public int DeleteCategories()
         {
-            lock (locker)
+            
             {
                 return _database.Execute("delete from Category");
             }
@@ -887,7 +884,7 @@ namespace TPSMobileApp
 
         public List<Subcategory> GetSubcategory()
         {
-            lock (locker)
+            
             {
                 return _database.Table<Subcategory>().OrderBy(t => t.Description).ToList();
             }
@@ -895,7 +892,7 @@ namespace TPSMobileApp
 
         public List<Subcategory> GetSubcategory(string sCategoryCode)
         {
-            lock (locker)
+            
             {
                 String sQuery = "select * from Subcategory where Category = '" + sCategoryCode + "' order by Description";
                 return _database.Query<Subcategory>(sQuery);
@@ -904,7 +901,7 @@ namespace TPSMobileApp
 
         public int SaveSubcategory(List<Subcategory> subcategory)
         {
-            lock (locker)
+            
             {
                 int i = _database.InsertAll(subcategory);
                 return i;
@@ -913,7 +910,7 @@ namespace TPSMobileApp
 
         public int GetSubcategoryCount(string sCategoryCode)
         {
-            lock (locker)
+            
             {
                 String sQuery = "select count(*) from [Subcategory] where Category = '" + sCategoryCode + "'";
                 return _database.ExecuteScalar<int>(sQuery);
@@ -927,7 +924,7 @@ namespace TPSMobileApp
 
         public int DeleteSubcategories()
         {
-            lock (locker)
+            
             {
                 return _database.Execute("delete from Subcategory");
             }
@@ -935,7 +932,7 @@ namespace TPSMobileApp
 
         public List<Subsubcategory> GetSubsubcategory()
         {
-            lock (locker)
+            
             {
                 return _database.Table<Subsubcategory>().OrderBy(t => t.Description).ToList();
             }
@@ -943,7 +940,7 @@ namespace TPSMobileApp
 
         public List<Subsubcategory> GetSubsubcategory(string sCategoryCode, string sSubcategoryCode)
         {
-            lock (locker)
+            
             {
                 var category = sCategoryCode?.Trim();
                 var subcategory = sSubcategoryCode?.Trim();
@@ -961,7 +958,7 @@ namespace TPSMobileApp
 
         public int GetSubsubcategoryCount(string sCategoryCode, string sSubcategoryCode)
         {
-            lock (locker)
+            
             {
                 String sQuery = "select count(*) from [Subsubcategory] where Category = '" + sCategoryCode + "' and Subcategory = '" + sSubcategoryCode + "'";
                 return _database.ExecuteScalar<int>(sQuery);
@@ -970,7 +967,7 @@ namespace TPSMobileApp
 
         public int SaveSubsubcategory(List<Subsubcategory> subsubcategory)
         {
-            lock (locker)
+            
             {
                 int i = _database.InsertAll(subsubcategory);
                 return i;
@@ -979,7 +976,7 @@ namespace TPSMobileApp
 
         public int DeleteSubsubcategory(Subsubcategory subsubcategory)
         {
-            lock (locker)
+            
             {
                 return _database.Delete(subsubcategory);
             }
@@ -987,7 +984,7 @@ namespace TPSMobileApp
 
         public int DeleteSubsubcategories()
         {
-            lock (locker)
+            
             {
                 return _database.Execute("delete from Subsubcategory");
             }
@@ -995,7 +992,7 @@ namespace TPSMobileApp
 
         public int DeleteBannersAsync()
         {
-            lock (locker)
+            
             {
                 return _database.Execute("delete from Banner");
             }
@@ -1003,7 +1000,7 @@ namespace TPSMobileApp
 
         public int SaveBannerAsync(Banner banner)
         {
-            lock (locker)
+            
             {
                 return _database.Insert(banner);
             }
@@ -1011,7 +1008,7 @@ namespace TPSMobileApp
 
         public List<Banner> GetBanners()
         {
-            lock (locker)
+            
             {
                 return _database.Table<Banner>().OrderBy(t => t.BannerName).ToList();
             }
@@ -1019,7 +1016,7 @@ namespace TPSMobileApp
 
         public int SaveCustomer(Customer cust)
         {
-            lock (locker)
+            
             {
                 _database.Delete(cust);
                 int i = _database.Insert(cust);
@@ -1029,7 +1026,7 @@ namespace TPSMobileApp
 
         public Customer GetCustomer()
         {
-            lock (locker)
+            
             {
                 //String sQuery = "select * from Customer limit 1";
                 return _database.Find<Customer>(s => s.CustId == -1);
@@ -1038,7 +1035,7 @@ namespace TPSMobileApp
 
         public string GetSetting(string sKey)
         {
-            lock (locker)
+            
             {
                 try
                 {
@@ -1062,7 +1059,7 @@ namespace TPSMobileApp
 
         public int SaveSetting(string sKey, string sValue)
         {
-            lock (locker)
+            
             {
                 Setting setting = new Setting();
                 setting.Key = sKey;
@@ -1074,7 +1071,7 @@ namespace TPSMobileApp
 
         public List<Setting> GetSettings()
         {
-            lock (locker)
+            
             {
                 return _database.Table<Setting>().ToList();
             }
@@ -1082,7 +1079,7 @@ namespace TPSMobileApp
 
         public int SaveLocation(Location location)
         {
-            lock (locker)
+            
             {
                 return _database.InsertOrReplace(location);
             }
@@ -1090,7 +1087,7 @@ namespace TPSMobileApp
 
         public int DeleteLocations()
         {
-            lock (locker)
+            
             {
                 return _database.Execute("delete from Location");
             }
@@ -1098,7 +1095,7 @@ namespace TPSMobileApp
 
         public Location GetLocation(int iLocation)
         {
-            lock (locker)
+            
             {
                 return _database.Find<Location>(s => s.LocationId == iLocation);
             }
@@ -1106,7 +1103,7 @@ namespace TPSMobileApp
 
         public int SaveOrderHeader(OrderHeader oh)
         {
-            lock (locker)
+            
             {
                 return _database.InsertOrReplace(oh);
             }
@@ -1115,7 +1112,7 @@ namespace TPSMobileApp
         public List<OrderHeader> GetOrderHeaders()
         {
             //return _database.Table<OrderHeader>().OrderByDescending(t => t.OrderDate).ToList();
-            lock (locker)
+            
             {
                 String sQuery = "select * from [OrderHeader] where [CustId] = " + App.g_Customer.CustNo + " order by OrderDate desc";
 
@@ -1125,7 +1122,7 @@ namespace TPSMobileApp
 
         public OrderHeader GetOrderHeader(string sOrderNo)
         {
-            lock (locker)
+            
             {
                 return _database.Find<OrderHeader>(s => s.OrderNo == sOrderNo);
             }
@@ -1133,7 +1130,7 @@ namespace TPSMobileApp
 
         public int DeleteOrderHistory()
         {
-            lock (locker)
+            
             {
                 _database.Execute("delete from OrderHeader");
                 _database.Execute("delete from OrderDetail");
@@ -1143,7 +1140,7 @@ namespace TPSMobileApp
 
         public int SaveOrderDetail(OrderDetail od)
         {
-            lock (locker)
+            
             {
                 return _database.InsertOrReplace(od);
             }
@@ -1151,7 +1148,7 @@ namespace TPSMobileApp
 
         public int DeleteOrderDetail(string sOrderNo)
         {
-            lock (locker)
+            
             {
                 return _database.Execute("delete from OrderDetail where OrderNo = '" + sOrderNo + "'");
             }
@@ -1159,7 +1156,7 @@ namespace TPSMobileApp
 
         public List<OrderDetail> GetOrderDetail(string sOrderNo)
         {
-            lock (locker)
+            
             {
                 String sQuery = "select * from OrderDetail where OrderNo = '" + sOrderNo + "' order by Description";
                 return _database.Query<OrderDetail>(sQuery);
@@ -1168,7 +1165,7 @@ namespace TPSMobileApp
 
         public int UpdateOrderDetailLastPurch()
         {
-            lock (locker)
+            
             {
                 String sQuery = "update OrderDetail set LastPurchDate = (select LastPurchDate from Item i where OrderDetail.ItemNo = i.ItemNo) where ItemNo in (select ItemNo from [OrderDetail])";
                 _database.Execute(sQuery);
@@ -1194,7 +1191,7 @@ namespace TPSMobileApp
 
         public List<ReorderItem> GetReorderItemsOld()
         {
-            lock (locker)
+            
             {
                 String sQuery = "select * from ReorderItem where Status = 'A' order by LastPurchDate desc, Description";
                 return _database.Query<ReorderItem>(sQuery);
@@ -1203,7 +1200,7 @@ namespace TPSMobileApp
 
         public List<Item> GetReorderItems()
         {
-            lock (locker)
+            
             {
                 String sQuery = "select * from Item where Status = 'A' and LastPurchDateDisplay > '' order by LastPurchDate desc, Description";
                 return _database.Query<Item>(sQuery);
@@ -1212,7 +1209,7 @@ namespace TPSMobileApp
 
         public int SaveReorderItem(ReorderItem ri)
         {
-            lock (locker)
+            
             {
                 return _database.InsertOrReplace(ri);
             }
@@ -1220,7 +1217,7 @@ namespace TPSMobileApp
 
         public int GetReorderItemsCount()
         {
-            lock (locker)
+            
             {
                 String sQuery = "select count(*) from [Item] where LastPurchDateDisplay > ''";
                 return _database.ExecuteScalar<int>(sQuery);
@@ -1229,7 +1226,7 @@ namespace TPSMobileApp
 
         public int DeleteReorderItems()
         {
-            lock (locker)
+            
             {
                 return _database.Execute("delete from ReorderItem");
             }
@@ -1253,7 +1250,7 @@ namespace TPSMobileApp
         }
         public int SuspendCartItems(string CustNo)
         {
-            lock (locker)
+            
             {
                 String sQuery = "insert into SuspendItem select '" + CustNo + "', ItemNo, QtyOrder, QtyCredit, QtyLabel, '" + App.g_ServerURL + "', LineNo from [Item] where QtyOrder > 0 or QtyCredit > 0 or QtyLabel > 0";
                 return _database.Execute(sQuery);
@@ -1262,7 +1259,7 @@ namespace TPSMobileApp
 
         public List<SuspendItem> GetSuspendedCartItems(string CustNo)
         {
-            lock (locker)
+            
             {
                 String sQuery = "select * from SuspendItem where CustNo = '" + CustNo + "' and ServerURL = '" + App.g_ServerURL + "'";
                 return _database.Query<SuspendItem>(sQuery);
@@ -1271,7 +1268,7 @@ namespace TPSMobileApp
 
         public int RestoreCartItems(string CustNo)
         {
-            lock (locker)
+            
             {
                 List<SuspendItem> items = GetSuspendedCartItems(CustNo);
 
@@ -1291,7 +1288,7 @@ namespace TPSMobileApp
 
         public int DeleteSuspendedCartItems(string CustNo)
         {
-            lock (locker)
+            
             {
                 return _database.Execute("delete from SuspendItem where CustNo = '" + CustNo + "' and ServerURL = '" + App.g_ServerURL + "'");
             }
@@ -1299,14 +1296,14 @@ namespace TPSMobileApp
 
         public int ClearFlyerItems()
         {
-            lock (locker)
+            
             {
                 return _database.Execute("update Item set FlyerPageNo = 0, FlyerBoxNo = 0, FlyerSection = '', FlyerStartDate = 0, FlyerEndDate = 0, FlyerTopLeftX = 0, FlyerTopLeftY = 0, FlyerBottomRightX = 0, FlyerBottomRightY = 0");
             }
         }
         public int UpdateItemFlyerInfo(FlyerItem item)
         {
-            lock (locker)
+            
             {
                 String sUpdate = "update Item set FlyerPageNo = " + item.Page.ToString() + ", FlyerBoxNo = " + item.Box.ToString();
                 sUpdate += ", FlyerSection = '" + item.Section + "', FlyerStartDate = " + item.StartDate.ToString() + ", FlyerEndDate = " + item.EndDate.ToString();
@@ -1318,7 +1315,7 @@ namespace TPSMobileApp
         }
         public int GetFlyerItemCount()
         {
-            lock (locker)
+            
             {
                 String sQuery = "select count(*) from [Item] where FlyerStartDate <= " + DateTime.Now.ToString("1yyMMdd") + " and FlyerEndDate >= " + DateTime.Now.ToString("1yyMMdd");
                 return _database.ExecuteScalar<int>(sQuery);
@@ -1327,7 +1324,7 @@ namespace TPSMobileApp
 
         public List<Item> SearchItemsMonthlyAdClick(int iPage, int iX, int iY)
         {
-            lock (locker)
+            
             {
                 try
                 {
@@ -1350,7 +1347,7 @@ namespace TPSMobileApp
 
         public int DeleteAll()
         {
-            lock (locker)
+            
             {
                 _database.Execute("delete from Item");
                 _database.Execute("delete from Customer");

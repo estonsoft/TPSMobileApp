@@ -120,6 +120,7 @@
                                 VerticalOptions="Center" />
                         </Grid>
                         <Button
+                            x:Name="buttonLogin"
                             Margin="0,20,0,0"
                             Padding="0,0,0,0"
                             BackgroundColor="blue"
@@ -132,11 +133,15 @@
                             Text="       Sign In       "
                             TextColor="White"
                             TextTransform="None" />
-                        <ActivityIndicator
-                            x:Name="WaitImage"
-                            HeightRequest="80"
+                        <Label
+                            x:Name="waitText"
+                            Padding="10"
+                            BackgroundColor="Yellow"
+                            FontSize="40"
                             HorizontalOptions="Center"
                             IsVisible="{Binding IsLoggingIn}"
+                            Text="Please wait..."
+                            TextColor="Blue"
                             VerticalOptions="Center" />
                     </StackLayout>
                 </StackLayout>

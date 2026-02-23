@@ -938,7 +938,7 @@ namespace TPSMobileApp
                         }
 
 
-                        await App.CommManager?.GetOrderHistory(App.g_Customer.CustNo);
+                        await App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
 
                         App.RefreshAll();
 
@@ -1678,49 +1678,6 @@ namespace TPSMobileApp
                         }
                         od.ImageURL = Constants.ItemImageUrl + od.ItemNo.ToString() + ".jpg";
 
-                        //ReorderItem ri = new ReorderItem();
-                        //ri.ItemNo = Convert.ToInt32(aOrder[7]);
-                        //ri.ItemNoDisplay = aOrder[7];
-                        //ri.LastPurchDate = Convert.ToDateTime(aOrder[2]);
-                        //ri.LastPurchDateDisplay = aOrder[2];
-                        //ri.QtyLastOrder = Convert.ToInt32(aOrder[8]);
-                        //ri.QtyOrderDisplay = aOrder[8];
-                        //ri.Description = aOrder[11];
-                        //ri.Price = Convert.ToDecimal(aOrder[9]);
-                        //ri.PriceDisplay = string.Format("{0:C}", ri.Price);
-                        //ri.ImageURL = Constants.ItemImageUrl + ri.ItemNo.ToString() + ".jpg";
-                        //ri.UPC = aOrder[10];
-                        //if (ri.UPC.Length > 0)
-                        //{
-                        //    ri.ItemNoDisplayUPC = "(" + ri.UPC + ")";
-                        //}
-                        //else
-                        //{
-                        //    ri.ItemNoDisplayUPC = "";
-                        //}
-                        //ri.UOM = aOrder[12];
-                        //ri.SellUnitsInPurch = aOrder[13];
-                        //ri.SizeDisplay = ri.UOM + "/" + ri.SellUnitsInPurch;
-                        //ri.SizeUOM = "/" + ri.UOM;
-                        //ri.Size = aOrder[14];
-                        //ri.Form = aOrder[15];
-                        //ri.CategoryCode = aOrder[16];
-                        //ri.CategoryDesc = aOrder[17];
-                        //ri.SubcategoryCode = aOrder[18];
-                        //ri.SubcategoryDesc = aOrder[19];
-                        //ri.VendorId = aOrder[20];
-                        //ri.VendorName = aOrder[21];
-                        //ri.Status = aOrder[22];
-                        //try
-                        //{
-                        //    ri.QOH = Convert.ToInt32(aOrder[23].Trim());
-                        //}
-                        //catch
-                        //{
-                        //    ri.QOH = 0;
-                        //}
-                        //ri.ImageURL = Constants.ItemImageUrl + ri.ItemNo.ToString() + ".jpg";
-
                         try
                         {
                             App.g_db.SaveOrderDetail(od);
@@ -1756,18 +1713,17 @@ namespace TPSMobileApp
 
                 if (aCustomers.Length > 1)
                 {
-                    App.g_db.BeginTransaction();
-
-                    App.g_db.DeleteSalesCustomers();
+                    List<SalesCustomer> lstCustomers = new List<SalesCustomer>();
+                    // Process items in parallel using all available CPU cores
 
                     foreach (String s in aCustomers)
                     {
                         String[] aCust = s.Split("|");
                         if (aCust.Count() < 2)
                         {
-                            continue;
+                            return;
                         }
-
+                        Debug.WriteLine("Sales Customer");
                         SalesCustomer c = new SalesCustomer();
                         c.CustNo = aCust[0];
                         c.CompanyName = aCust[1];
@@ -1804,6 +1760,7 @@ namespace TPSMobileApp
                         c.TermsDesc = aCust[12];
                         try
                         {
+                            Debug.WriteLine("Payment date");
                             if (aCust[13] == "0")
                             {
                                 c.LastPaymentDate = "N/A";
@@ -1818,6 +1775,7 @@ namespace TPSMobileApp
                         catch { }
                         try
                         {
+                            Debug.WriteLine("Last Order");
                             if (aCust[14] == "0")
                             {
                                 c.LastOrderDate = "N/A";
@@ -1832,27 +1790,24 @@ namespace TPSMobileApp
                         catch { }
                         try
                         {
+                            Debug.WriteLine("Min Order");
                             c.MinOrderAmount = Decimal.Parse(aCust[15]);
                             c.ShippingFee = Decimal.Parse(aCust[16]);
                             c.MinOrderQty = Decimal.Parse(aCust[17]);
                         }
                         catch { }
-
-                        try
-                        {
-                            App.g_db.SaveSalesCustomer(c);
-                        }
-                        catch (Exception ex)
-                        {
-                            String sMsg = ex.Message;
-                        }
+                        Debug.WriteLine("Added Items = " + s);
+                        lstCustomers.Add(c);
                     }
-
+                    App.g_db.BeginTransaction();
+                    App.g_db.DeleteSalesCustomers();
+                    App.g_db.SaveSalesCustomer(lstCustomers);
                     App.g_db.CommitTransaction();
                 }
             }
             catch (Exception ex)
             {
+                Debug.WriteLine("Exeception in parsing SalesPerson" + ex.Message);
             }
         }
 

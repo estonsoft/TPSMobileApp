@@ -15,11 +15,6 @@ namespace TPSMobileApp.Views
             App.g_LoginPage = this;
         }
 
-        //private async void OnRegisterClicked(object obj)
-        //{
-        //    await App.g_Shell.GoToRegisterVerify();
-        //}
-
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
@@ -48,17 +43,25 @@ namespace TPSMobileApp.Views
             if (App.g_Customer.RememberMe)
             {
                 User.Text = App.g_Customer.User;
-                //Password.Focus();
             }
-            else
-            {
-                //User.Focus();
-            }
+            HideAnimation();
+        }
+
+        public void ShowAnimation()
+        {
+            User.IsEnabled  = false;
+            Password.IsEnabled = false;
+            buttonLogin.IsEnabled = false;
+            waitText.IsVisible = true;
         }
 
         public void HideAnimation()
         {
-            WaitImage.IsVisible = false;
+
+            User.IsEnabled = true;
+            Password.IsEnabled = true;
+            buttonLogin.IsEnabled = true;
+            waitText.IsVisible = false;
         }
 
         protected override bool OnBackButtonPressed()
