@@ -154,6 +154,9 @@
     <MauiXaml Update="Views\ShoppingCartPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\SplashScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\SubcategoryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

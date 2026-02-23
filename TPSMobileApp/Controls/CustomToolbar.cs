@@ -11,7 +11,7 @@ public class CustomToolbar : StackLayout
         set => SetValue(CartItemsProperty, value);
     }
 
-    //static int ColumnWidth = 60;
+    int height = 65;
 
     Grid gridContainer;
 
@@ -41,6 +41,10 @@ public class CustomToolbar : StackLayout
 
     public CustomToolbar()
     {
+        if (DeviceInfo.Platform == DevicePlatform.iOS)
+        {
+            height = 80;
+        }
         gridContainer = new Grid
         {
             ColumnSpacing = 10,
@@ -48,9 +52,9 @@ public class CustomToolbar : StackLayout
             HorizontalOptions = LayoutOptions.Fill,
             VerticalOptions = LayoutOptions.Start,
             BackgroundColor = Colors.Blue,
-            HeightRequest = 80,
+            HeightRequest = height,
         };
-        HeightRequest = 80;
+        HeightRequest = height;
         BackgroundColor = Colors.Blue;
         
         gridContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
@@ -71,13 +75,13 @@ public class CustomToolbar : StackLayout
         TapShoppingCart.Tapped += OnShoppingCartTapped;
         AddTap(StackShoppingCart, TapShoppingCart);
 
-        LabelShoppingCartItems = new Label
-        {
-            TextColor = Colors.Black,
-            FontSize = 10,
-            HorizontalTextAlignment = TextAlignment.Center
-        };
-        LabelShoppingCartItems.SetBinding(Label.TextProperty, new Binding(nameof(CartItems), source: this));
+        //LabelShoppingCartItems = new Label
+        //{
+        //    TextColor = Colors.Black,
+        //    FontSize = 10,
+        //    HorizontalTextAlignment = TextAlignment.Center
+        //};
+        //LabelShoppingCartItems.SetBinding(Label.TextProperty, new Binding(nameof(CartItems), source: this));
         StackShoppingCart.Children.Add(LabelShoppingCartItems);
 
         StackPurchaseHistory = CreateStack(out LabelPurchaseHistoryIcon, out LabelPurchaseHistoryText, "\uF571", "Order\nHistory");
@@ -102,9 +106,8 @@ public class CustomToolbar : StackLayout
     {
         var stack = new VerticalStackLayout
         {
-            BackgroundColor = Colors.Blue,
-            //WidthRequest = ColumnWidth,            
-            HeightRequest = 80,
+            BackgroundColor = Colors.Blue,           
+            HeightRequest = height,
             HorizontalOptions = LayoutOptions.Center,
             VerticalOptions = LayoutOptions.Center
         };
@@ -114,8 +117,6 @@ public class CustomToolbar : StackLayout
             stack.Margin = new Thickness(0, 40, 0, 0);
         }
             
-
-        glyph = glyph.Replace("/u", "0x");
         icon = new Image
         {
             Margin = new Thickness(0, 8, 0, 0),

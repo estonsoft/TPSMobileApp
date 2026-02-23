@@ -15,7 +15,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="40,Auto,*,80">
+    <Grid RowDefinitions="40,Auto,*,Auto">
 
         <!--  HEADER  -->
         <controls:CustomHeader Grid.Row="0" />
@@ -23,9 +23,12 @@
         <!--  SUMMARY + ACTIONS  -->
         <Grid
             Grid.Row="1"
+            Margin="{OnPlatform iOS='0,50,0,0',
+                                Android='0'}"
             Padding="10"
-            ColumnDefinitions="*,Auto">
-
+            ColumnDefinitions="*,Auto"
+            SafeAreaEdges="{OnPlatform iOS='None',
+                                       Android='All'}">
             <!--  LEFT INFO  -->
             <VerticalStackLayout Spacing="4">
                 <HorizontalStackLayout>
@@ -142,7 +145,7 @@
         </Grid>
 
         <!--  BOTTOM TOOLBAR (FIXED 80)  -->
-        <controls:CustomToolbar Grid.Row="3" HeightRequest="80" />
+        <controls:CustomToolbar Grid.Row="3" />
 
     </Grid>
 </ContentPage>

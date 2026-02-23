@@ -117,14 +117,6 @@ namespace TPSMobileApp
 
                 try
                 {
-                    App.g_HomePage.LoadCategories();
-                }
-                catch (Exception ex)
-                {
-                }
-
-                try
-                {
                     String CustNo = "0";
                     try
                     {

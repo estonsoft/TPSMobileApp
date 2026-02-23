@@ -45,7 +45,7 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <Grid Margin="0,50,0,0" SafeAreaEdges="None">
+        <Grid Margin="{OnPlatform iOS='0,50,0,0', Android='0'}" SafeAreaEdges="{OnPlatform iOS='None', Android='All'}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <!--  Header  -->

@@ -6,8 +6,8 @@ namespace TPSMobileApp
     {
         readonly SQLiteConnection _database;
         static object locker = new object();
-
-        public Database()
+        private static Database database;
+        private Database()
         {
             //string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.DBName);
             string dbPath = Path.Combine(FileSystem.AppDataDirectory, Constants.DBName);
@@ -33,6 +33,15 @@ namespace TPSMobileApp
 
             _database.EnableWriteAheadLogging();
             _database.Execute("PRAGMA synchronous = NORMAL");
+        }
+
+        public static Database Instance()
+        {
+            if(database == null)
+            {
+                database = new Database();
+            }
+            return database;
         }
 
         public void BeginTransaction()
