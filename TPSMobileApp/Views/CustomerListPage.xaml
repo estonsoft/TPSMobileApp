@@ -124,8 +124,20 @@
                         VerticalOptions="Fill"
                         Color="lightgray" />
                 </StackLayout>
+                <Label
+                    x:Name="showLoading"
+                    Grid.Row="2"
+                    Padding="50"
+                    Background="Yellow"
+                    FontSize="30"
+                    HorizontalOptions="Center"
+                    IsVisible="Collapse"
+                    Text="Please Wait customer change is in progress..."
+                    TextColor="Blue"
+                    VerticalOptions="Center" />
 
             </StackLayout>
+
             <syncfusion:SfListView
                 x:Name="CustomerList"
                 Grid.Row="2"

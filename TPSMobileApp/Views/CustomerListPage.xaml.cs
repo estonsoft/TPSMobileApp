@@ -64,59 +64,65 @@ namespace TPSMobileApp.Views
             RefreshList();
         }
 
-        async void OnTappedCustomer(object sender, EventArgs args)
+        void OnTappedCustomer(object sender, EventArgs args)
         {
             string OldCustNo = App.g_Customer.CustNo;
 
             var c = sender as CustomerStackLayout;
-
-            SalesCustomer cust = App.g_db.FindSalesCustomer(c.CustNo);
-
-            App.g_Customer.CustNo = cust.CustNo;
-            App.g_Customer.CompanyName = cust.CompanyName;
-            App.g_Customer.Address1 = cust.Address1;
-            App.g_Customer.Address2 = cust.Address2;
-            App.g_Customer.City = cust.City;
-            App.g_Customer.State = cust.State;
-            App.g_Customer.Zip = cust.Zip;
-            App.g_Customer.CityStateZip = cust.CityStateZip;
-            App.g_Customer.Phone = cust.Phone;
-            App.g_Customer.Contact = cust.Contact;
-            App.g_Customer.Email = cust.Email;
-            App.g_Customer.Delivery = cust.Delivery;
-            App.g_Customer.Warehouse = cust.Warehouse;
-            App.g_Customer.TermsDesc = cust.TermsDesc;
-            App.g_Customer.ARBalance = cust.ARBalance;
-            App.g_Customer.CreditLimit = cust.CreditLimit;
-            App.g_Customer.LastPaymentDate = cust.LastPaymentDate;
-            App.g_Customer.LastOrderDate = cust.LastOrderDate;
-            App.g_Customer.MinOrderAmount = cust.MinOrderAmount;
-            App.g_Customer.MinOrderQty = cust.MinOrderQty;
-            App.g_Customer.ShippingFee = cust.ShippingFee;
-
-            App.g_db.SaveCustomer(App.g_Customer);
-
-            App.g_HomePage.SetLoginControls();
-
-            App.g_db.SuspendCartItems(OldCustNo);
-            App.g_db.ClearCartItems();
-            //App.g_db.ClearFavorites();
-            App.g_db.DeleteOrderHistory();
-            App.g_db.RestoreCartItems(App.g_Customer.CustNo);
-            try
+            showLoading.IsVisible = true;
+            CustomerList.IsVisible = false;
+            Task.Run(async () =>
             {
-                if (!string.IsNullOrEmpty(App.g_Customer.CustNo) && App.g_Customer.CustNo != "0")
+                SalesCustomer cust = App.g_db.FindSalesCustomer(c.CustNo);
+
+                App.g_Customer.CustNo = cust.CustNo;
+                App.g_Customer.CompanyName = cust.CompanyName;
+                App.g_Customer.Address1 = cust.Address1;
+                App.g_Customer.Address2 = cust.Address2;
+                App.g_Customer.City = cust.City;
+                App.g_Customer.State = cust.State;
+                App.g_Customer.Zip = cust.Zip;
+                App.g_Customer.CityStateZip = cust.CityStateZip;
+                App.g_Customer.Phone = cust.Phone;
+                App.g_Customer.Contact = cust.Contact;
+                App.g_Customer.Email = cust.Email;
+                App.g_Customer.Delivery = cust.Delivery;
+                App.g_Customer.Warehouse = cust.Warehouse;
+                App.g_Customer.TermsDesc = cust.TermsDesc;
+                App.g_Customer.ARBalance = cust.ARBalance;
+                App.g_Customer.CreditLimit = cust.CreditLimit;
+                App.g_Customer.LastPaymentDate = cust.LastPaymentDate;
+                App.g_Customer.LastOrderDate = cust.LastOrderDate;
+                App.g_Customer.MinOrderAmount = cust.MinOrderAmount;
+                App.g_Customer.MinOrderQty = cust.MinOrderQty;
+                App.g_Customer.ShippingFee = cust.ShippingFee;
+
+                App.g_db.SaveCustomer(App.g_Customer);
+
+                App.g_HomePage.SetLoginControls();
+
+                App.g_db.SuspendCartItems(OldCustNo);
+                App.g_db.ClearCartItems();
+                //App.g_db.ClearFavorites();
+                App.g_db.DeleteOrderHistory();
+                App.g_db.RestoreCartItems(App.g_Customer.CustNo);
+                try
                 {
-                    await App.CommManager.GetItems(App.g_Customer.CustNo, "0");
+                    if (!string.IsNullOrEmpty(App.g_Customer.CustNo) && App.g_Customer.CustNo != "0")
+                    {
+                        await App.CommManager.GetItems(App.g_Customer.CustNo, "0");
+                    }
                 }
-            }
-            catch
+                catch
+                {
+                }
+            }).ContinueWith((t) =>
             {
-            }
-
-            //App.g_Shell.GoToUpdatingPage();
-
-            await App.g_Shell.GoToHome();
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await App.g_Shell.GoToHome();
+                });
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         protected override bool OnBackButtonPressed()

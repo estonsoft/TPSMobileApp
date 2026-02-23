@@ -157,21 +157,16 @@
                 </StackLayout>
 
             </StackLayout>
-            <syncfusion:SfListView
+            <CollectionView
                 x:Name="OrderItemsList"
                 Grid.Row="2"
-                AutoFitMode="DynamicHeight"
-                ItemAppearing="OrderItemsList_ItemAppearing"
-                ItemsSourceChangeCachingStrategy="ClearItems"
                 SelectionMode="None">
-                <syncfusion:SfListView.ItemTemplate>
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <controls:CustomListItem x:Name="CustomListItem" Grid.Row="0" />
-                        </ViewCell>
+                        <controls:CustomListItem x:Name="CustomListItem" Grid.Row="0" />
                     </DataTemplate>
-                </syncfusion:SfListView.ItemTemplate>
-            </syncfusion:SfListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             <controls:CustomToolbar Grid.Row="3" />
         </Grid>
     </ContentPage.Content>
