@@ -21,7 +21,7 @@
             }
         }
 
-        private void OnLoginClicked(object obj)
+        private async void OnLoginClicked(object obj)
         {
             if (User.ToLower() == "app_test")
             {
@@ -44,7 +44,7 @@
             //Database db = new Database();
             App.g_db.SaveCustomer(App.g_Customer);
 
-            App.CommManager.ValidateLogin(User, Password, App.g_Customer.UniqueId);
+            await App.CommManager.ValidateLogin(User, Password, App.g_Customer.UniqueId);
         }
     }
 }

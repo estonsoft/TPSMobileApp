@@ -4,7 +4,7 @@ namespace TPSMobileApp
 {
     internal class XMLResponseParser
     {
-        public static async void commService_GetBannersCompleted(String response)
+        public static async Task commService_GetBannersCompleted(String response)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace TPSMobileApp
                     App.g_db.CommitTransaction();
                 }
 
-                App.CommManager.GetCategoriesAndSubcategoriesCust(App.g_Customer.CustNo);
+                await App.CommManager.GetCategoriesAndSubcategoriesCust(App.g_Customer.CustNo);
             }
             catch (Exception ex)
             {
@@ -46,7 +46,7 @@ namespace TPSMobileApp
         }
 
 
-        public static async void commService_GetCategoriesAndSubcategoriesCompleted(String response)
+        public static async Task commService_GetCategoriesAndSubcategoriesCompleted(String response)
         {
             Debug.WriteLine("Get Categories and Subcategories returned");
 
@@ -123,11 +123,11 @@ namespace TPSMobileApp
                     sDate = "0";
                     if (App.g_Customer.CustNo == "0")
                     {
-                        App.CommManager.GetItems("0", sDate);
+                        await App.CommManager.GetItems("0", sDate);
                     }
                     else
                     {
-                        App.CommManager.GetItems(App.g_Customer.CustNo, sDate);
+                        await App.CommManager.GetItems(App.g_Customer.CustNo, sDate);
                     }
                 }
                 catch (Exception ex)
@@ -139,7 +139,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static async void commService_GetCategoriesAndSubcategoriesCustCompleted(String response)
+        public static async Task commService_GetCategoriesAndSubcategoriesCustCompleted(String response)
         {
             Debug.WriteLine("Get Categories and Subcategories Cust returned");
 
@@ -237,11 +237,11 @@ namespace TPSMobileApp
                     sDate = "0";
                     if (App.g_Customer.CustNo == "0")
                     {
-                        App.CommManager.GetItems("0", sDate);
+                        await App.CommManager.GetItems("0", sDate);
                     }
                     else
                     {
-                        App.CommManager.GetItems(App.g_Customer.CustNo, sDate);
+                        await App.CommManager.GetItems(App.g_Customer.CustNo, sDate);
                     }
                     App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
                     App.g_db.CommitTransaction();
@@ -257,7 +257,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static async void commService_GetItemsCompletedAsync(String response)
+        public static async Task commService_GetItemsCompletedAsync(String response)
         {
             try
             {
@@ -532,9 +532,9 @@ namespace TPSMobileApp
 
                     App.g_db.CommitTransaction();
 
-                    App.CommManager.GetItemQOH(App.g_Customer.CustNo);
-                    App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
-                    App.CommManager.GetFlyerItemsPDF();
+                    await App.CommManager.GetItemQOH(App.g_Customer.CustNo);
+                    await App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
+                    await App.CommManager.GetFlyerItemsPDF();
                 }
             }
             catch (Exception ex)
@@ -544,7 +544,7 @@ namespace TPSMobileApp
         }
 
 
-        public static async void commService_GetItemQOHCompletedAsync(String response)
+        public static async Task commService_GetItemQOHCompletedAsync(String response)
         {
             try
             {
@@ -601,7 +601,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static async void commService_GetItemQOH2CompletedAsync(String response)
+        public static async Task commService_GetItemQOH2CompletedAsync(String response)
         {
             Debug.WriteLine("Get Item QOH 2 returned");
 
@@ -660,7 +660,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static async void commService_ValidateLoginCompletedAsync(String response)
+        public static async Task commService_ValidateLoginCompletedAsync(String response)
         {
             Debug.WriteLine("ValidateLogin Complete");
             try
@@ -925,7 +925,7 @@ namespace TPSMobileApp
 
                         if ((App.g_IsSalesUser) || (App.g_IsChainManager))
                         {
-                            App.CommManager.GetSalespersonCustomers(App.g_UserName);
+                            await App.CommManager.GetSalespersonCustomers(App.g_UserName);
                         }
 
                         if (App.g_Customer.CustNo != OldCustNo)
@@ -938,7 +938,7 @@ namespace TPSMobileApp
                         }
 
 
-                        App.CommManager?.GetOrderHistory(App.g_Customer.CustNo);
+                        await App.CommManager?.GetOrderHistory(App.g_Customer.CustNo);
 
                         App.RefreshAll();
 
@@ -1053,7 +1053,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static async void commService_GetSettingsCompletedAsync(String response)
+        public static async Task commService_GetSettingsCompletedAsync(String response)
         {
             Debug.WriteLine("GetSettings Complete");
 
@@ -1208,7 +1208,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static async void commService_SubmitOrderCompletedAsync(String response)
+        public static async Task commService_SubmitOrderCompletedAsync(String response)
         {
             try
             {
@@ -1289,7 +1289,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static async void commService_SubmitReturnCompletedAsync(String response)
+        public static async Task commService_SubmitReturnCompletedAsync(String response)
         {
             try
             {
@@ -1349,7 +1349,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static async void commService_GetOrderHistoryCompletedAsyncOld(String response)
+        public static async Task commService_GetOrderHistoryCompletedAsyncOld(String response)
         {
             try
             {
@@ -1557,7 +1557,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static async void commService_GetOrderHistoryCompletedAsync(String response)
+        public static async Task commService_GetOrderHistoryCompletedAsync(String response)
         {
             Debug.WriteLine("Get Order History Complete");
 
@@ -1744,7 +1744,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static async void commService_GetSalespersonCustomersCompletedAsync(String response)
+        public static async Task commService_GetSalespersonCustomersCompletedAsync(String response)
         {
             try
             {
@@ -1856,7 +1856,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static async void commService_GetFlyerItemsPDFCompleted(String response)
+        public static async Task commService_GetFlyerItemsPDFCompleted(String response)
         {
             Debug.WriteLine("GetFlyerItemsPDFCompleted");
 
@@ -1934,7 +1934,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static async void commService_ValidateUserActiveCompletedAsync(String response)
+        public static async Task commService_ValidateUserActiveCompletedAsync(String response)
         {
             String sUser = response;
             if (sUser == "0")
