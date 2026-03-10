@@ -294,25 +294,27 @@
                     <TapGestureRecognizer Tapped="OnNewItemsAll" />
                 </Grid.GestureRecognizers>
             </Grid>
-            <CollectionView
-                x:Name="TopCategoriesCollectionView"
-                Margin="10,0,0,0"
-                HorizontalOptions="Fill"
-                SelectionChanged="TopCategoriesCollectionView_SelectionChanged"
-                SelectionMode="Single"
-                VerticalOptions="Start">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout
-                        HorizontalItemSpacing="20"
-                        Orientation="Horizontal"
-                        VerticalItemSpacing="20" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <controls:HomePageItems />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <ScrollView>
+                <CollectionView
+                    x:Name="TopCategoriesCollectionView"
+                    Margin="10,0,0,0"
+                    HorizontalOptions="Fill"
+                    SelectionChanged="TopCategoriesCollectionView_SelectionChanged"
+                    SelectionMode="Single"
+                    VerticalOptions="Start">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            HorizontalItemSpacing="20"
+                            Orientation="Horizontal"
+                            VerticalItemSpacing="20" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:HomePageItems />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </ScrollView>
         </VerticalStackLayout>
 
         <controls:CustomToolbar Grid.Row="2" VerticalOptions="End" />

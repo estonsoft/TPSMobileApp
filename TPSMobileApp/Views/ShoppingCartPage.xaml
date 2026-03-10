@@ -15,7 +15,12 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="40,Auto,*,Auto">
+    <Grid
+        Margin="{OnPlatform iOS='0,50,0,0',
+                            Android='0'}"
+        RowDefinitions="40,Auto,*,Auto"
+        SafeAreaEdges="{OnPlatform iOS='None',
+                                   Android='All'}">
 
         <!--  HEADER  -->
         <controls:CustomHeader Grid.Row="0" />
@@ -23,12 +28,8 @@
         <!--  SUMMARY + ACTIONS  -->
         <Grid
             Grid.Row="1"
-            Margin="{OnPlatform iOS='0,50,0,0',
-                                Android='0'}"
             Padding="10"
-            ColumnDefinitions="*,Auto"
-            SafeAreaEdges="{OnPlatform iOS='None',
-                                       Android='All'}">
+            ColumnDefinitions="*,Auto">
             <!--  LEFT INFO  -->
             <VerticalStackLayout Spacing="4">
                 <HorizontalStackLayout>

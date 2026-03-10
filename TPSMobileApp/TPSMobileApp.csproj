@@ -178,4 +178,51 @@
   <ItemGroup>
     <Folder Include="Platforms\iOS\Resources\" />
   </ItemGroup>
+  <ItemGroup>
+    <MauiFont Update="C:\Users\ATM\.nuget\packages\syncfusion.maui.core\32.1.24\buildTransitive\..\buildTransitive\Resources\Fonts\MauiMaterialAssets.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="C:\Users\ATM\.nuget\packages\syncfusion.maui.pdfviewer\32.1.24\buildTransitive\..\buildTransitive\Resources\Fonts\Boogaloo.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="C:\Users\ATM\.nuget\packages\syncfusion.maui.pdfviewer\32.1.24\buildTransitive\..\buildTransitive\Resources\Fonts\Handlee.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="C:\Users\ATM\.nuget\packages\syncfusion.maui.pdfviewer\32.1.24\buildTransitive\..\buildTransitive\Resources\Fonts\KaushanScript.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="C:\Users\ATM\.nuget\packages\syncfusion.maui.pdfviewer\32.1.24\buildTransitive\..\buildTransitive\Resources\Fonts\PinyonScript.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="Resources\Fonts\Font Awesome 5 Brands-Regular-400.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="Resources\Fonts\Font Awesome 5 Free-Regular-400.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="Resources\Fonts\Font Awesome 5 Free-Solid-900.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="Resources\Fonts\Font Awesome 6 Pro-Light-300.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="Resources\Fonts\Font Awesome 6 Pro-Regular-400.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="Resources\Fonts\Font Awesome 6 Pro-Solid-900.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="Resources\Fonts\Font Awesome 6 Pro-Thin-100.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="Resources\Fonts\OpenSans-Regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="Resources\Fonts\OpenSans-Semibold.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+    <MauiFont Update="Resources\Fonts\SEGMDL2.TTF">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiFont>
+  </ItemGroup>
 </Project>
