@@ -140,7 +140,7 @@
                             FontSize="40"
                             HorizontalOptions="Center"
                             IsVisible="{Binding IsLoggingIn}"
-                            Text="Please wait..."
+                            Text="Please wait... "
                             TextColor="Blue"
                             VerticalOptions="Center" />
                     </StackLayout>

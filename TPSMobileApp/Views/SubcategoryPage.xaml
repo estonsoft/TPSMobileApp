@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
     xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
+    xmlns:modal="clr-namespace:TPSMobileApp"
     x:Name="SubcategoriesPage"
     Title="Product Subcategories">
 
@@ -46,46 +47,56 @@
                     Color="lightgray" />
             </StackLayout>
 
-            <ListView
+            <CollectionView
                 x:Name="SubcategoriesListSearch"
                 Grid.Row="2"
-                CachingStrategy="RetainElement"
-                HasUnevenRows="true"
-                ItemTapped="OnSubcategoryTapped"
-                RowHeight="{Binding RowHeight, Mode=TwoWay}"
-                SelectionMode="None">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout
-                                Orientation="Vertical"
-                                Spacing="0"
-                                VerticalOptions="Start">
-                                <Label
-                                    Margin="0,0,0,0"
-                                    IsVisible="false"
-                                    Text="{Binding Code}" />
-                                <Label
-                                    Margin="60,15,0,15"
-                                    BackgroundColor="White"
-                                    FontAttributes="Bold"
-                                    FontSize="16"
-                                    HorizontalOptions="Start"
-                                    LineBreakMode="WordWrap"
-                                    Text="{Binding Description}"
-                                    TextColor="black"
-                                    VerticalOptions="Start" />
-                                <BoxView
-                                    BackgroundColor="gray"
-                                    HeightRequest="3"
-                                    HorizontalOptions="Fill"
-                                    VerticalOptions="Fill"
-                                    Color="lightgray" />
-                            </StackLayout>
-                        </ViewCell>
+                SelectionChanged="OnSubcategoryTapped"
+                SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="modal:Subcategory">
+                        <StackLayout
+                            Orientation="Vertical"
+                            Spacing="0"
+                            VerticalOptions="Start">
+                            <Label
+                                Margin="0,0,0,0"
+                                IsVisible="false"
+                                Text="{Binding Code}" />
+                            <Label
+                                Margin="60,15,0,15"
+                                BackgroundColor="White"
+                                FontAttributes="Bold"
+                                FontSize="16"
+                                HorizontalOptions="Start"
+                                LineBreakMode="WordWrap"
+                                Text="{Binding Description}"
+                                TextColor="black"
+                                VerticalOptions="Start" />
+                            <BoxView
+                                BackgroundColor="gray"
+                                HeightRequest="3"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Fill"
+                                Color="lightgray" />
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroupList>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <!--  Normal State  -->
+                                        <VisualState Name="Normal" />
+
+                                        <!--  Selected State  -->
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="LightGray" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateGroupList>
+                            </VisualStateManager.VisualStateGroups>
+                        </StackLayout>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             <controls:CustomToolbar Grid.Row="3" />
         </Grid>
     </ContentPage.Content>

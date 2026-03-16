@@ -7,6 +7,7 @@
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
     xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Maui"
     xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
+    xmlns:modal="clr-namespace:TPSMobileApp"
     xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     Title="Search Products"
     Shell.NavBarIsVisible="False"
@@ -267,14 +268,49 @@
             <CollectionView
                 x:Name="ItemsListSearch"
                 Grid.Row="4"
+                SelectionChanged="ItemsListSearch_SelectionChanged"
+                SelectionMode="Single"
                 VerticalOptions="Fill">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <controls:CustomListItem />
+                    <DataTemplate x:DataType="modal:Item">
+
+                        <controls:CustomListItem>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroupList>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <!--  Normal State  -->
+                                        <VisualState Name="Normal" />
+
+                                        <!--  Selected State  -->
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="White" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateGroupList>
+                            </VisualStateManager.VisualStateGroups>
+                        </controls:CustomListItem>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
+            <VerticalStackLayout
+                x:Name="ImageOverlay"
+                Grid.Row="0"
+                Grid.RowSpan="5"
+                Grid.Column="0"
+                Padding="20"
+                BackgroundColor="#80000000"
+                IsVisible="False">
+                <ffimageloading:CachedImage
+                    x:Name="FullImage"
+                    HeightRequest="500"
+                    WidthRequest="300" />
+                <Button
+                    Clicked="Button_Clicked"
+                    HorizontalOptions="Center"
+                    Text="Close" />
+            </VerticalStackLayout>
             <controls:CustomToolbar Grid.Row="5" />
         </Grid>
     </ContentPage.Content>

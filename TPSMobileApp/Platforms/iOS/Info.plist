@@ -35,23 +35,19 @@
 	<string>This app needs access to the disk space to determine if images can be downloaded or need to link via web.</string>
 	<key>NSPrivacyAccessedAPICategoryFileTimestamp</key>
 	<string>This app needs access to the file timestamp to internally check for updates.</string>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
-	<string>Profit_Order</string>
+	<string>Ram Distributors</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIMainStoryboardFile</key>
-	<string>LaunchScreen</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.009</string>
-	<key>CFBundleVersion</key>
-	<string>2.009</string>
+	<string>3.907</string>
 	<key>UIRequiresFullScreen</key>
 	<true/>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
+	<key>CFBundleVersion</key>
+	<string>3.907</string>
 </dict>
 </plist>

@@ -2,7 +2,7 @@
 {
     public static class Constants
     {
-        public static string Version = "1.016";
+        public static string Version = "3.906";
 
         // URL of ASMX service
         public static string SoapUrl = "https://www.turningpointsystems.com/RemotePhoneApp.asmx";

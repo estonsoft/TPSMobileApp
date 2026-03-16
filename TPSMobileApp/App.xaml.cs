@@ -110,11 +110,15 @@ namespace TPSMobileApp
 
                 if (App.g_UserName == "app_test")
                 {
-                    App.g_ServerURL = "https://ramtest.qwikpoint.net";
+                    App.g_ServerURL = "https://store.qwikpoint.net";
                 }
                 else
                 {
-                    App.g_ServerURL = "https://ramdistributors.qwikpoint.net";
+#if DEBUG
+                    App.g_ServerURL = "https://ramtest.qwikpoint.net";
+#else
+                App.g_ServerURL = "https://ramdistributors.qwikpoint.net";
+#endif
                 }
 
                 App.UpdateServerLinks();

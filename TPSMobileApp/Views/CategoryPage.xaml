@@ -7,6 +7,7 @@
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
     xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Maui"
     xmlns:ios="http://schemas.microsoft.com/dotnet/2021/maui/ios"
+    xmlns:modal="clr-namespace:TPSMobileApp"
     xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     x:Name="CategoriesPage"
     Title="Product Categories">
@@ -28,14 +29,13 @@
 
             <controls:CustomHeader Grid.Row="0" />
 
-            <syncfusion:SfListView
+            <CollectionView
                 x:Name="CategoriesListSearch"
                 Grid.Row="1"
-                AutoFitMode="DynamicHeight"
-                ItemTapped="CategoriesListSearch_ItemTapped"
-                SelectionMode="None">
-                <syncfusion:SfListView.ItemTemplate>
-                    <DataTemplate>
+                SelectionChanged="CategoriesListSearch_ItemTapped"
+                SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="modal:Category">
                         <!--  Use a plain layout as the DataTemplate content for MAUI  -->
                         <VerticalStackLayout
                             Margin="0,0,0,0"
@@ -83,10 +83,25 @@
                                 IsVisible="false"
                                 VerticalOptions="Fill"
                                 Color="LightGray" />
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroupList>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <!--  Normal State  -->
+                                        <VisualState Name="Normal" />
+
+                                        <!--  Selected State  -->
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="LightGray" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateGroupList>
+                            </VisualStateManager.VisualStateGroups>
                         </VerticalStackLayout>
                     </DataTemplate>
-                </syncfusion:SfListView.ItemTemplate>
-            </syncfusion:SfListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <controls:CustomToolbar Grid.Row="2" />
         </Grid>

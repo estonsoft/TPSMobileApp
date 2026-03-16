@@ -6,7 +6,12 @@ namespace TPSMobileApp.Data
     public class SoapService : ISoapService
     {
         private readonly HttpClient _httpClient;
-        private string SoapUrl = "https://ramtest.qwikpoint.net/RemotePhoneApp.asmx";
+#if DEBUG
+        private string SoapUrl = "https://ramtest.qwikpoint.net";
+#else
+        private string SoapUrl = "https://ramdistributors.qwikpoint.net/RemotePhoneApp.asmx";
+
+#endif
 
         public SoapService(HttpClient httpClient)
         {

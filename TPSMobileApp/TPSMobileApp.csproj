@@ -29,6 +29,46 @@
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
   </PropertyGroup>
+  <PropertyGroup> 
+     <UseInterpreter>true</UseInterpreter> 
+     <AssemblyTitle>Ram Distributors</AssemblyTitle> 
+     <AndroidSigningKeyStore>tps.keystore</AndroidSigningKeyStore> 
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
+    <ApplicationTitle>Ram Distributors</ApplicationTitle>
+    <ApplicationDisplayVersion>3.907</ApplicationDisplayVersion>
+    <ApplicationVersion>3907</ApplicationVersion>
+    <AndroidUseAapt2>True</AndroidUseAapt2>
+    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <AndroidKeyStore>True</AndroidKeyStore>
+    <AndroidSigningStorePass>tps_999</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>tps</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>tps_999</AndroidSigningKeyPass>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
+    <ApplicationTitle>Ram Distributors</ApplicationTitle>
+    <ApplicationDisplayVersion>3.907</ApplicationDisplayVersion>
+    <ApplicationVersion>3907</ApplicationVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
+    <ApplicationTitle>Ram Distributors</ApplicationTitle>
+    <ApplicationDisplayVersion>3.907</ApplicationDisplayVersion>
+    <ApplicationVersion>3907</ApplicationVersion>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+	<RunAOTCompilation>false</RunAOTCompilation>
+    <AndroidUseAapt2>True</AndroidUseAapt2>
+    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+    <AndroidKeyStore>True</AndroidKeyStore>
+    <AndroidSigningStorePass>tps_999</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>tps</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>tps_999</AndroidSigningKeyPass>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
+    <ApplicationTitle>Ram Distributors</ApplicationTitle>
+    <ApplicationDisplayVersion>3.907</ApplicationDisplayVersion>
+    <ApplicationVersion>3907</ApplicationVersion>
+  </PropertyGroup>
   
   <ItemGroup>
 	<!-- App Icon -->

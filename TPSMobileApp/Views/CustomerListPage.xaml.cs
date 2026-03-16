@@ -74,7 +74,6 @@ namespace TPSMobileApp.Views
             Task.Run(async () =>
             {
                 SalesCustomer cust = App.g_db.FindSalesCustomer(c.CustNo);
-
                 App.g_Customer.CustNo = cust.CustNo;
                 App.g_Customer.CompanyName = cust.CompanyName;
                 App.g_Customer.Address1 = cust.Address1;
@@ -98,8 +97,6 @@ namespace TPSMobileApp.Views
                 App.g_Customer.ShippingFee = cust.ShippingFee;
 
                 App.g_db.SaveCustomer(App.g_Customer);
-
-                App.g_HomePage.SetLoginControls();
 
                 App.g_db.SuspendCartItems(OldCustNo);
                 App.g_db.ClearCartItems();

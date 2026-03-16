@@ -41,9 +41,13 @@ namespace TPSMobileApp.Views
             //App.g_Shell.GoToItemSearch();
         }
 
-        private async void CategoriesListSearch_ItemTapped(object sender, Syncfusion.Maui.ListView.ItemTappedEventArgs e)
-        {
-            App.g_Category = (Category)e.DataItem;
+        private async void CategoriesListSearch_ItemTapped(object sender, SelectionChangedEventArgs e)
+        {   
+            var selectedCategory = e.CurrentSelection?.FirstOrDefault() as Category;
+            if (selectedCategory == null)
+                return;
+
+            App.g_Category = selectedCategory;
             App.g_ScanBarcode = "";
 
             int iSubcategories = App.g_db.GetSubcategoryCount(App.g_Category.Code);

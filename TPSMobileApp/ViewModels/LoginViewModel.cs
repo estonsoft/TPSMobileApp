@@ -30,9 +30,12 @@
             }
             else
             {
+#if DEBUG
                 App.g_ServerURL = "https://ramtest.qwikpoint.net";
+#else
+                App.g_ServerURL = "https://ramdistributors.qwikpoint.net";
+#endif
             }
-
 
             App.UpdateServerLinks();
 
@@ -47,7 +50,6 @@
 
 
             App.CommManager.ValidateLogin(User, Password, App.g_Customer.UniqueId);
-
         }
     }
 }

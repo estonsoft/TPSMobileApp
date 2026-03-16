@@ -42,9 +42,12 @@
             //Shell.Current.GoToAsync("//HomePage/ItemSearchPage");
         }
 
-        private async void OnSubcategoryTapped(object sender, ItemTappedEventArgs e)
+        private async void OnSubcategoryTapped(object sender, SelectionChangedEventArgs e)
         {
-            App.g_Subcategory = (Subcategory)e.Item;
+            var selectedCategory = e.CurrentSelection?.FirstOrDefault() as Subcategory;
+            if (selectedCategory == null)
+                return;
+            App.g_Subcategory = selectedCategory;
             App.g_ScanBarcode = "";
 
             int iSubsubcategories = App.g_db.GetSubsubcategory(App.g_Category.Code, App.g_Subcategory.Code).Count;
@@ -64,5 +67,6 @@
         {
             return true;
         }
+
     }
 }

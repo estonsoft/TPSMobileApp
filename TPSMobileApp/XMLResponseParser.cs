@@ -1359,6 +1359,8 @@ namespace TPSMobileApp
                 String[] aOrders = sOrders.Split('~');
                 List<String> lstHeader = new List<String>();
 
+                App.g_db.DeleteReorderItems();
+
                 if (aOrders.Length > 1)
                 {
                     //Database db = new Database();
