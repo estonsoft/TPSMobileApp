@@ -184,7 +184,6 @@
 
                                 <!--  Credit Information  -->
                                 <Grid ColumnDefinitions="80,70,40,90,*">
-
                                     <Label
                                         Grid.Column="0"
                                         FontSize="11"
@@ -206,15 +205,11 @@
                                         FontAttributes="Bold"
                                         FontSize="11"
                                         Text="{Binding ARBalanceDisplay}" />
-
-                                    <Label
-                                        Grid.Column="4"
-                                        Margin="-20,0,0,0"
-                                        FontAttributes="Bold"
-                                        FontSize="11"
-                                        Text="{Binding TermsDesc}" />
                                 </Grid>
-
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="11"
+                                    Text="{Binding TermsDesc}" />
                                 <!--  Last Payment + Last Order  -->
                                 <Grid ColumnDefinitions="90,90,80,*">
 

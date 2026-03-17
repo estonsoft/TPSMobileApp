@@ -10,6 +10,7 @@
     xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     Title="Quick Entry"
     BackgroundColor="White"
+    HideSoftInputOnTapped="True"
     Shell.NavBarIsVisible="False">
 
     <ContentPage.Content>

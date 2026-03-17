@@ -33,17 +33,10 @@ namespace TPSMobileApp.Views
             ClearItemInfo();
 
             await Task.Delay(100);
-            EntryFocus();
+
+            ScanItem.Text = "";
 
             await viewModel.OnResumeAsync();
-        }
-
-        private async void EntryFocus()
-        {
-            ScanItem.Unfocus();
-            ScanItem.Text = "";
-            await Task.Delay(500);
-            ScanItem.Focus();
         }
 
         protected override void OnDisappearing()
@@ -89,8 +82,6 @@ namespace TPSMobileApp.Views
             lstItems.Clear();
             ItemsListSearch.ItemsSource = null;
             ItemsListSearch.ItemsSource = lstItems;
-
-            EntryFocus();
         }
 
         private void SetMessage(string sMessage)
@@ -115,7 +106,6 @@ namespace TPSMobileApp.Views
                 ClearItemInfo();
                 SetMessage("Item Not Found " + ScanItem.Text);
                 ScanItem.Text = "";
-                EntryFocus();
                 return;
             }
 
@@ -125,6 +115,7 @@ namespace TPSMobileApp.Views
             }
 
             ShowItemInfo(item);
+            ScanItem.Unfocus();
         }
 
         private void ScanItem_Completed(object sender, EventArgs e)
