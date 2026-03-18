@@ -304,7 +304,9 @@
                 IsVisible="False">
                 <ffimageloading:CachedImage
                     x:Name="FullImage"
+                    ErrorPlaceholder="missing_item.jpg"
                     HeightRequest="500"
+                    LoadingPlaceholder="missing_item.jpg"
                     WidthRequest="300" />
                 <Button
                     Clicked="Button_Clicked"
