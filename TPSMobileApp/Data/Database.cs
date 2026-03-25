@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Scandit.DataCapture.Barcode.Data;
+using SQLite;
 
 namespace TPSMobileApp
 {
@@ -93,78 +94,57 @@ namespace TPSMobileApp
                 subcategory.Code = "";
                 subsubcategory.Code = "";
             }
+            string[] searchWords = sSearch.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            sSearch = sSearch.Replace("'", "");
+            string sQuery = "SELECT * FROM [Item] WHERE ";
+            string searchFilter = "";
 
-            String sSearchShort = sSearch;
-            if (sSearch.Length > 11)
+            if (!string.IsNullOrEmpty(sBarcode))
             {
-                sSearchShort = sSearchShort.Substring(0, 11);
+                // Barcode/Specific ID logic
+                searchFilter = $@" (
+                (([UPC_1] LIKE '%{sBarcode}%' OR [UPC_1] LIKE '%{sBarcodeShort}%') AND [UPC_1] > '') OR 
+                (([UPC_2] LIKE '%{sBarcode}%' OR [UPC_2] LIKE '%{sBarcodeShort}%') AND [UPC_2] > '') OR 
+                ([ItemNoDisplay] = '{sBarcode}' OR [ItemNoDisplay] = '{sBarcodeShort}')
+                ) ";
             }
-
-            String sQuery = "select * from [Item] where ";
-
-            if (sBarcode != "")
+            else if (searchWords.Length > 0)
             {
-                sQuery += " (((([UPC_1] like '%" + sBarcode + "%' or [UPC_1] like '%" + sBarcodeShort + "') and [UPC_1] > '') or ";
-                sQuery += " (([UPC_2] like '%" + sBarcode + "%' or [UPC_2] like '%" + sBarcodeShort + "') and [UPC_2] > '') or ";
-                sQuery += " (([UPC_3] like '%" + sBarcode + "%' or [UPC_3] like '%" + sBarcodeShort + "') and [UPC_3] > '') or ";
-                sQuery += " (([UPC_4] like '%" + sBarcode + "%' or [UPC_4] like '%" + sBarcodeShort + "') and [UPC_4] > '')) or ";
-                sQuery += " (([ItemNoDisplay] = '" + sBarcode + "') or ([ItemNoDisplay] = '" + sBarcodeShort + "')) ";
-            }
-            else
-            {
-                sQuery += " ([Description] like '%" + sSearch + "%' or [ItemNoDisplay] like '%" + sSearch + "%' or ";
-                if (dItemNo > 0)
+                // 2. ANY ORDER LOGIC
+                // We create a requirement that EVERY word must exist SOMEWHERE in the item fields
+                List<string> wordClauses = new List<string>();
+                foreach (string word in searchWords)
                 {
-                    sQuery += " [ItemNoDisplay] like '%" + dItemNo.ToString() + "%' or ";
+                    wordClauses.Add($"( [Description] LIKE '%{word}%' OR [ItemNoDisplay] LIKE '%{word}%' OR [UPC_1] LIKE '%{word}%' )");
                 }
-                sQuery += " (([UPC_1] like '%" + sSearch + "%' or [UPC_1] like '%" + sSearchShort + "') and [UPC_1] > '') or ";
-                sQuery += " (([UPC_2] like '%" + sSearch + "%' or [UPC_2] like '%" + sSearchShort + "') and [UPC_2] > '') or ";
-                sQuery += " (([UPC_3] like '%" + sSearch + "%' or [UPC_3] like '%" + sSearchShort + "') and [UPC_3] > '') or ";
-                sQuery += " (([UPC_4] like '%" + sSearch + "%' or [UPC_4] like '%" + sSearchShort + "') and [UPC_4] > '')) ";
-            }
 
-            if (category.Code != "")
-            {
-                sQuery += " and CategoryCode = '" + category.Code + "' ";
-            }
+                // Joining with AND ensures all words must be present, but order doesn't matter
+                string flexibleMatch = string.Join(" AND ", wordClauses);
 
-            if (subcategory.Code != "")
-            {
-                sQuery += " and SubcategoryCode = '" + subcategory.Code + "' ";
-            }
-
-            if (subsubcategory.Code != "")
-            {
-                sQuery += " and SubsubcategoryCode = '" + subsubcategory.Code + "' ";
-            }
-
-            if ((subcategory.Code != "") && (subcategory.Code != "TOPSELLERS"))
-            {
-                //sQuery += " and SubcategoryCode = '" + subcategory.Code + "' ";
-            }
-
-            if (App.g_InStockOnly)
-            {
-                sQuery += " and QOH > 0 ";
-            }
-
-            sQuery += " and Status = 'A' ";
-
-            if (App.g_IsTopSellers)
-            {
-                sQuery += " order by CategoryRank limit 25 ";
+                // We still prioritize an exact match for the whole string if it exists
+                searchFilter = $@" (
+                [ItemNoDisplay] = '{sSearch}' OR 
+                [UPC_1] = '{sSearch}' OR 
+                ({flexibleMatch})
+                 ) ";
             }
             else
             {
-                sQuery += " order by Description";
+                searchFilter = " 1=1 "; // Default if no search text
             }
-            
-            {
-                return _database.Query<Item>(sQuery);
-            }
-        }
+
+            sQuery += searchFilter;
+
+            // Apply existing filters
+            if (!string.IsNullOrEmpty(category?.Code)) sQuery += $" AND CategoryCode = '{category.Code}' ";
+            if (!string.IsNullOrEmpty(subcategory?.Code)) sQuery += $" AND SubcategoryCode = '{subcategory.Code}' ";
+            if (App.g_InStockOnly) sQuery += " AND QOH > 0 ";
+
+            sQuery += " AND Status = 'A' ";
+            sQuery += App.g_IsTopSellers ? " ORDER BY CategoryRank LIMIT 25 " : " ORDER BY Description ";
+
+            return _database.Query<Item>(sQuery);           
+        }        
 
         public int InsertDiscontinuedItems()
         {

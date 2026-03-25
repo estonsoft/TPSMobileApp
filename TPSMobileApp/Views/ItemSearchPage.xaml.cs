@@ -177,7 +177,6 @@
                     App.g_Subcategory.Code = "";
                     App.g_Subcategory.Description = "ALL SUBCATEGORIES";
 
-                    RefreshList();
                     await App.g_Shell.GoToItemSearch();
                 }
                 else
