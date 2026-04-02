@@ -268,12 +268,14 @@
             <CollectionView
                 x:Name="ItemsListSearch"
                 Grid.Row="4"
+                ItemsSource="{Binding DisplayedItems}"
+                RemainingItemsThreshold="5"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
                 SelectionChanged="ItemsListSearch_SelectionChanged"
                 SelectionMode="Single"
                 VerticalOptions="Fill">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="modal:Item">
-
                         <controls:CustomListItem>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroupList>

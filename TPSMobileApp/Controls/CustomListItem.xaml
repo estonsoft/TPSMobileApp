@@ -22,15 +22,30 @@
 
         <!--  IMAGE  -->
         <ff:CachedImage
+            x:Name="icon"
             Grid.Row="1"
             Grid.Column="0"
             Margin="10"
             Aspect="AspectFit"
+            CacheDuration="30.00:00:00"
+            DownsampleToViewSize="True"
             ErrorPlaceholder="missing_item.jpg"
             HeightRequest="90"
-            LoadingPlaceholder="missing_item.jpg"
+            RetryCount="3"
+            RetryDelay="250"
             Source="{Binding ImageURL}"
             WidthRequest="90" />
+        <!--  The Spinner: Visible only when the image is loading  -->
+        <ActivityIndicator
+            Grid.Row="1"
+            Grid.Column="0"
+            HeightRequest="90"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsLoading, Source={x:Reference icon}}"
+            IsVisible="{Binding IsLoading, Source={x:Reference icon}}"
+            VerticalOptions="Center"
+            WidthRequest="90"
+            Color="RoyalBlue" />
 
         <!--  DETAILS  -->
         <VerticalStackLayout

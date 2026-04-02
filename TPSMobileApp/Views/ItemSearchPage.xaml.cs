@@ -1,6 +1,10 @@
-﻿namespace TPSMobileApp.Views
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
+namespace TPSMobileApp.Views
 {
-    public partial class ItemSearchPage : ContentPage
+    public partial class ItemSearchPage : ContentPage, INotifyPropertyChanged
     {
         string _category;
         string _subcategory;
@@ -8,8 +12,17 @@
         bool _topSellers;
         bool _inStockOnly;
         string _search_text;
-        List<Item> lstItems;
+        List<Item> lstItems = new ();
 
+        // The items actually shown in the CollectionView
+        public ObservableCollection<Item> DisplayedItems { get; } = new();
+
+        private int _pageSize = 20;
+
+        // Remove [ObservableProperty] from itemtoload field
+        // and implement as a property with OnPropertyChanged
+
+        
         public string Category
         {
             get { return _category; }
@@ -74,7 +87,6 @@
         {
             InitializeComponent();
             BindingContext = this;
-
             App.g_SearchPage = this;
 
             try
@@ -112,9 +124,6 @@
 
         public async void RefreshList()
         {
-
-            ItemsListSearch.ItemsSource = null;
-
             Category = App.g_Category.Description;
             Subcategory = App.g_Subcategory.Description;
             Subsubcategory = App.g_Subsubcategory.Description;
@@ -154,8 +163,7 @@
                 iItems++;
                 Item.SetListItem(i, "O");
             }
-
-            ItemsListSearch.ItemsSource = lstItems;
+            
 
             if (iItems == 0)
             {
@@ -183,7 +191,30 @@
                 {
                     // User tapped 'No' - Handle cancellation or do nothing
                 }
-            }            
+            } 
+            loadMoreCommand.Execute(null);
+        }
+
+        [RelayCommand]
+        private void LoadMore()
+        {
+            // 1. Calculate how many items are already shown
+            int currentCount = DisplayedItems.Count;
+
+            // 2. Check if there's more to load
+            if (currentCount < lstItems.Count)
+            {
+                // 3. Take the next batch from your master list
+                var nextBatch = lstItems
+                    .Skip(currentCount)
+                    .Take(_pageSize);
+
+                // 4. Add them to the observable collection
+                foreach (var item in nextBatch)
+                {
+                    DisplayedItems.Add(item);
+                }
+            }
         }
 
         private void OnTappedClearCategory(object sender, EventArgs e)
