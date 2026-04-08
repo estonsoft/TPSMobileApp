@@ -163,9 +163,9 @@ namespace TPSMobileApp.Views
                 iItems++;
                 Item.SetListItem(i, "O");
             }
-            
 
-            if (iItems == 0)
+
+            if (iItems == 0 && App.g_Category.Description != "ALL CATEGORIES")
             {
                 //await Shell.Current.DisplayAlertAsync("Profit Order", "No items found matching search criteria", "Ok");
                 bool answer = await Shell.Current.DisplayAlertAsync(
@@ -176,6 +176,7 @@ namespace TPSMobileApp.Views
 
                 if (answer)
                 {
+                    DisplayedItems.Clear();
                     // User tapped 'Yes' - Call your search method here
                     App.g_SearchText = Search.Text;
                     //App.g_SearchFromPage = "HomePage";
@@ -191,7 +192,13 @@ namespace TPSMobileApp.Views
                 {
                     // User tapped 'No' - Handle cancellation or do nothing
                 }
-            } 
+            }
+            else if (iItems == 0 ){
+                await Shell.Current.DisplayAlertAsync(
+               "Profit Order",
+               "No items found in selected category.Please modify your search.",
+               "Cancel");
+            }
             loadMoreCommand.Execute(null);
         }
 
