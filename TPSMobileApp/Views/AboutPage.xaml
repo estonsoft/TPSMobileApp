@@ -2,9 +2,8 @@
 <ContentPage
     x:Class="TPSMobileApp.Views.AboutPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
-    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
     xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
     xmlns:vm="clr-namespace:TPSMobileApp.ViewModels"
     Title="{Binding Title}">
@@ -33,7 +32,7 @@
                 Orientation="Horizontal"
                 VerticalOptions="Center">
                 <ContentView Padding="0,40,0,40" VerticalOptions="Fill">
-                    <ffimageloading:CachedImage
+                   <ffimageloading:CachedImage 
                         HeightRequest="64"
                         Source="xamarin_logo.png"
                         VerticalOptions="Center" />

@@ -2,10 +2,10 @@
 <ContentView
     x:Class="TPSMobileApp.Controls.CustomListLabelItem"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
-    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
-    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Maui">
+    
+    >
 
     <ContentView.Resources>
         <ResourceDictionary>
@@ -33,8 +33,8 @@
                 HorizontalOptions="Start"
                 Orientation="Horizontal"
                 VerticalOptions="Center">
-                <!--  Replaced FFImageLoading CachedImage with MAUI ffimageloading:CachedImage  -->
-                <ffimageloading:CachedImage
+                <!--  Replaced FFImageLoading CachedImage with MAUI Image  -->
+               <ffimageloading:CachedImage 
                     Margin="15,15,15,15"
                     Aspect="AspectFit"
                     HeightRequest="90"
@@ -43,10 +43,10 @@
                     VerticalOptions="Fill"
                     WidthRequest="90" />
                 <!--<ffimageloading:CachedImage Aspect="AspectFit" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="50" WidthRequest="50" Margin="15,15,15,15" >
-                    <ffimageloading:CachedImage.Source>
+                   <ffimageloading:CachedImage.Source>
                         <UriImageSource Uri="{Binding ImageURL}" CacheValidity="1" CachingEnabled="true" />
-                    </ffimageloading:CachedImage.Source>
-                </Image>-->
+                    </syncfusion:SfAvatarView.Source>
+                </syncfusion:SfAvatarView>-->
                 <StackLayout
                     Margin="0,0,0,0"
                     HorizontalOptions="Start"

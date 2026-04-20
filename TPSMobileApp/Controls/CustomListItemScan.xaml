@@ -2,10 +2,10 @@
 <ContentView
     x:Class="TPSMobileApp.Controls.CustomListItemScan"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
-    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
-    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Maui">
+    
+    >
 
     <ContentView.Resources>
         <ResourceDictionary>
@@ -24,7 +24,7 @@
                 HorizontalOptions="Center"
                 Text="{Binding Description}"
                 TextColor="RoyalBlue" />
-            <ffimageloading:CachedImage
+           <ffimageloading:CachedImage 
                 Margin="15,15,15,15"
                 Aspect="AspectFit"
                 HeightRequest="110"

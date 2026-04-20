@@ -5,10 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
     xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
-    xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Maui"
     xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
     xmlns:modal="clr-namespace:TPSMobileApp"
-    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     Title="Search Products"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False">
@@ -304,11 +302,9 @@
                 Padding="20"
                 BackgroundColor="#80000000"
                 IsVisible="False">
-                <ffimageloading:CachedImage
+                <Image
                     x:Name="FullImage"
-                    ErrorPlaceholder="missing_item.jpg"
                     HeightRequest="500"
-                    LoadingPlaceholder="missing_item.jpg"
                     WidthRequest="300" />
                 <Button
                     Clicked="Button_Clicked"

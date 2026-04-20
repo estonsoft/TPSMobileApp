@@ -17,7 +17,7 @@ namespace TPSMobileApp.Views
         // The items actually shown in the CollectionView
         public ObservableCollection<Item> DisplayedItems { get; } = new();
 
-        private int _pageSize = 20;
+        private int _pageSize = 10;
 
         // Remove [ObservableProperty] from itemtoload field
         // and implement as a property with OnPropertyChanged
@@ -199,7 +199,7 @@ namespace TPSMobileApp.Views
                "No items found in selected category.Please modify your search.",
                "Cancel");
             }
-            loadMoreCommand.Execute(null);
+            loadMoreCommand?.Execute(null);
         }
 
         [RelayCommand]
@@ -287,12 +287,16 @@ namespace TPSMobileApp.Views
         private void TopSellers_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
             App.g_IsTopSellers = TopSellers.IsChecked;
+            lstItems.Clear();
+            DisplayedItems.Clear();
             RefreshList();
         }
 
         private void InStockOnly_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
             App.g_InStockOnly = InStockOnly.IsChecked;
+            lstItems.Clear();
+            DisplayedItems.Clear();
             RefreshList();
         }
 
@@ -301,26 +305,20 @@ namespace TPSMobileApp.Views
             return true;
         }
 
-        void OnTappedSearch(object sender, EventArgs e)
+        async void OnTappedSearch(object sender, EventArgs e)
         {
             App.g_SearchText = Search.Text;
-            RefreshList();
-        }
+            DisplayedItems.Clear();
+            // User tapped 'Yes' - Call your search method here
+            App.g_SearchText = Search.Text;
+            //App.g_SearchFromPage = "HomePage";
+            App.g_Category.Code = "";
+            App.g_Category.Description = "ALL CATEGORIES";
 
-        private void ItemsListSearch_ItemAppearing(object sender, Syncfusion.Maui.ListView.ItemAppearingEventArgs e)
-        {
-            Item item = (Item)e.DataItem;
+            App.g_Subcategory.Code = "";
+            App.g_Subcategory.Description = "ALL SUBCATEGORIES";
 
-            if (item.QtyOrder > 0)
-            {
-                item.IsStepperVisible = true;
-                item.IsAddToOrderVisible = false;
-            }
-            else
-            {
-                item.IsStepperVisible = false;
-                item.IsAddToOrderVisible = true;
-            }
+            await App.g_Shell.GoToItemSearch();
         }
 
         private void Button_Clicked(object sender, EventArgs e)

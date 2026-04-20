@@ -1794,13 +1794,13 @@ namespace TPSMobileApp
                             c.MinOrderQty = Decimal.Parse(aCust[17]);
                         }
                         catch { }
-                        Debug.WriteLine("Added Items = " + s);
                         lstCustomers.Add(c);
                     }
                     App.g_db.BeginTransaction();
                     App.g_db.DeleteSalesCustomers();
                     App.g_db.SaveSalesCustomer(lstCustomers);
                     App.g_db.CommitTransaction();
+                    Debug.WriteLine("Sales Person Completed");
                 }
             }
             catch (Exception ex)

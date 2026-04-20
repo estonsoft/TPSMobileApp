@@ -10,7 +10,7 @@
                             <Label Text="{Binding Description}" Margin="40,7,0,0" FontSize="16" FontAttributes="Bold" HorizontalOptions="Start"  BackgroundColor="White" TextColor="Red"/>
                             <StackLayout Orientation="Horizontal" Margin="0,5,0,0" HorizontalOptions="Start" VerticalOptions="Center">
                                 <!--<ffimageloading:CachedImage Aspect="AspectFit" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="90" WidthRequest="90" Margin="15,15,15,15" Source="{Binding ImageURL}" />-->
-                                <ffimageloading:CachedImage Source="{Binding ImageURL}" Aspect="AspectFit" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="90" WidthRequest="90" Margin="15,15,15,15"  RetryCount="200"  />
+                               <ffimageloading:CachedImage  Source="{Binding ImageURL}" Aspect="AspectFit" HorizontalOptions="Fill" VerticalOptions="Fill" HeightRequest="90" WidthRequest="90" Margin="15,15,15,15"  RetryCount="200"  />
                                 <StackLayout Orientation="Vertical" Margin="0,0,0,0" HorizontalOptions="Start" VerticalOptions="Center">
                                     <Label Text="{Binding ItemNoDisplay}" Margin="5,5,0,0" FontSize="16" FontAttributes="Bold" HorizontalOptions="Start"  BackgroundColor="White" TextColor="Black"/>
                                     <Label Text="{Binding VendorName}" Margin="5,-8,0,0" FontSize="16" FontAttributes="Bold" HorizontalOptions="Start"  BackgroundColor="White" TextColor="Black"/>

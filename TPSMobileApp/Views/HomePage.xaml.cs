@@ -1,4 +1,6 @@
-﻿namespace TPSMobileApp.Views
+﻿using System.Diagnostics;
+
+namespace TPSMobileApp.Views
 {
     public partial class HomePage : ContentPage
     {
@@ -8,58 +10,33 @@
 
             BindingContext = this;
 
-            App.g_HomePage = this;
-
-            BannerImage.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
-            RequestCameraPermission();
-            InitializeTimer();
+            App.g_HomePage = this;            
         }
 
-        async void RequestCameraPermission()
+        public async Task InitializeBannersAsync()
         {
-            // Check current status
-            var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
+            try
+            {
+                // Move DB call off UI thread
+                _banners = await Task.Run(() => App.g_db.GetBanners());
+            }
+            catch
+            {
+                _banners = new List<Banner>();
+            }
 
-            if (status == PermissionStatus.Granted)
+            // Fallback
+            if (_banners == null || _banners.Count == 0)
             {
-                // Permission already granted, proceed with camera action
-                // e.g., StartCamera();
+                BannerImage.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
+                return;
             }
-            else if (status == PermissionStatus.Denied && OperatingSystem.IsAndroid())
-            {
-                // Android specific: If denied, shouldShowRationale might tell you if you can ask again
-                if (Permissions.ShouldShowRationale<Permissions.Camera>())
-                {
-                    // Show an alert to explain why you need it, then request again
-                    if (await DisplayAlertAsync("Permission Needed", "We need camera access to take photos. Allow access?", "OK", "Cancel"))
-                    {
-                        await Permissions.RequestAsync<Permissions.Camera>();
-                    }
-                }
-            }
-            else if (status != PermissionStatus.Granted) // For iOS/Others if not granted or just denied
-            {
-                // Request permission
-                status = await Permissions.RequestAsync<Permissions.Camera>();
-                if (status == PermissionStatus.Granted)
-                {
-                    // Permission granted after request
-                    // e.g., StartCamera();
-                }
-                else
-                {
-                    // Permission denied permanently (iOS) or still denied (Android)
-                    // Inform the user they need to enable it in settings.
-                }
-            }
-        }
 
-        private void InitializeTimer()
-        {
-            Dispatcher.StartTimer(TimeSpan.FromSeconds(10), () =>
+            // Start rotation every 3 seconds
+            Dispatcher.StartTimer(TimeSpan.FromSeconds(3), () =>
             {
-                MainThread.BeginInvokeOnMainThread(UpdateBanner);
-                return true;
+                UpdateBanner();
+                return true; // keep rotating
             });
         }
 
@@ -73,56 +50,64 @@
             await App.g_Shell.GoToCategories();
         }
 
+        private int _currentIndex = 0;
+        private List<Banner> _banners = new();
+
         private async void UpdateBanner()
         {
-            //Database db = new Database();
-
-            var banners = App.g_db.GetBanners();
-
             try
             {
-                if (banners.Count == 0)
+                if (_banners == null || _banners.Count == 0)
                 {
                     BannerImage.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
                     return;
                 }
+
+                var banner = _banners[_currentIndex];
+
+                BannerImage.Source = ImageSource.FromUri(new Uri(banner.BannerURL));
+
+                // Move to next index (circular)
+                _currentIndex = (_currentIndex + 1) % _banners.Count;
             }
-            catch (Exception ex)
+            catch
             {
-                BannerImage.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
-                return;
+                BannerImage.Source = ImageSource.FromResource("logo.png");
             }
-
-            int iNextIndex = 0;
-            String CurrentBanner = BannerImage.Source.ToString();
-
-            foreach (var b in banners)
-            {
-                iNextIndex++;
-
-                if (CurrentBanner.Contains(b.BannerName))
-                {
-                    break;
-                }
-            }
-
-            if (iNextIndex >= banners.Count)
-            {
-                iNextIndex = 0;
-            }
-
-            Banner banner = banners[iNextIndex];
-
-            BannerImage.Source = ImageSource.FromUri(new Uri(banner.BannerURL));
         }
         protected async override void OnAppearing()
         {
-            base.OnAppearing();
+            base.OnAppearing();   
+            CheckAppStatus();
+        }
+
+        private void CheckAppStatus()
+        {
+            Dispatcher.StartTimer(TimeSpan.FromSeconds(60), () =>
+            {
+                Debug.WriteLine("Checking App Status");
+                if (App.isAppLoading)
+                {
+                    LoadingIndicator.IsVisible = true;
+                    return true;
+                }
+                else
+                {
+                    MainThread.BeginInvokeOnMainThread(LoadApp);
+                    return false;
+                } 
+            });
+        }
+
+        private async void LoadApp()
+        {            
             if (!App.g_IsLoggedIn)
             {
                 await App.g_Shell.GoToLogin();
                 return;
             }
+
+            await InitializeBannersAsync();
 
             App.g_Shell.SetMenu();
 
@@ -158,6 +143,7 @@
             RefreshCategoryList();
 
             LoadCategories();
+            LoadingIndicator.IsVisible = false;
         }
 
         public void SetLoginControls()
@@ -200,15 +186,6 @@
             App.g_Subcategory.Description = "ALL SUBCATEGORIES";
 
             await App.g_Shell.GoToItemSearch();
-            //App.g_Shell.GoToSubcategories();
-
-            try
-            {
-                App.g_SearchPage.RefreshList();
-            }
-            catch
-            {
-            }
         }
 
 

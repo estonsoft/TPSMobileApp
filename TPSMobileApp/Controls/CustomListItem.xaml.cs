@@ -181,5 +181,6 @@
                 QtyEntry.SelectionLength = QtyEntry.Text?.Length ?? 0;
             });
         }
-    }
+
+            }
 }

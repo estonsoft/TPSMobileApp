@@ -2,10 +2,9 @@
 <ContentPage
     x:Class="TPSMobileApp.Views.LabelCartPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
     xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
-    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     xmlns:view="clr-namespace:TPSMobileApp.Views"
     x:Name="LabelCart"
     Title="Return Cart"
@@ -97,19 +96,13 @@
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill"
                     Color="lightgray" />
-                <syncfusion:SfListView
-                    x:Name="ItemsListCart"
-                    AutoFitMode="DynamicHeight"
-                    ItemsSourceChangeCachingStrategy="ClearItems"
-                    SelectionMode="None">
-                    <syncfusion:SfListView.ItemTemplate>
+                <CollectionView x:Name="ItemsListCart" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <controls:CustomListCreditItem x:Name="CustomListLabelItem" Grid.Row="0" />
-                            </ViewCell>
+                            <controls:CustomListCreditItem x:Name="CustomListLabelItem" Grid.Row="0" />
                         </DataTemplate>
-                    </syncfusion:SfListView.ItemTemplate>
-                </syncfusion:SfListView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </StackLayout>
 
             <controls:CustomToolbar Grid.Row="2" />

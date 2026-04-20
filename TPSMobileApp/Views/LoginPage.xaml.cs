@@ -11,7 +11,6 @@ namespace TPSMobileApp.Views
         {
             InitializeComponent();
             this.BindingContext = new LoginViewModel();
-
             App.g_LoginPage = this;
         }
 
@@ -35,11 +34,16 @@ namespace TPSMobileApp.Views
 
             AppVersion.Text = Constants.Version;
 
-            if (Constants.LogoUrl != "")
+            try
             {
-                Logo.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
+                if (Constants.LogoUrl != "")
+                {
+                    Logo.Source = ImageSource.FromUri(new Uri(Constants.LogoUrl));
+                }
             }
-
+            catch (Exception)
+            { 
+            }
             if (App.g_Customer.RememberMe)
             {
                 User.Text = App.g_Customer.User;
@@ -81,6 +85,37 @@ namespace TPSMobileApp.Views
             }
             App.g_HeaderTitle = "Settings";
             await App.g_Shell.GoToSettings();
+        }
+
+        private async void OnImageLoaded(object sender, EventArgs e)
+        {
+            if (sender is Image img && img.Source != null)
+            {
+                try
+                {
+                    // Ensure Handler and MauiContext are not null before using them
+                    var handler = img.Handler;
+                    var mauiContext = handler?.MauiContext;
+                    if (mauiContext != null)
+                    {
+                        var result = await img.Source.GetPlatformImageAsync(mauiContext);
+
+                        if (result == null)
+                        {
+                            img.Source = "missing_item.jpg"; // Set to yingour local resource name
+                        }
+                    }
+                    else
+                    {
+                        img.Source = "missing_item.jpg";
+                    }
+                }
+                catch (Exception)
+                {
+                    // If the URI is malformed or download fails immediately
+                    img.Source = "missing_item.jpg";
+                }
+            }
         }
     }
 }

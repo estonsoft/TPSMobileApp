@@ -2,7 +2,7 @@
 <ContentPage
     x:Class="TPSMobileApp.Views.CustomerListPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
     xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=netstandard"
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
     Title="Customers"

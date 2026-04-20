@@ -2,7 +2,7 @@
 <ContentPage
     x:Class="TPSMobileApp.Views.ItemsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
     
     xmlns:local="clr-namespace:TPSMobileApp.ViewModels"
     x:Name="BrowseItemsPage"
