@@ -99,7 +99,7 @@ public class CustomStepperSearch : StackLayout
 
         AddToOrderBtn = new Button
         {
-            Text = "Add To Order",
+            Text = "Add",
             HeightRequest = 33,
             WidthRequest = 120,
             CornerRadius = 15,

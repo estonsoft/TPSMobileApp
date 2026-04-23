@@ -2,9 +2,10 @@
 <ContentPage
     x:Class="TPSMobileApp.Views.CustomerListPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ListCollection="clr-namespace:System.Collections.Generic;assembly=netstandard"
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
     Title="Customers"
     Shell.NavBarIsVisible="false">
 
@@ -143,129 +144,138 @@
                 SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <controls:CustomerStackLayout CustNo="{Binding CustNo}" Orientation="Vertical">
+                        <Grid RowDefinitions="*,*">
+                            <controls:CustomerStackLayout
+                                Grid.Row="0"
+                                CustNo="{Binding CustNo}"
+                                Orientation="Vertical">
 
-                            <controls:CustomerStackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnTappedCustomer" />
-                            </controls:CustomerStackLayout.GestureRecognizers>
+                                <controls:CustomerStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnTappedCustomer" />
+                                </controls:CustomerStackLayout.GestureRecognizers>
 
-                            <VerticalStackLayout Margin="10" Spacing="4">
+                                <VerticalStackLayout Margin="10" Spacing="4">
 
-                                <!--  Customer Number + Company  -->
-                                <HorizontalStackLayout Spacing="10">
+                                    <!--  Customer Number + Company  -->
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="12"
+                                            Text="{Binding CustNo}"
+                                            TextColor="RoyalBlue" />
+
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="12"
+                                            Text="{Binding CompanyName}"
+                                            TextColor="RoyalBlue" />
+                                    </HorizontalStackLayout>
+
+                                    <!--  Address  -->
                                     <Label
-                                        FontAttributes="Bold"
-                                        FontSize="12"
-                                        Text="{Binding CustNo}"
-                                        TextColor="RoyalBlue" />
-
-                                    <Label
-                                        FontAttributes="Bold"
-                                        FontSize="12"
-                                        Text="{Binding CompanyName}"
-                                        TextColor="RoyalBlue" />
-                                </HorizontalStackLayout>
-
-                                <!--  Address  -->
-                                <Label
-                                    FontSize="11"
-                                    Text="{Binding Address1}"
-                                    TextColor="Black" />
-
-                                <Label
-                                    FontSize="11"
-                                    Text="{Binding CityStateZip}"
-                                    TextColor="Black" />
-
-                                <Label
-                                    FontSize="11"
-                                    Text="{Binding Phone}"
-                                    TextColor="Black" />
-
-                                <!--  Credit Information  -->
-                                <Grid ColumnDefinitions="80,70,40,90,*">
-                                    <Label
-                                        Grid.Column="0"
                                         FontSize="11"
-                                        Text="Credit Limit" />
+                                        Text="{Binding Address1}"
+                                        TextColor="Black" />
 
                                     <Label
-                                        Grid.Column="1"
-                                        FontAttributes="Bold"
                                         FontSize="11"
-                                        Text="{Binding CreditLimitDisplay}" />
+                                        Text="{Binding CityStateZip}"
+                                        TextColor="Black" />
 
                                     <Label
-                                        Grid.Column="2"
                                         FontSize="11"
-                                        Text="Due" />
+                                        Text="{Binding Phone}"
+                                        TextColor="Black" />
 
-                                    <Label
-                                        Grid.Column="3"
-                                        FontAttributes="Bold"
-                                        FontSize="11"
-                                        Text="{Binding ARBalanceDisplay}" />
-                                </Grid>
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="11"
-                                    Text="{Binding TermsDesc}" />
-                                <!--  Last Payment + Last Order  -->
-                                <Grid ColumnDefinitions="90,90,80,*">
+                                    <!--  Credit Information  -->
+                                    <Grid ColumnDefinitions="80,70,40,90,*">
+                                        <Label
+                                            Grid.Column="0"
+                                            FontSize="11"
+                                            Text="Credit Limit" />
 
-                                    <Label
-                                        Grid.Column="0"
-                                        FontSize="11"
-                                        Text="Last Payment" />
+                                        <Label
+                                            Grid.Column="1"
+                                            Margin="5,0,0,0"
+                                            FontAttributes="Bold"
+                                            FontSize="11"
+                                            Text="{Binding CreditLimitDisplay}" />
 
-                                    <Label
-                                        Grid.Column="1"
-                                        FontAttributes="Bold"
-                                        FontSize="11"
-                                        Text="{Binding LastPaymentDate}" />
+                                        <Label
+                                            Grid.Column="2"
+                                            FontSize="11"
+                                            Text="Due" />
 
-                                    <Label
-                                        Grid.Column="2"
-                                        FontSize="11"
-                                        Text="Last Order" />
-
-                                    <Label
-                                        Grid.Column="3"
-                                        FontAttributes="Bold"
-                                        FontSize="11"
-                                        Text="{Binding LastOrderDate}" />
-                                </Grid>
-
-                                <!--  Shopping Cart  -->
-                                <HorizontalStackLayout
-                                    x:Name="ShoppingCartStack"
-                                    IsVisible="{Binding IsShoppingCart}"
-                                    Spacing="6">
-
-                                    <Label
-                                        FontFamily="FontAwesomeFreeSolid"
-                                        FontSize="14"
-                                        Text="&#xF07A;"
-                                        TextColor="RoyalBlue"
-                                        VerticalOptions="Center" />
-
+                                        <Label
+                                            Grid.Column="3"
+                                            FontAttributes="Bold"
+                                            FontSize="11"
+                                            Text="{Binding ARBalanceDisplay}" />
+                                    </Grid>
                                     <Label
                                         FontAttributes="Bold"
                                         FontSize="11"
-                                        Text="{Binding ShoppingCartItemsDisplay}" />
+                                        Text="{Binding TermsDesc}" />
+                                    <!--  Last Payment + Last Order  -->
+                                    <Grid ColumnDefinitions="90,90,80,*">
 
-                                    <Label FontSize="11" Text="Items" />
-                                </HorizontalStackLayout>
+                                        <Label
+                                            Grid.Column="0"
+                                            FontSize="11"
+                                            Text="Last Payment" />
 
-                            </VerticalStackLayout>
+                                        <Label
+                                            Grid.Column="1"
+                                            FontAttributes="Bold"
+                                            FontSize="11"
+                                            Text="{Binding LastPaymentDate}" />
 
-                            <!--  Separator  -->
-                            <BoxView
+                                        <Label
+                                            Grid.Column="2"
+                                            FontSize="11"
+                                            Text="Last Order" />
+
+                                        <Label
+                                            Grid.Column="3"
+                                            FontAttributes="Bold"
+                                            FontSize="11"
+                                            Text="{Binding LastOrderDate}" />
+                                    </Grid>
+
+                                    <!--  Shopping Cart  -->
+                                    <HorizontalStackLayout
+                                        x:Name="ShoppingCartStack"
+                                        IsVisible="{Binding IsShoppingCart}"
+                                        Spacing="6">
+
+                                        <Label
+                                            FontFamily="FontAwesomeFreeSolid"
+                                            FontSize="14"
+                                            Text="&#xF07A;"
+                                            TextColor="RoyalBlue"
+                                            VerticalOptions="Center" />
+
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="11"
+                                            Text="{Binding ShoppingCartItemsDisplay}" />
+
+                                        <Label FontSize="11" Text="Items" />
+                                    </HorizontalStackLayout>
+
+                                </VerticalStackLayout>
+
+                                <!--  Separator  -->
+
+
+                            </controls:CustomerStackLayout>
+                            <Grid
+                                Grid.Row="1"
                                 BackgroundColor="LightGray"
-                                HeightRequest="1"
+                                HeightRequest="3"
                                 HorizontalOptions="Fill" />
+                        </Grid>
 
-                        </controls:CustomerStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

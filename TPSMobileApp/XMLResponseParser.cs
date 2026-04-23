@@ -492,7 +492,7 @@ namespace TPSMobileApp
                             item.SubsubcategoryDesc = "";
                         }
 
-                        item.AddToOrderDisplay = "Add To Order";
+                        item.AddToOrderDisplay = "Add";
                         item.QtyOrder = 0;
                         item.QtyCredit = 0;
                         item.QtyLabel = 0;
@@ -1781,9 +1781,9 @@ namespace TPSMobileApp
                             }
                             else
                             {
-                                c.LastOrderDate = aCust[17].Substring(3, 2) + "/";
-                                c.LastOrderDate += aCust[17].Substring(5, 2) + "/";
-                                c.LastOrderDate += aCust[17].Substring(1, 2);
+                                c.LastOrderDate = aCust[14].Substring(3, 2) + "/";
+                                c.LastOrderDate += aCust[14].Substring(5, 2) + "/";
+                                c.LastOrderDate += aCust[14].Substring(1, 2);
                             }
                         }
                         catch { }

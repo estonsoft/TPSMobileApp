@@ -69,8 +69,6 @@ namespace TPSMobileApp
         public static string g_Notes { get; set; }
         public static string g_ShoppingCartSort { get; set; }
 
-        public static Boolean isAppLoading { get; set; }
-
         public class MessageKeys
         {
             public const string OnStart = nameof(OnStart);
@@ -83,20 +81,14 @@ namespace TPSMobileApp
             InitializeComponent();
             Application.Current.UserAppTheme = AppTheme.Light;
             g_App = this;
-            isAppLoading = true;
             CommManager = _commManager;
 
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjQ0OTcyOEAzMTM5MmUzNDJlMzBoTVFSazNhbDdpOTVGMVE3VXExSzNPZENwUFJ5WmhnT2ZxaDQrK2dBQ0hJPQ==");
             App.g_db = Database.Instance();
             
-            Task.Run(async () =>
-            {
-                await LoadSettings();
-                await LoadDataFromServer();
-                await LoadCustomerFromServer();
-                isAppLoading = false;
-            });
-            
+            LoadSettings();
+            LoadDataFromServer();
+            LoadCustomerFromServer();            
         }
 
         private async Task LoadSettings()

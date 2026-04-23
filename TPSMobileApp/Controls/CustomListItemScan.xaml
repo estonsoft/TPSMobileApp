@@ -198,7 +198,7 @@
                     HeightRequest="35"
                     IsVisible="{Binding IsAddToOrderVisible}"
                     ItemNo="{Binding ItemNo}"
-                    Text="Add To Order"
+                    Text="Add"
                     TextColor="RoyalBlue"
                     WidthRequest="110" />
             </HorizontalStackLayout>

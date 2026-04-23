@@ -15,7 +15,6 @@ namespace TPSMobileApp.Views
         List<Item> lstItems = new ();
 
         // The items actually shown in the CollectionView
-        public ObservableCollection<Item> DisplayedItems { get; } = new();
 
         private int _pageSize = 10;
 
@@ -176,7 +175,6 @@ namespace TPSMobileApp.Views
 
                 if (answer)
                 {
-                    DisplayedItems.Clear();
                     // User tapped 'Yes' - Call your search method here
                     App.g_SearchText = Search.Text;
                     //App.g_SearchFromPage = "HomePage";
@@ -199,30 +197,31 @@ namespace TPSMobileApp.Views
                "No items found in selected category.Please modify your search.",
                "Cancel");
             }
-            loadMoreCommand?.Execute(null);
+            ItemsListSearch.ItemsSource = lstItems;
+            //loadMoreCommand?.Execute(null);
         }
 
-        [RelayCommand]
-        private void LoadMore()
-        {
-            // 1. Calculate how many items are already shown
-            int currentCount = DisplayedItems.Count;
+        //[RelayCommand]
+        //private void LoadMore()
+        //{
+        //    // 1. Calculate how many items are already shown
+        //    int currentCount = DisplayedItems.Count;
 
-            // 2. Check if there's more to load
-            if (currentCount < lstItems.Count)
-            {
-                // 3. Take the next batch from your master list
-                var nextBatch = lstItems
-                    .Skip(currentCount)
-                    .Take(_pageSize);
+        //    // 2. Check if there's more to load
+        //    if (currentCount < lstItems.Count)
+        //    {
+        //        // 3. Take the next batch from your master list
+        //        var nextBatch = lstItems
+        //            .Skip(currentCount)
+        //            .Take(_pageSize);
 
-                // 4. Add them to the observable collection
-                foreach (var item in nextBatch)
-                {
-                    DisplayedItems.Add(item);
-                }
-            }
-        }
+        //        // 4. Add them to the observable collection
+        //        foreach (var item in nextBatch)
+        //        {
+        //            DisplayedItems.Add(item);
+        //        }
+        //    }
+        //}
 
         private void OnTappedClearCategory(object sender, EventArgs e)
         {
@@ -288,7 +287,6 @@ namespace TPSMobileApp.Views
         {
             App.g_IsTopSellers = TopSellers.IsChecked;
             lstItems.Clear();
-            DisplayedItems.Clear();
             RefreshList();
         }
 
@@ -296,7 +294,6 @@ namespace TPSMobileApp.Views
         {
             App.g_InStockOnly = InStockOnly.IsChecked;
             lstItems.Clear();
-            DisplayedItems.Clear();
             RefreshList();
         }
 
@@ -308,7 +305,6 @@ namespace TPSMobileApp.Views
         async void OnTappedSearch(object sender, EventArgs e)
         {
             App.g_SearchText = Search.Text;
-            DisplayedItems.Clear();
             // User tapped 'Yes' - Call your search method here
             App.g_SearchText = Search.Text;
             //App.g_SearchFromPage = "HomePage";

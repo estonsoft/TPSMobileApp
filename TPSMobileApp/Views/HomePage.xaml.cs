@@ -10,7 +10,7 @@ namespace TPSMobileApp.Views
 
             BindingContext = this;
 
-            App.g_HomePage = this;            
+            InitializeBannersAsync();
         }
 
         public async Task InitializeBannersAsync()
@@ -77,37 +77,39 @@ namespace TPSMobileApp.Views
         }
         protected async override void OnAppearing()
         {
-            base.OnAppearing();   
-            CheckAppStatus();
+            base.OnAppearing();
+            App.g_HomePage = this;
+            LoadApp(); 
         }
 
-        private void CheckAppStatus()
-        {
-            Dispatcher.StartTimer(TimeSpan.FromSeconds(60), () =>
-            {
-                Debug.WriteLine("Checking App Status");
-                if (App.isAppLoading)
-                {
-                    LoadingIndicator.IsVisible = true;
-                    return true;
-                }
-                else
-                {
-                    MainThread.BeginInvokeOnMainThread(LoadApp);
-                    return false;
-                } 
-            });
-        }
+        //private void CheckAppStatus()
+        //{
+        //    Dispatcher.StartTimer(TimeSpan.FromSeconds(20), () =>
+        //    {
+        //        Debug.WriteLine("Checking App Status");
+        //        if (App.isAppLoading)
+        //        {
+        //            LoadingIndicator.IsVisible = true;
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            LoadApp();
+        //            return false;
+        //        } 
+        //    });
+        //}
 
         private async void LoadApp()
-        {            
+        {
+            SearchBox.Query = App.g_SearchText;
+            App.g_CurrentPage = "HomePage";
+
             if (!App.g_IsLoggedIn)
             {
                 await App.g_Shell.GoToLogin();
                 return;
             }
-
-            await InitializeBannersAsync();
 
             App.g_Shell.SetMenu();
 
@@ -118,10 +120,7 @@ namespace TPSMobileApp.Views
                 return;
             }
 
-            //SearchBox.Query = App.g_SearchText;
-
-            App.g_CurrentPage = "HomePage";
-
+            
             if (App.g_Customer.Status == "3")
             {
                 await Shell.Current.DisplayAlertAsync("Profit Order", "Registration request has been completed.  Please check your email for instructions.", "Ok");
@@ -154,23 +153,32 @@ namespace TPSMobileApp.Views
 
         public void LoadCategories()
         {
-            Task.Run(() =>
+            if (App.g_HomePageCategoryList != null && App.g_HomePageCategoryList.Count > 0)
+            {   
+                TopCategoriesCollectionView.ItemsSource = App.g_HomePageCategoryList;
+                TopCategoriesCollectionView.SelectedItem = null;
+                return;
+            }
+            else
             {
-                //Database db = new Database();
-                App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
-            }).ContinueWith(t =>
-            {
-                if (t.Exception != null)
+                Task.Run(() =>
                 {
-                    // Handle exceptions if needed
-                    return;
-                }
-                // Update UI on the main thread
-                MainThread.BeginInvokeOnMainThread(() =>
+                    //Database db = new Database();
+                    App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
+                }).ContinueWith(t =>
                 {
-                    TopCategoriesCollectionView.ItemsSource = App.g_HomePageCategoryList;
+                    if (t.Exception != null)
+                    {
+                        // Handle exceptions if needed
+                        return;
+                    }
+                    // Update UI on the main thread
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        TopCategoriesCollectionView.ItemsSource = App.g_HomePageCategoryList;
+                    });
                 });
-            });
+            }   
         }
 
         async void CategoryTapped(String Code, String Description)
