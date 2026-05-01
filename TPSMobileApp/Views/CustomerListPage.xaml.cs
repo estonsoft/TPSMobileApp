@@ -26,37 +26,39 @@ namespace TPSMobileApp.Views
             base.OnAppearing();
 
             App.g_CurrentPage = "CustomerListPage";
-
             RefreshList();
         }
 
-        public async void RefreshList()
+        public void RefreshList()
         {
             CustomerList.ItemsSource = null;
 
             App.g_db.UpdateCustomerCartItems();
 
-            if (PendingOrdersCheckbox.IsChecked)
+            Task.Run(() =>
             {
-                customers = App.g_db.GetSalesCustomersWithPendingOrders(CustomerSearch.Text);
-            }
-            else
-            {
-                customers = App.g_db.GetSalesCustomers(CustomerSearch.Text);
-            }
-
-            foreach (SalesCustomer customer in customers)
-            {
-                if (customer.ShoppingCartItems > 0)
+                if (PendingOrdersCheckbox.IsChecked)
                 {
-                    customer.IsShoppingCart = true;
-                    customer.ShoppingCartItemsDisplay = customer.ShoppingCartItems.ToString();
+                    customers = App.g_db.GetSalesCustomersWithPendingOrders(CustomerSearch.Text);
                 }
-            }
+                else
+                {
+                    customers = App.g_db.GetSalesCustomers(CustomerSearch.Text);
+                }
 
-            CustomerList.ItemsSource = customers;
-
-            App.g_CurrentPage = "CustomerListPage";
+                foreach (SalesCustomer customer in customers)
+                {
+                    if (customer.ShoppingCartItems > 0)
+                    {
+                        customer.IsShoppingCart = true;
+                        customer.ShoppingCartItemsDisplay = customer.ShoppingCartItems.ToString();
+                    }
+                }
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    CustomerList.ItemsSource = customers;
+                });
+            });
         }
 
         async void OnTappedSearch(object sender, EventArgs args)

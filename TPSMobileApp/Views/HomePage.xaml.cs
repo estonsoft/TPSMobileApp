@@ -4,12 +4,13 @@ namespace TPSMobileApp.Views
 {
     public partial class HomePage : ContentPage
     {
+        List<Category> category;
         public HomePage()
         {
             InitializeComponent();
 
             BindingContext = this;
-
+            LoadCategories();
             InitializeBannersAsync();
         }
 
@@ -82,24 +83,6 @@ namespace TPSMobileApp.Views
             LoadApp(); 
         }
 
-        //private void CheckAppStatus()
-        //{
-        //    Dispatcher.StartTimer(TimeSpan.FromSeconds(20), () =>
-        //    {
-        //        Debug.WriteLine("Checking App Status");
-        //        if (App.isAppLoading)
-        //        {
-        //            LoadingIndicator.IsVisible = true;
-        //            return true;
-        //        }
-        //        else
-        //        {
-        //            LoadApp();
-        //            return false;
-        //        } 
-        //    });
-        //}
-
         private async void LoadApp()
         {
             SearchBox.Query = App.g_SearchText;
@@ -138,10 +121,7 @@ namespace TPSMobileApp.Views
             App.g_SearchText = "";
             App.g_ScanBarcode = "";
             SearchText.Text = "";
-
-            RefreshCategoryList();
-
-            LoadCategories();
+            TopCategoriesCollectionView.SelectedItem = null;
             LoadingIndicator.IsVisible = false;
         }
 
@@ -153,32 +133,20 @@ namespace TPSMobileApp.Views
 
         public void LoadCategories()
         {
-            if (App.g_HomePageCategoryList != null && App.g_HomePageCategoryList.Count > 0)
-            {   
-                TopCategoriesCollectionView.ItemsSource = App.g_HomePageCategoryList;
-                TopCategoriesCollectionView.SelectedItem = null;
-                return;
-            }
-            else
+
+            if (category == null || category?.Count == 0)
             {
                 Task.Run(() =>
                 {
                     //Database db = new Database();
-                    App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
-                }).ContinueWith(t =>
-                {
-                    if (t.Exception != null)
-                    {
-                        // Handle exceptions if needed
-                        return;
-                    }
-                    // Update UI on the main thread
+                    category = App.g_db.GetHomePageCategories();
+                    App.g_HomePageCategoryList = category;
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        TopCategoriesCollectionView.ItemsSource = App.g_HomePageCategoryList;
+                        TopCategoriesCollectionView.ItemsSource = category;
                     });
                 });
-            }   
+            }
         }
 
         async void CategoryTapped(String Code, String Description)
@@ -254,11 +222,6 @@ namespace TPSMobileApp.Views
             }
         }
 
-        public async void RefreshCategoryList()
-        {
-            //CategoryList.ItemsSource = null;
-            //CategoryList.ItemsSource = App.g_HomePageCategoryList;
-        }
 
         async void OnPastPurchases(object sender, EventArgs e)
         {

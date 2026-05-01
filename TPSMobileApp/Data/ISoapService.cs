@@ -15,6 +15,7 @@
         Task<string> SubmitOrderAsync(string sCustNo, string sPO, string sPaymentMethod, string sCCInfo, string sOrderInfo, string sDeliveryPickup, string sUser, string sNotes, int iHoldForReview, string sOrderType);
         Task<string> SubmitReturnAsync(string sCustNo, string sOrderInfo, string sUser, string sNotes);
         Task<string> GetOrderHistoryAsync(string sCustNo);
+        Task<string> GetInvoicePDFAsync(string sOrder);
         Task<string> GetSalespersonCustomersAsync(string sUser);
         Task<string> GetFlyerItemsPDFAsync();
     }

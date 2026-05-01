@@ -278,7 +278,7 @@
 
         async void OnPlaceOrderClicked(object sender, EventArgs e)
         {
-            if (App.g_IsSalesUser)
+            if (App.g_IsSalesUser || !IsDeliveryHighlighted)
             {
                 await App.g_Shell.GoToSubmitOrderPage();
             }

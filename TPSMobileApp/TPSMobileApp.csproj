@@ -36,8 +36,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
     <ApplicationTitle>Ram Distributors</ApplicationTitle>
-    <ApplicationDisplayVersion>3.913</ApplicationDisplayVersion>
-    <ApplicationVersion>3913</ApplicationVersion>
+    <ApplicationDisplayVersion>3.941</ApplicationDisplayVersion>
+    <ApplicationVersion>3941</ApplicationVersion>
     <AndroidUseAapt2>True</AndroidUseAapt2>
     <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
     <AndroidPackageFormat>aab</AndroidPackageFormat>
@@ -48,13 +48,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-ios|AnyCPU'">
     <ApplicationTitle>Ram Distributors</ApplicationTitle>
-    <ApplicationDisplayVersion>3.913</ApplicationDisplayVersion>
-    <ApplicationVersion>3913</ApplicationVersion>
+    <ApplicationDisplayVersion>3.941</ApplicationDisplayVersion>
+    <ApplicationVersion>3941</ApplicationVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
     <ApplicationTitle>Ram Distributors</ApplicationTitle>
-    <ApplicationDisplayVersion>3.913</ApplicationDisplayVersion>
-    <ApplicationVersion>3913</ApplicationVersion>
+    <ApplicationDisplayVersion>3.941</ApplicationDisplayVersion>
+    <ApplicationVersion>3941</ApplicationVersion>
     <AndroidPackageFormat>aab</AndroidPackageFormat>
 	<RunAOTCompilation>false</RunAOTCompilation>
     <AndroidUseAapt2>True</AndroidUseAapt2>
@@ -67,8 +67,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-ios|AnyCPU'">
     <ApplicationTitle>Ram Distributors</ApplicationTitle>
-    <ApplicationDisplayVersion>3.913</ApplicationDisplayVersion>
-    <ApplicationVersion>3913</ApplicationVersion>
+    <ApplicationDisplayVersion>3.941</ApplicationDisplayVersion>
+    <ApplicationVersion>3941</ApplicationVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net10.0-ios'">
+    <ProvisioningType>automatic</ProvisioningType>
+    <CodesignKey>Apple Development: Created via API (3H34G4NBZU)</CodesignKey>
+    <CodesignProvision>VS: com.sales.ramdistributors Development</CodesignProvision>
   </PropertyGroup>
   
   <ItemGroup>

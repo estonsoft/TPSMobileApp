@@ -114,8 +114,8 @@
                 </Grid.RowDefinitions>
                 <ffimageloading:CachedImage
                     Margin="6"
-                    Aspect="AspectFill"
-                    HeightRequest="50"
+                    Aspect="AspectFit"
+                    HeightRequest="100"
                     HorizontalOptions="Center"
                     Source="logo.png"
                     StyleClass="FlyoutHeaderStyle"

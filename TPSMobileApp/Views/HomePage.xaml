@@ -143,10 +143,10 @@
                     <ffimageloading:CachedImage
                         x:Name="BannerImage"
                         Margin="0,0,0,0"
-                        Aspect="Fill"
+                        Aspect="AspectFit"
                         BackgroundColor="white"
                         HeightRequest="150"
-                        HorizontalOptions="Fill"
+                        HorizontalOptions="FillAndExpand"
                         VerticalOptions="Fill" />
                 </Grid>
             </Border>

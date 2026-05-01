@@ -19,14 +19,16 @@ namespace TPSMobileApp.Views
             RefreshList();
         }
 
-        public async void RefreshList()
+        public void RefreshList()
         {
             OrderHistoryList.ItemsSource = null;
-
-            List<OrderHeader> orderHeaders = App.g_db.GetOrderHeaders();
-            MainThread.BeginInvokeOnMainThread(() =>
+            Task.Run(() =>
             {
-                OrderHistoryList.ItemsSource = orderHeaders;
+                List<OrderHeader> orderHeaders = App.g_db.GetOrderHeaders();
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    OrderHistoryList.ItemsSource = orderHeaders;
+                });
             });
         }
 

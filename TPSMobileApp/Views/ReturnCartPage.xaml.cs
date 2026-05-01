@@ -53,16 +53,9 @@
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
+            App.g_CurrentPage = "ReturnCartPage";
             //Database db = new Database();
-            List<Item> items = App.g_db.GetReturnCartItems();
-
-            if (items.Count > 0)
-            {
-                App.g_CurrentPage = "ReturnCartPage";
-
-                RefreshList();
-            }
+            RefreshList();
         }
 
         public void UpdateTotals()
@@ -92,19 +85,22 @@
             CartTotal = dCartTotal.ToString("{0:C2}");
         }
 
-        public async void RefreshList()
+        public void RefreshList()
         {
             ItemsListCart.ItemsSource = null;
-
-            ItemsListCart.ItemsSource = App.g_db.GetReturnCartItems();
-
-            foreach (Item i in (List<Item>)ItemsListCart.ItemsSource)
+            Task.Run(() =>
             {
-                Item.SetListItem(i, "C");
-
-            }
-
-            UpdateTotals();
+                List<Item> lstItem = App.g_db.GetReturnCartItems();
+                foreach (Item i in lstItem)
+                {
+                    Item.SetListItem(i, "C");
+                }
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    ItemsListCart.ItemsSource = lstItem;
+                    UpdateTotals();
+                });
+            });            
         }
 
         private async void btnCheckout_Clicked(object sender, EventArgs e)

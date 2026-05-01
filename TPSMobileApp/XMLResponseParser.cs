@@ -304,7 +304,7 @@ namespace TPSMobileApp
                         item.UPC_1 = aItem[8].Trim();
                         if (item.UPC_1.Length > 0)
                         {
-                            item.ItemNoDisplayUPC = "(" + item.UPC_1 + ")";
+                            item.ItemNoDisplayUPC = item.UPC_1;
                         }
                         else
                         {
@@ -492,7 +492,7 @@ namespace TPSMobileApp
                             item.SubsubcategoryDesc = "";
                         }
 
-                        item.AddToOrderDisplay = "Add";
+                        item.AddToOrderDisplay = "Add To Order";
                         item.QtyOrder = 0;
                         item.QtyCredit = 0;
                         item.QtyLabel = 0;
@@ -1412,7 +1412,7 @@ namespace TPSMobileApp
                         od.UPC = aOrder[10];
                         if (od.UPC.Length > 0)
                         {
-                            od.ItemNoDisplayUPC = "(" + od.UPC + ")";
+                            od.ItemNoDisplayUPC = od.UPC;
                         }
                         else
                         {
@@ -1482,7 +1482,7 @@ namespace TPSMobileApp
                         ri.UPC = aOrder[10];
                         if (ri.UPC.Length > 0)
                         {
-                            ri.ItemNoDisplayUPC = "(" + ri.UPC + ")";
+                            ri.ItemNoDisplayUPC = ri.UPC;
                         }
                         else
                         {
@@ -1638,7 +1638,7 @@ namespace TPSMobileApp
                         od.UPC = aOrder[10];
                         if (od.UPC.Length > 0)
                         {
-                            od.ItemNoDisplayUPC = "(" + od.UPC + ")";
+                            od.ItemNoDisplayUPC = od.UPC;
                         }
                         else
                         {
@@ -1697,6 +1697,19 @@ namespace TPSMobileApp
 
                     App.g_db.CommitTransaction();
                 }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        public static void commService_GetInvoicePDFCompletedAsync(String response)
+        {
+            Debug.WriteLine("Get Invoice PDF Complete");
+
+            try
+            {
+                String sBase64PDF = response;
             }
             catch (Exception ex)
             {

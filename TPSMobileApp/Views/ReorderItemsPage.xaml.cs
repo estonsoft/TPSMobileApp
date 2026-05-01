@@ -17,28 +17,34 @@
             RefreshList();
         }
 
-        public async void RefreshList()
+        public void RefreshList()
         {
             ReorderItemsList.ItemsSource = App.g_ReorderItemList;
-
-            List<Item> lstItem = App.g_db.GetItems();
-
-            foreach (Item ri in (List<Item>)ReorderItemsList.ItemsSource)
+            
+            Task.Run(() =>
             {
-                ri.IsLoggedIn = App.g_IsLoggedIn;
-
-                foreach (Item i in lstItem)
+                List<Item> lstItem = App.g_db.GetItems();
+                foreach (Item ri in (List<Item>)ReorderItemsList.ItemsSource)
                 {
-                    if (ri.ItemNo == i.ItemNo)
-                    {
-                        ri.QtyOrder = i.QtyOrder;
-                        ri.IsPriceVisible = i.IsPriceVisible;
-                        break;
-                    }
-                }
+                    ri.IsLoggedIn = App.g_IsLoggedIn;
 
-                Item.SetListItem(ri, "O");
-            }
+                    foreach (Item i in lstItem)
+                    {
+                        if (ri.ItemNo == i.ItemNo)
+                        {
+                            ri.QtyOrder = i.QtyOrder;
+                            ri.IsPriceVisible = i.IsPriceVisible;
+                            break;
+                        }
+                    }
+
+                    Item.SetListItem(ri, "O");
+                }
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    ReorderItemsList.ItemsSource = lstItem;
+                });
+            });
         }
 
         protected override bool OnBackButtonPressed()

@@ -47,8 +47,7 @@ namespace TPSMobileApp.Views
         public ShoppingCartPage()
         {
             InitializeComponent();
-
-            //BindingContext = _viewModel = new ShoppingCartViewModel();
+            
             BindingContext = this;
 
             App.g_ShoppingCartPage = this;
@@ -59,10 +58,6 @@ namespace TPSMobileApp.Views
             {
                 RefreshList();
             });
-            //MessagingCenter.Subscribe<ShoppingCartPage>(this, "RefreshShoppingCart", (sender) =>
-            //{
-
-            //});
         }
 
         protected override void OnAppearing()

@@ -79,6 +79,12 @@
             XMLResponseParser.commService_GetOrderHistoryCompletedAsync(response);
         }
 
+        public async Task GetInvoicePDF(string sOrder)
+        {
+            String response = await soapService.GetInvoicePDFAsync(sOrder);
+            XMLResponseParser.commService_GetInvoicePDFCompletedAsync(response);
+        }
+
         public async Task GetSalespersonCustomers(string sUser)
         {
             String response = await soapService.GetSalespersonCustomersAsync(sUser);
