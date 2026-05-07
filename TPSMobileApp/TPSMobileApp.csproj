@@ -101,6 +101,7 @@
     <PackageReference Include="Syncfusion.Maui.PdfViewer" Version="33.1.49" />
     <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.6" />
 	<PackageReference Include="System.ServiceModel.Security" Version="6.0.0" />
+	<PackageReference Include="Vitvov.Maui.PDFView" Version="1.7.3" />
     <PackageReference Include="Zebra.Printer.SDK" Version="4.0.3435" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +145,9 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\InvoiceViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\ItemSearchPage.xaml">
@@ -270,5 +274,10 @@
     <MauiFont Update="Resources\Fonts\SEGMDL2.TTF">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </MauiFont>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Views\InvoiceViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
   </ItemGroup>
 </Project>

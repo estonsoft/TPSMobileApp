@@ -81,7 +81,7 @@ public class CustomHeader : StackLayout
         {
             await App.g_Shell.GoToHome();
         }
-        else if (TitleText.Text == "Order Detail")
+        else if (TitleText.Text == "Order Detail" || TitleText.Text == "Invoice Detail")
         {
             await App.g_Shell.GoToMyPurchases();
         }

@@ -100,221 +100,214 @@
                 VerticalOptions="Fill"
                 Color="lightgray" />
         </StackLayout>
-
-        <VerticalStackLayout
-            Grid.Row="1"
-            HorizontalOptions="Fill"
-            VerticalOptions="Start">
-            <VerticalStackLayout
-                x:Name="lblLoginInfo"
-                Margin="0,20,0,0"
-                HeightRequest="50"
-                HorizontalOptions="Center"
-                VerticalOptions="Center">
-                <Label
-                    x:Name="lblWelcome"
-                    Margin="0,0,0,0"
-                    FontSize="14"
-                    HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center"
-                    Text="Welcome"
-                    TextColor="black"
-                    WidthRequest="500" />
-                <Label
-                    x:Name="lblUserName"
-                    Margin="0,-5,0,0"
-                    FontAttributes="Bold"
-                    FontSize="14"
-                    HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center"
-                    Text="Company Name"
-                    TextColor="black"
-                    WidthRequest="500" />
-            </VerticalStackLayout>
-            <Border
-                Padding="0,0,0,0"
-                BackgroundColor="Green"
-                Stroke="transparent">
-                <Grid
-                    BackgroundColor="white"
-                    HeightRequest="150"
-                    HorizontalOptions="Fill"
-                    VerticalOptions="Fill">
-                    <ffimageloading:CachedImage
-                        x:Name="BannerImage"
-                        Margin="0,0,0,0"
-                        Aspect="AspectFit"
-                        BackgroundColor="white"
-                        HeightRequest="150"
-                        HorizontalOptions="FillAndExpand"
-                        VerticalOptions="Fill" />
-                </Grid>
-            </Border>
-            <Border
-                Margin="0,5,0,5"
-                Padding="0"
-                BackgroundColor="LightGray"
-                HeightRequest="48"
-                HorizontalOptions="Center"
-                Stroke="White"
-                VerticalOptions="Start">
-                <Border.StrokeShape>
-                    <!--  Replaces CornerRadius="10"  -->
-                    <RoundRectangle CornerRadius="10" />
-                </Border.StrokeShape>
-                <HorizontalStackLayout
-                    Margin="0,10,0,10"
-                    Padding="0,0,0,0"
-                    HeightRequest="60"
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout HorizontalOptions="Fill" VerticalOptions="Start">
+                <VerticalStackLayout
+                    x:Name="lblLoginInfo"
+                    Margin="0,20,0,0"
+                    HeightRequest="50"
                     HorizontalOptions="Center"
                     VerticalOptions="Center">
-                    <HorizontalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnPastPurchases" />
-                    </HorizontalStackLayout.GestureRecognizers>
                     <Label
-                        Padding="15,10,0,0"
-                        FontAttributes="Bold"
-                        FontFamily="FontAwesomeFreeSolid"
-                        FontSize="18"
-                        HeightRequest="45"
+                        x:Name="lblWelcome"
+                        Margin="0,0,0,0"
+                        FontSize="14"
                         HorizontalOptions="Center"
-                        Text="&#xF571;"
-                        TextColor="blue"
-                        VerticalOptions="Center"
-                        WidthRequest="45" />
-                    <VerticalStackLayout>
-                        <Label
-                            Margin="0,10,0,0"
-                            Padding="0,0,15,0"
-                            FontSize="16"
-                            HorizontalOptions="Start"
-                            Text="Past Purchases"
-                            TextColor="Blue" />
-                        <HorizontalStackLayout HeightRequest="40">
-                            <Label
-                                FontSize="12"
-                                Text="Reorder"
-                                TextColor="blue" />
-                            <Label
-                                Margin="10,2,0,0"
-                                FontAttributes="Bold"
-                                FontFamily="FontAwesomeFreeSolid"
-                                FontSize="11"
-                                Text="&#xF061;"
-                                TextColor="blue" />
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </HorizontalStackLayout>
-            </Border>
-            <Grid
-                Padding="27,15,0,0"
-                HorizontalOptions="Fill"
-                VerticalOptions="Fill">
-                <Label
-                    Margin="0,0,0,0"
-                    FontAttributes="Bold"
-                    FontSize="22"
-                    HorizontalOptions="Start"
-                    Text="Start Your Cart"
-                    TextColor="black"
-                    VerticalOptions="Center"
-                    WidthRequest="255" />
-                <HorizontalStackLayout HorizontalOptions="End">
+                        HorizontalTextAlignment="Center"
+                        Text="Welcome"
+                        TextColor="black"
+                        WidthRequest="500" />
                     <Label
+                        x:Name="lblUserName"
+                        Margin="0,-5,0,0"
                         FontAttributes="Bold"
-                        FontSize="12"
-                        HorizontalOptions="Fill"
-                        Text="Shop All Items"
-                        TextColor="blue"
-                        VerticalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnShopNow" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label
-                        Margin="20"
-                        FontAttributes="Bold"
-                        FontFamily="FontAwesomeFreeSolid"
-                        FontSize="11"
-                        HorizontalOptions="End"
-                        Text="&#xF061;"
-                        TextColor="blue"
-                        VerticalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnShopNow" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                </HorizontalStackLayout>
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnNewItemsAll" />
-                </Grid.GestureRecognizers>
-            </Grid>
-            <Grid
-                Padding="27,5,0,0"
-                HorizontalOptions="Fill"
-                VerticalOptions="Fill">
-                <Label
-                    Margin="0,0,0,0"
-                    FontAttributes="Bold"
-                    FontSize="22"
-                    HorizontalOptions="Start"
-                    Text="Top Categories"
-                    TextColor="black"
-                    VerticalOptions="Center"
-                    WidthRequest="255" />
-                <HorizontalStackLayout HorizontalOptions="End">
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="12"
-                        HorizontalOptions="Fill"
-                        Text="View All"
-                        TextColor="blue"
-                        VerticalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnNewItemsAll" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label
-                        Margin="20"
-                        FontAttributes="Bold"
-                        FontFamily="FontAwesomeFreeSolid"
-                        FontSize="11"
-                        HorizontalOptions="End"
-                        Text="&#xF061;"
-                        TextColor="blue"
-                        VerticalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnNewItemsAll" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                </HorizontalStackLayout>
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnNewItemsAll" />
-                </Grid.GestureRecognizers>
-            </Grid>
-            <ScrollView>
-                <CollectionView
-                    x:Name="TopCategoriesCollectionView"
-                    Margin="10,0,0,0"
-                    HorizontalOptions="Fill"
-                    SelectionChanged="TopCategoriesCollectionView_SelectionChanged"
-                    SelectionMode="Single"
+                        FontSize="14"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="Company Name"
+                        TextColor="black"
+                        WidthRequest="500" />
+                </VerticalStackLayout>
+                <Border
+                    Padding="0,0,0,0"
+                    BackgroundColor="Green"
+                    Stroke="transparent">
+                    <Grid BackgroundColor="Red" HorizontalOptions="Fill">
+                        <ffimageloading:CachedImage
+                            x:Name="BannerImage"
+                            Margin="0,0,0,0"
+                            Aspect="AspectFit"
+                            BackgroundColor="white"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill" />
+                    </Grid>
+                </Border>
+                <Border
+                    Margin="0,5,0,5"
+                    Padding="0"
+                    BackgroundColor="LightGray"
+                    HeightRequest="48"
+                    HorizontalOptions="Center"
+                    Stroke="White"
                     VerticalOptions="Start">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout
-                            HorizontalItemSpacing="20"
-                            Orientation="Horizontal"
-                            VerticalItemSpacing="20" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <controls:HomePageItems />
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </ScrollView>
-        </VerticalStackLayout>
-
+                    <Border.StrokeShape>
+                        <!--  Replaces CornerRadius="10"  -->
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    <HorizontalStackLayout
+                        Margin="0,10,0,10"
+                        Padding="0,0,0,0"
+                        HeightRequest="60"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnPastPurchases" />
+                        </HorizontalStackLayout.GestureRecognizers>
+                        <Label
+                            Padding="15,10,0,0"
+                            FontAttributes="Bold"
+                            FontFamily="FontAwesomeFreeSolid"
+                            FontSize="18"
+                            HeightRequest="45"
+                            HorizontalOptions="Center"
+                            Text="&#xF571;"
+                            TextColor="blue"
+                            VerticalOptions="Center"
+                            WidthRequest="45" />
+                        <VerticalStackLayout>
+                            <Label
+                                Margin="0,10,0,0"
+                                Padding="0,0,15,0"
+                                FontSize="16"
+                                HorizontalOptions="Start"
+                                Text="Past Purchases"
+                                TextColor="Blue" />
+                            <HorizontalStackLayout HeightRequest="40">
+                                <Label
+                                    FontSize="12"
+                                    Text="Reorder"
+                                    TextColor="blue" />
+                                <Label
+                                    Margin="10,2,0,0"
+                                    FontAttributes="Bold"
+                                    FontFamily="FontAwesomeFreeSolid"
+                                    FontSize="11"
+                                    Text="&#xF061;"
+                                    TextColor="blue" />
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Border>
+                <Grid
+                    Padding="27,15,0,0"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill">
+                    <Label
+                        Margin="0,0,0,0"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalOptions="Start"
+                        Text="Start Your Cart"
+                        TextColor="black"
+                        VerticalOptions="Center"
+                        WidthRequest="255" />
+                    <HorizontalStackLayout HorizontalOptions="End">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Fill"
+                            Text="Shop All Items"
+                            TextColor="blue"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnShopNow" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label
+                            Margin="20"
+                            FontAttributes="Bold"
+                            FontFamily="FontAwesomeFreeSolid"
+                            FontSize="11"
+                            HorizontalOptions="End"
+                            Text="&#xF061;"
+                            TextColor="blue"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnShopNow" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNewItemsAll" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <Grid
+                    Padding="27,5,0,0"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill">
+                    <Label
+                        Margin="0,0,0,0"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        HorizontalOptions="Start"
+                        Text="Top Categories"
+                        TextColor="black"
+                        VerticalOptions="Center"
+                        WidthRequest="255" />
+                    <HorizontalStackLayout HorizontalOptions="End">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            HorizontalOptions="Fill"
+                            Text="View All"
+                            TextColor="blue"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnNewItemsAll" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label
+                            Margin="20"
+                            FontAttributes="Bold"
+                            FontFamily="FontAwesomeFreeSolid"
+                            FontSize="11"
+                            HorizontalOptions="End"
+                            Text="&#xF061;"
+                            TextColor="blue"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnNewItemsAll" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNewItemsAll" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <ScrollView>
+                    <CollectionView
+                        x:Name="TopCategoriesCollectionView"
+                        Margin="10,0,0,0"
+                        HorizontalOptions="Fill"
+                        SelectionChanged="TopCategoriesCollectionView_SelectionChanged"
+                        SelectionMode="Single"
+                        VerticalOptions="Start">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout
+                                HorizontalItemSpacing="20"
+                                Orientation="Horizontal"
+                                VerticalItemSpacing="20" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <controls:HomePageItems />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
+                <Grid HeightRequest="20" />
+            </VerticalStackLayout>
+        </ScrollView>
         <controls:CustomToolbar Grid.Row="2" VerticalOptions="End" />
         <Grid
             x:Name="LoadingIndicator"

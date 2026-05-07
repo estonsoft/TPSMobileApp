@@ -83,7 +83,7 @@ namespace TPSMobileApp
             g_App = this;
             CommManager = _commManager;
 
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjQ0OTcyOEAzMTM5MmUzNDJlMzBoTVFSazNhbDdpOTVGMVE3VXExSzNPZENwUFJ5WmhnT2ZxaDQrK2dBQ0hJPQ==");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JHaF5cWWdCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdlWXpednVURGVdVk1+XkJWZ0g=");
             App.g_db = Database.Instance();
             
             LoadSettings();

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="TPSMobileApp.Views.InvoiceViewer"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:TPSMobileApp.Controls"
+    xmlns:ios="http://schemas.microsoft.com/dotnet/2021/maui/ios"
+    xmlns:syncfusion="clr-namespace:Syncfusion.Maui.PdfViewer;assembly=Syncfusion.Maui.PdfViewer"
+    xmlns:vm="clr-namespace:TPSMobileApp.ViewModels"
+    Title="InvoiceViewer">
+    <ContentPage.BindingContext>
+        <vm:PdfViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <Grid Margin="{OnPlatform iOS='0,50,0,0', Android='0'}" SafeAreaEdges="{OnPlatform iOS='None', Android='All'}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <controls:CustomHeader x:Name="CustomHeader" Grid.Row="0" />
+
+            <!--  PDF Viewer  -->
+            <syncfusion:SfPdfViewer
+                x:Name="pdfViewer"
+                Grid.Row="1"
+                DocumentSource="{Binding PdfDocumentStream}" />
+
+            <!--  Loading Indicator  -->
+            <ActivityIndicator
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

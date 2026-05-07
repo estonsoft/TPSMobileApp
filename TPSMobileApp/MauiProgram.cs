@@ -1,4 +1,5 @@
 ﻿using FFImageLoading.Maui;
+using Maui.PDFView;
 using Microsoft.Extensions.Logging;
 using Scandit.DataCapture.Barcode;
 using Scandit.DataCapture.Core;
@@ -6,7 +7,6 @@ using Scandit.DataCapture.Core.UI.Maui;
 using SQLitePCL;
 using Syncfusion.Maui.Core.Hosting;
 using TPSMobileApp.Data;
-
 namespace TPSMobileApp
 {
     public static class MauiProgram
@@ -16,6 +16,7 @@ namespace TPSMobileApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiPdfView()
                 .ConfigureSyncfusionCore()
                 .UseFFImageLoading()
                 .UseScanditCore()

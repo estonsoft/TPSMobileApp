@@ -9,8 +9,7 @@ namespace TPSMobileApp.Views
         {
             InitializeComponent();
 
-            BindingContext = this;
-            LoadCategories();
+            BindingContext = this;            
             InitializeBannersAsync();
         }
 
@@ -121,6 +120,7 @@ namespace TPSMobileApp.Views
             App.g_SearchText = "";
             App.g_ScanBarcode = "";
             SearchText.Text = "";
+            LoadCategories();
             TopCategoriesCollectionView.SelectedItem = null;
             LoadingIndicator.IsVisible = false;
         }
@@ -133,19 +133,18 @@ namespace TPSMobileApp.Views
 
         public void LoadCategories()
         {
-
+            
             if (category == null || category?.Count == 0)
             {
-                Task.Run(() =>
+                Task.Delay(1000).ContinueWith(t =>
                 {
-                    //Database db = new Database();
                     category = App.g_db.GetHomePageCategories();
                     App.g_HomePageCategoryList = category;
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
                         TopCategoriesCollectionView.ItemsSource = category;
                     });
-                });
+                }, TaskScheduler.FromCurrentSynchronizationContext());
             }
         }
 

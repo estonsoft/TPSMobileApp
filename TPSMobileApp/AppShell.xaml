@@ -115,7 +115,6 @@
                 <ffimageloading:CachedImage
                     Margin="6"
                     Aspect="AspectFit"
-                    HeightRequest="100"
                     HorizontalOptions="Center"
                     Source="logo.png"
                     StyleClass="FlyoutHeaderStyle"

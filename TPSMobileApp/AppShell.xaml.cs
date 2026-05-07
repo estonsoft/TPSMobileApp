@@ -50,6 +50,7 @@ namespace TPSMobileApp
             Routing.RegisterRoute(nameof(CustomerListPage), typeof(CustomerListPage));
             Routing.RegisterRoute(nameof(FlyerPDFPage), typeof(FlyerPDFPage));
             Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
+            Routing.RegisterRoute(nameof(InvoiceViewer), typeof(InvoiceViewer));
 
             custMenu = MenuCustomers;
             returnMenu = MenuCreditCart;
@@ -136,6 +137,13 @@ namespace TPSMobileApp
         {   
             App.g_HeaderTitle = "Settings";
             await Current.GoToAsync("//HomePage/SplashScreen");
+            return 0;
+        }
+
+        public async Task<int> GoToInvoiceViewer()
+        {
+            App.g_HeaderTitle = "Invoice Detail";
+            await Current.GoToAsync("//HomePage/PurchaseHistoryPage/InvoiceViewer");
             return 0;
         }
         public async Task<int> GoToSettings()
