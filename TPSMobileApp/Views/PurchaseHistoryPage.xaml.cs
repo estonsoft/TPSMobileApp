@@ -54,7 +54,8 @@ namespace TPSMobileApp.Views
                 loading.IsRunning = true;
                 loading.IsVisible = true;
             } );
-            App.g_OrderNo = e.Parameter?.ToString();
+            var lbl = sender as OrderImage;
+            App.g_OrderNo = lbl.OrderNo;
 
             try
             {

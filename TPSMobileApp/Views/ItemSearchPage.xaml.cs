@@ -323,6 +323,7 @@ namespace TPSMobileApp.Views
             if (ItemsListSearch.SelectedItem!= null)
             {   
                 ItemsListSearch.SelectedItem = null;
+                FullImage.Source = null;
             }
         }
 

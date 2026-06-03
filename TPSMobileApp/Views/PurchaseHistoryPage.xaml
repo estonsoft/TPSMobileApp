@@ -161,15 +161,16 @@
                                     TextColor="Black" />
 
                                 <!--  PDF Icon  -->
-                                <Image
+                                <controls:OrderImage
                                     HeightRequest="44"
                                     HorizontalOptions="End"
+                                    OrderNo="{Binding OrderNo}"
                                     Source="pdf.png"
                                     WidthRequest="44">
-                                    <Image.GestureRecognizers CommandParameter="{Binding OrderNo}">
+                                    <Image.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                                     </Image.GestureRecognizers>
-                                </Image>
+                                </controls:OrderImage>
 
                                 <!--  View Details  -->
                                 <controls:OrderLabel
