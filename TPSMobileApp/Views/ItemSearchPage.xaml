@@ -266,19 +266,23 @@
             <CollectionView
                 x:Name="ItemsListSearch"
                 Grid.Row="4"
+                ItemsUpdatingScrollMode="KeepScrollOffset"
+                RemainingItemsThreshold="5"
                 SelectionChanged="ItemsListSearch_SelectionChanged"
                 SelectionMode="Single"
                 VerticalOptions="Fill">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="2" Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="modal:Item">
                         <controls:CustomListItem>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroupList>
                                     <VisualStateGroup Name="CommonStates">
-                                        <!--  Normal State  -->
                                         <VisualState Name="Normal" />
-
-                                        <!--  Selected State  -->
                                         <VisualState Name="Selected">
                                             <VisualState.Setters>
                                                 <Setter Property="BackgroundColor" Value="White" />

@@ -29,6 +29,8 @@
                 Grid.Column="0"
                 Margin="10"
                 Aspect="AspectFit"
+                BitmapOptimizations="True"
+                CacheDuration="30"
                 DownsampleToViewSize="True"
                 DownsampleWidth="90"
                 ErrorPlaceholder="missing_item.jpg"
@@ -37,6 +39,7 @@
                 RetryCount="0"
                 Source="{Binding ImageURL}"
                 WidthRequest="90" />
+
             <!--  The Spinner: Visible only when the image is loading  -->
             <!--<ActivityIndicator
                 Grid.Row="1"
