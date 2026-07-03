@@ -280,6 +280,7 @@ namespace TPSMobileApp
         }
         public async Task<int> GoToReorderItems()
         {
+            App.g_HeaderTitle = "Reorder Items";
             await Current.GoToAsync("//HomePage/ReorderItemsPage");
             return 0;
         }
