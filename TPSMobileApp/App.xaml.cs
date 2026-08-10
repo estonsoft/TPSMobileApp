@@ -86,9 +86,14 @@ namespace TPSMobileApp
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JHaF5cWWdCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdlWXpednVURGVdVk1+XkJWZ0g=");
             App.g_db = Database.Instance();
             
-            LoadSettings();
-            LoadDataFromServer();
-            LoadCustomerFromServer();            
+            LoadAppData();       
+        }
+
+        public async Task LoadAppData()
+        {
+            await LoadSettings();
+            await LoadDataFromServer();
+            await LoadCustomerFromServer();   
         }
 
         private async Task LoadSettings()
@@ -283,7 +288,7 @@ namespace TPSMobileApp
 
             try
             {
-                App.CommManager.GetSettings();
+                await App.CommManager.GetSettings();
             }
             catch { }
         }

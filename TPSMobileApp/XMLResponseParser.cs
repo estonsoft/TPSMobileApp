@@ -1,70 +1,71 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace TPSMobileApp
 {
     internal class XMLResponseParser
     {
-        public static void commService_GetBannersCompleted(String response)
+        public static async Task commService_GetBannersCompleted(String response)
         {
             try
             {
-                Debug.WriteLine("Get Banners returned");
-
+                Console.WriteLine("Get Banners returned");
                 String sBanners = response;
                 String[] aBanners = sBanners.Split('|');
+                ConcurrentBag<Banner> lstBanners = new ConcurrentBag<Banner>();
                 if (aBanners.Length >= 1)
                 {
-                    //Database db = new Database();
-
-                    App.g_db.BeginTransaction();
-                    App.g_db.DeleteBannersAsync();
-
-                    foreach (String s in aBanners)
-                    {
+                    // foreach (String s in aBanners)
+                    // {
+                    Parallel.ForEach(aBanners, s =>{
                         Banner banner = new Banner();
                         banner.BannerName = s;
                         banner.BannerURL = Constants.BannerUrl + banner.BannerName;
-
-                        try
-                        {
-                            App.g_db.SaveBannerAsync(banner);
-                        }
-                        catch (Exception ex)
-                        {
-                            String sMsg = ex.Message;
-                        }
-                    }
-
-                    App.g_db.CommitTransaction();
+                        lstBanners.Add(banner);
+                    });
                 }
-
-                App.CommManager.GetCategoriesAndSubcategoriesCust(App.g_Customer.CustNo);
+                try
+                {
+                    App.g_db.BeginTransaction();
+                    App.g_db.DeleteBannersAsync();
+                    App.g_db.SaveBannerAsync(lstBanners.ToList());
+                    App.g_db.CommitTransaction();
+                    Console.WriteLine("Get Banners returned Completed");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error occurred while saving banners: " + ex.Message);
+                }
+                await App.CommManager.GetCategoriesAndSubcategoriesCust(App.g_Customer.CustNo);
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Get Banners Error");
+                Console.WriteLine(ex.Message);
             }
         }
 
 
-        public static void commService_GetCategoriesAndSubcategoriesCompleted(String response)
+        public static async Task commService_GetCategoriesAndSubcategoriesCompleted(String response)
         {
-            Debug.WriteLine("Get Categories and Subcategories returned");
+            Console.WriteLine("Get Categories and Subcategories returned");
 
             try
             {
                 String sCategories = response;
                 String[] aCategories = sCategories.Split('~');
-                List<Category> categories = new List<Category>();
-                List<Subcategory> subcategories = new List<Subcategory>();
+                ConcurrentBag<Category> lstCategories = new ConcurrentBag<Category>();
+                ConcurrentBag<Subcategory> lstSubcategories = new ConcurrentBag<Subcategory>();
                 if (aCategories.Length > 1)
                 {
-                    foreach (String s in aCategories)
+                    Parallel.ForEach(aCategories, s =>
                     {
                         String[] aCategory = s.Split("|");
 
                         if (aCategory.Count() < 4)
                         {
-                            continue;
+                            return; // Skip this iteration if there are not enough elements
                         }
 
                         if (aCategory[1].Length == 0)
@@ -73,9 +74,9 @@ namespace TPSMobileApp
                             cat.Code = aCategory[0];
                             cat.Description = aCategory[2].Trim();
                             cat.ImageURL = Constants.CategoryImageUrl + cat.Code + ".png";
-                            cat.Rank = Convert.ToInt32(aCategory[3].Trim());
-                            cat.HomePage = Convert.ToInt32(aCategory[4].Trim());
-                            categories.Add(cat);
+                            cat.Rank = GetIntegerValue("Category rank", aCategory[3], 0);
+                            cat.HomePage = GetIntegerValue("Category home page", aCategory[4], 0);
+                            lstCategories.Add(cat);
                         }
                         else
                         {
@@ -83,20 +84,25 @@ namespace TPSMobileApp
                             subcat.Category = aCategory[0];
                             subcat.Code = aCategory[1];
                             subcat.Description = aCategory[2].Trim();
-                            subcat.Rank = Convert.ToInt32(aCategory[3].Trim());
-                            subcategories.Add(subcat);
+                            subcat.Rank = GetIntegerValue("Subcategory rank", aCategory[3], 0);
+                            lstSubcategories.Add(subcat);
                         }
+                    });
+                    try
+                    {
+                        App.g_db.BeginTransaction();
+                        App.g_db.DeleteAllCategory();
+                        App.g_db.DeleteAllSubcategory();
+                        App.g_db.SaveCategory(lstCategories.ToList());
+                        App.g_db.SaveSubcategory(lstSubcategories.ToList());
+                        App.g_db.CommitTransaction();
+                        Console.WriteLine("Get Categories and Subcategories returned Completed");
+                        App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
                     }
-                    App.g_db.BeginTransaction();
-
-                    App.g_db.DeleteCategories();
-                    App.g_db.DeleteSubcategories();
-                    App.g_db.SaveCategory(categories);
-                    App.g_db.SaveSubcategory(subcategories);
-
-                    App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
-
-                    App.g_db.CommitTransaction();
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error occurred while parsing categories and subcategories: " + ex.Message);
+                    }
                 }
 
                 try
@@ -106,61 +112,55 @@ namespace TPSMobileApp
                     {
                         CustNo = App.g_Customer.CustNo;
                     }
-                    catch
+                    catch(Exception ex)
                     {
+                        Console.WriteLine("Error occurred while parsing customer number: " + ex.Message);
                         CustNo = "0";
                     }
 
                     //Database db = new Database();
-                    string sDate = App.g_db.GetSetting("LastUpdateItems");
-
-                    if (sDate == "")
-                    {
-                        sDate = "0";
-                    }
-
-                    // for now always refresh all items
-                    sDate = "0";
+                    string sDate = "0";
                     if (App.g_Customer.CustNo == "0")
                     {
-                        App.CommManager.GetItems("0", sDate);
+                        await App.CommManager.GetItems("0", sDate);
                     }
                     else
                     {
-                        App.CommManager.GetItems(App.g_Customer.CustNo, sDate);
+                        await App.CommManager.GetItems(App.g_Customer.CustNo, sDate);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
+                    Console.WriteLine("Fetch Items Categories and SubCategories" + e.Message);
                 }
             }
             catch (Exception ex)
             {
+                Console.WriteLine("SAVE Categories and SubCategories" + ex.Message);
             }
         }
 
-        public static void commService_GetCategoriesAndSubcategoriesCustCompleted(String response)
+        public static async Task commService_GetCategoriesAndSubcategoriesCustCompleted(String response)
         {
-            Debug.WriteLine("Get Categories and Subcategories Cust returned");
+            Console.WriteLine("Get Categories Subcategories and Subsubcategories Cust returned");
 
             try
             {
-                List<Category> categories = new List<Category>();
-                List<Subcategory> subcategories = new List<Subcategory>();
-                List<Subsubcategory> subsubcategories = new List<Subsubcategory>();
-
                 String sCategories = response;
                 String[] aCategories = sCategories.Split('~');
+                ConcurrentBag<Category> lstCategories = new ConcurrentBag<Category>();
+                ConcurrentBag<Subcategory> lstSubcategories = new ConcurrentBag<Subcategory>();
+                ConcurrentBag<Subsubcategory> lstSubsubcategories = new ConcurrentBag<Subsubcategory>();
 
                 if (aCategories.Length > 1)
                 {
-                    foreach (String s in aCategories)
+                    Parallel.ForEach(aCategories, s =>
                     {
                         String[] aCategory = s.Split("|");
 
                         if (aCategory.Count() < 4)
                         {
-                            continue;
+                            return; // Skip this iteration if there are not enough elements
                         }
 
                         string sSubsubcategory;
@@ -168,8 +168,9 @@ namespace TPSMobileApp
                         {
                             sSubsubcategory = aCategory[5];
                         }
-                        catch
+                        catch(Exception ex)
                         {
+                            Console.WriteLine("Error occurred while parsing subsubcategory: " + ex.Message);
                             sSubsubcategory = "";
                         }
 
@@ -179,9 +180,9 @@ namespace TPSMobileApp
                             cat.Code = aCategory[0];
                             cat.Description = aCategory[2].Trim();
                             cat.ImageURL = Constants.CategoryImageUrl + cat.Code + ".png";
-                            cat.Rank = Convert.ToInt32(aCategory[3].Trim());
-                            cat.HomePage = Convert.ToInt32(aCategory[4].Trim());
-                            categories.Add(cat);
+                            cat.Rank = GetIntegerValue("Category rank", aCategory[3], 0);
+                            cat.HomePage = GetIntegerValue("Category home page", aCategory[4], 0);
+                            lstCategories.Add(cat);
                         }
                         else if (sSubsubcategory.Length == 0)  // no subsubcat, just add subcategory
                         {
@@ -189,8 +190,8 @@ namespace TPSMobileApp
                             subcat.Category = aCategory[0];
                             subcat.Code = aCategory[1];
                             subcat.Description = aCategory[2].Trim();
-                            subcat.Rank = Convert.ToInt32(aCategory[3].Trim());
-                            subcategories.Add(subcat);
+                            subcat.Rank = GetIntegerValue("Subcategory rank", aCategory[3], 0);
+                            lstSubcategories.Add(subcat);
                         }
                         else // add subsubcategory
                         {
@@ -199,99 +200,90 @@ namespace TPSMobileApp
                             subsubcat.Subcategory = aCategory[1];
                             subsubcat.Code = sSubsubcategory;
                             subsubcat.Description = aCategory[2].Trim();
-                            subsubcat.Rank = Convert.ToInt32(aCategory[3].Trim());
-                            subsubcategories.Add(subsubcat);
+                            subsubcat.Rank = GetIntegerValue("Subsubcategory rank", aCategory[3], 0);
+                            lstSubsubcategories.Add(subsubcat);
                         }
-                    }
+                    });
                 }
+                try
+                    {
+                        App.g_db.BeginTransaction();
+                        App.g_db.DeleteAllCategory();
+                        App.g_db.DeleteAllSubcategory();
+                        App.g_db.DeleteAllSubsubcategory();
+                        App.g_db.SaveCategory(lstCategories.ToList());
+                        App.g_db.SaveSubcategory(lstSubcategories.ToList());
+                        App.g_db.SaveSubsubcategory(lstSubsubcategories.ToList());
+                        App.g_db.CommitTransaction();
+                        Console.WriteLine("Get Categories Subcategories and Subsubcategories returned Completed");
+                        App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error occurred while parsing categories subcategories and subsubcategories: " + ex.Message);
+                    }
 
                 try
                 {
-                    App.g_db.BeginTransaction();
-                    App.g_db.DeleteCategories();
-                    App.g_db.DeleteSubcategories();
-                    App.g_db.DeleteSubsubcategories();
-                    App.g_db.SaveCategory(categories);
-                    App.g_db.SaveSubcategory(subcategories);
-                    App.g_db.SaveSubsubcategory(subsubcategories);
-
+                    Console.WriteLine("Get Categories Subcategories and Subsubcategories Cust returned Completed");
                     String CustNo = "0";
                     try
                     {
                         CustNo = App.g_Customer.CustNo;
                     }
-                    catch
+                    catch(Exception ex)
                     {
+                        Console.WriteLine("Error occurred while parsing customer number: " + ex.Message);
                         CustNo = "0";
                     }
 
                     //Database db = new Database();
-                    string sDate = App.g_db.GetSetting("LastUpdateItems");
-
-                    if (sDate == "")
-                    {
-                        sDate = "0";
-                    }
-
-                    // for now always refresh all items
-                    sDate = "0";
+                    string sDate = "0";
                     if (App.g_Customer.CustNo == "0")
                     {
-                        App.CommManager.GetItems("0", sDate);
+                        await App.CommManager.GetItems("0", sDate);
                     }
                     else
                     {
-                        App.CommManager.GetItems(App.g_Customer.CustNo, sDate);
+                        await App.CommManager.GetItems(App.g_Customer.CustNo, sDate);
                     }
                     App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
-                    App.g_db.CommitTransaction();
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
-                    Debug.WriteLine("Fetch Items Categories and SubCategories" + ex.Message);
+                    Console.WriteLine("Fetch Items Categories and SubCategories" + e.Message);
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("SAVE Categories and SubCategories" + ex.Message);
+                Console.WriteLine("SAVE Categories and SubCategories" + ex.Message);
             }
         }
 
-        public static void commService_GetItemsCompletedAsync(String response)
+        public static async void commService_GetItemsCompletedAsync(String response)
         {
             try
             {
-                Debug.WriteLine(DateTime.Now.ToString() + " - Get Items returned");
-
+                Console.WriteLine(DateTime.Now.ToString() + " - Get Items returned");
                 String sItems = response;
                 String[] aItems = sItems.Split('~');
                 if (aItems.Length > 1)
                 {
-                    App.g_db.BeginTransaction();
-
-                    App.g_db.InsertDiscontinuedItems();
+                    var sw = System.Diagnostics.Stopwatch.StartNew();
 
                     List<Item> lstCartItems = App.g_db.GetCartItems();
+                    var cartDict = lstCartItems.ToDictionary(c => c.ItemNo); // O(1) lookup instead of nested loop
 
-                    foreach (String s in aItems)
+                    var itemsToSave = new ConcurrentBag<Item>();
+                    var processedItemNos = new ConcurrentBag<int>();
+                    
+                    Parallel.ForEach(aItems, s =>
                     {
+                        if (string.IsNullOrWhiteSpace(s)) return; // Skip empty rows
                         String[] aItem = s.Split("|");
 
-                        if (aItem.Count() < 20)
-                        {
-                            continue;
-                        }
-
                         Item item = new Item();
-                        try
-                        {
-                            item.ItemNo = Convert.ToInt32(aItem[0]);
-                        }
-                        catch (Exception ex)
-                        {
-                            String sMsg = ex.Message;
-                            continue;
-                        }
+                        item.ItemNo = GetIntegerValue("ItemNo", aItem[0], 0);
                         item.ItemNoDisplay = aItem[0];
                         item.Description = aItem[1].Trim();
                         item.ImageURL = Constants.ItemImageUrl + item.ItemNo.ToString() + ".jpg";
@@ -315,70 +307,21 @@ namespace TPSMobileApp
                         item.UPC_4 = aItem[11].Trim();
                         item.RetailUOM = aItem[12].Trim();
                         item.RetailSize = aItem[13].Trim();
-                        try
-                        {
-                            item.RetailPrice = Convert.ToDecimal(aItem[14].Trim());
-                        }
-                        catch
-                        {
-                            item.RetailPrice = 0;
-                        }
+                        item.RetailPrice = GetDecimalValue("RetailPrice", aItem[14], 0);
                         item.RetailPriceDisplay = aItem[14].Trim();
                         item.UOM = aItem[15].Trim();
                         item.SizeUOM = "/" + item.UOM;
-                        try
-                        {
-                            item.Size = Convert.ToInt32(aItem[16].Trim());
-                        }
-                        catch
-                        {
-                            item.Size = 1;
-                        }
+                        item.Size = GetIntegerValue("Size", aItem[16], 1);
                         item.SizeDisplay = aItem[16].Trim();
                         item.Form = aItem[17].Trim();
-                        try
-                        {
-                            item.Price = Convert.ToDecimal(aItem[18].Trim());
-                        }
-                        catch
-                        {
-                            item.Price = 0;
-                        }
+                        item.Price = GetDecimalValue("Price", aItem[18], 0);
                         item.PriceDisplay = string.Format("{0:C}", item.Price);
-                        try
-                        {
-                            item.Tax = Convert.ToDecimal(aItem[19].Trim());
-                        }
-                        catch
-                        {
-                            item.Tax = 0;
-                        }
+                        item.Tax = GetDecimalValue("Tax", aItem[19], 0);
                         item.TaxDisplay = string.Format("{0:C}", item.Tax);
-                        try
-                        {
-                            item.CategoryRank = Convert.ToInt32(aItem[20].Trim());
-                        }
-                        catch
-                        {
-                            item.CategoryRank = 0;
-                        }
-                        try
-                        {
-                            item.SellUnitsInPurchaseUnit = Convert.ToInt32(aItem[21].Trim());
-                        }
-                        catch
-                        {
-                            item.SellUnitsInPurchaseUnit = 1;
-                        }
+                        item.CategoryRank = GetIntegerValue("CategoryRank", aItem[20], 0);
+                        item.SellUnitsInPurchaseUnit = GetIntegerValue("SellUnitsInPurchaseUnit", aItem[21], 1);
                         item.Status = aItem[22];
-                        try
-                        {
-                            item.QOH = Convert.ToInt32(aItem[23].Trim());
-                        }
-                        catch
-                        {
-                            item.QOH = 0;
-                        }
+                        item.QOH = GetIntegerValue("QOH", aItem[23], 0);
                         try
                         {
                             item.IsNew = false;
@@ -404,15 +347,11 @@ namespace TPSMobileApp
                                 item.AddedDateDisplay += aItem[25].Substring(1, 2);
                             }
                         }
-                        catch { }
-                        try
+                        catch (Exception e)
                         {
-                            item.AllocationQty = Convert.ToInt32(aItem[26].Trim());
+                            Console.WriteLine("Error occurred while parsing added date: " + e.Message);
                         }
-                        catch
-                        {
-                            item.AllocationQty = 0;
-                        }
+                        item.AllocationQty = GetIntegerValue("AllocationQty", aItem[26], 0);
                         try
                         {
                             if (aItem[27] == "1")
@@ -424,8 +363,9 @@ namespace TPSMobileApp
                                 item.IsPriceVisible = 1;
                             }
                         }
-                        catch
+                        catch(Exception e)
                         {
+                            Console.WriteLine("Error occurred while parsing price visibility: " + e.Message);
                             item.IsPriceVisible = 1;
                         }
 
@@ -435,8 +375,9 @@ namespace TPSMobileApp
                             item.Keyword2 = aItem[29];
                             item.Keyword3 = aItem[30];
                         }
-                        catch
+                        catch(Exception e)
                         {
+                            Console.WriteLine("Error occurred while parsing keywords: " + e.Message);
                             item.Keyword1 = "";
                             item.Keyword2 = "";
                             item.Keyword3 = "";
@@ -446,51 +387,52 @@ namespace TPSMobileApp
                         {
                             item.LastPurchDateDisplay = aItem[31];
                         }
-                        catch
+                        catch(Exception e)
                         {
+                            Console.WriteLine("Error occurred while parsing last purchase date display: " + e.Message);
                             item.LastPurchDateDisplay = "";
                         }
-                        if (item.LastPurchDateDisplay == "")
+                        if (item.LastPurchDateDisplay.Trim() != "")
                         {
-                            try
-                            {
-                                item.LastPurchDate = Convert.ToDateTime(item.LastPurchDateDisplay);
-                            }
-                            catch
-                            {
-                            }
+                            item.LastPurchDate = GetDateTime("LastPurchDate", item.LastPurchDateDisplay);
                         }
-                        try
-                        {
-                            if (aItem[32] == "")
-                            {
-                                item.QtyLastOrder = 0;
-                            }
-                            else
-                            {
-                                item.QtyLastOrder = Convert.ToInt32(aItem[32]);
-                            }
-                        }
-                        catch
+                        if (aItem[32] == "")
                         {
                             item.QtyLastOrder = 0;
                         }
+                        else
+                        {
+                            item.QtyLastOrder = GetIntegerValue("QtyLastOrder", aItem[32], 0);
+                        }
+                        
                         try
                         {
                             item.SubsubcategoryCode = aItem[33];
                         }
-                        catch
+                        catch(Exception e)
                         {
+                            Console.WriteLine("Error occurred while parsing subsubcategory code: " + e.Message);
                             item.SubsubcategoryCode = "";
                         }
                         try
                         {
                             item.SubsubcategoryDesc = aItem[34];
                         }
-                        catch
+                        catch(Exception e)
                         {
+                            Console.WriteLine("Error occurred while parsing subsubcategory description: " + e.Message);
                             item.SubsubcategoryDesc = "";
                         }
+                        try
+                        {
+                            item.ItemRefNo = aItem[35];
+                        }
+                        catch(Exception e)
+                        {
+                            Console.WriteLine("Error occurred while parsing item reference number: " + e.Message);
+                            item.ItemRefNo = "";
+                        }
+                        
 
                         item.AddToOrderDisplay = "Add To Order";
                         item.QtyOrder = 0;
@@ -498,48 +440,66 @@ namespace TPSMobileApp
                         item.QtyLabel = 0;
                         item.LineNo = 0;
 
-                        foreach (Item ci in lstCartItems)
+                        if (cartDict.TryGetValue(item.ItemNo, out var ci))
                         {
-                            if (item.ItemNo == ci.ItemNo)
-                            {
-                                item.QtyOrder = ci.QtyOrder;
-                                item.QtyCredit = ci.QtyCredit;
-                                item.QtyLabel = ci.QtyLabel;
-                                item.LineNo = ci.LineNo;
-
-                                break;
-                            }
+                            item.QtyOrder = ci.QtyOrder;
+                            item.QtyCredit = ci.QtyCredit;
+                            item.QtyLabel = ci.QtyLabel;
+                            item.LineNo = ci.LineNo;
                         }
 
-                        try
-                        {
-                            App.g_db.SaveItem(item);
-                            App.g_db.DeleteDiscontinuedItem(item.ItemNo.ToString());
-                        }
-                        catch (Exception ex)
-                        {
-                            String sMsg = ex.Message;
-                        }
+                        itemsToSave.Add(item);
+                        processedItemNos.Add(item.ItemNo);
+                    });
+
+                    Console.WriteLine($"Parse loop: {sw.ElapsedMilliseconds}ms"); sw.Restart();
+
+                    try
+                    {
+                        App.g_db.BeginTransaction();
+                        App.g_db.InsertDiscontinuedItems();
+                        App.g_db.DeleteItems();
+                        App.g_db.SaveItems(itemsToSave.ToList());
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error occurred while bulk-saving items: " + ex.Message);
                     }
 
-                    App.g_db.UpdateDiscontinuedItems();
+                    Console.WriteLine($"Save items ({itemsToSave.Count}): {sw.ElapsedMilliseconds}ms"); sw.Restart();
 
-                    App.g_db.UpdateOrderDetailLastPurch();
+                    try
+                    {   
+                        App.g_db.DeleteDiscontinuedItems(processedItemNos.ToList());
+                    
+                        Console.WriteLine($"Delete discontinued: {sw.ElapsedMilliseconds}ms"); sw.Restart();
 
-                    App.g_db.SaveSetting("LastUpdateItems", DateTime.Now.ToString("1yyMMdd"));
+                        App.g_db.UpdateDiscontinuedItems();
+                        Console.WriteLine("Update Discontinued Items completed");
+                        App.g_db.UpdateOrderDetailLastPurch();
+                        Console.WriteLine("Update Order Detail Last Purch completed");
+                        App.g_db.SaveSetting("LastUpdateItems", DateTime.Now.ToString("1yyMMdd"));
 
-                    App.g_ItemList = App.g_db.GetItems();
+                        App.g_ItemList = App.g_db.GetItems();
 
-                    App.g_db.CommitTransaction();
+                        App.g_db.CommitTransaction();
 
-                    App.CommManager.GetItemQOH(App.g_Customer.CustNo);
-                    App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
-                    App.CommManager.GetFlyerItemsPDF();
+                        Console.WriteLine($"Finalize + commit: {sw.ElapsedMilliseconds}ms");
+                
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error occurred while removing discontinued items: " + ex.Message);
+                    }
+
+                    await App.CommManager.GetItemQOH(App.g_Customer.CustNo);
+                    await App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
+                    await App.CommManager.GetFlyerItemsPDF();
                 }
             }
             catch (Exception ex)
             {
-                String sMsg = ex.Message + ex.StackTrace;
+                Console.WriteLine("Error occurred while updating items: " + ex.Message + ex.StackTrace);
             }
         }
 
@@ -660,7 +620,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static void commService_ValidateLoginCompletedAsync(String response)
+        public static async Task commService_ValidateLoginCompletedAsync(String response)
         {
             Debug.WriteLine("ValidateLogin Complete");
             try
@@ -925,7 +885,7 @@ namespace TPSMobileApp
 
                         if ((App.g_IsSalesUser) || (App.g_IsChainManager))
                         {
-                            App.CommManager.GetSalespersonCustomers(App.g_UserName);
+                            await App.CommManager.GetSalespersonCustomers(App.g_UserName);
                         }
 
                         if (App.g_Customer.CustNo != OldCustNo)
@@ -1716,27 +1676,23 @@ namespace TPSMobileApp
             }
         }
 
-        public static void commService_GetSalespersonCustomersCompletedAsync(String response)
+        public static async Task commService_GetSalespersonCustomersCompletedAsync(String response)
         {
             try
             {
-                Debug.WriteLine("Get Salesperson Customers returned");
-                Debug.WriteLine(response);
-
+                Console.WriteLine("Get Salesperson Customers returned");
+                
                 String sCustomers = response;
                 String[] aCustomers = sCustomers.Split('~');
-
+                ConcurrentBag<SalesCustomer> lstCustomer = new ConcurrentBag<SalesCustomer>();
                 if (aCustomers.Length > 1)
                 {
-                    List<SalesCustomer> lstCustomers = new List<SalesCustomer>();
-                    // Process items in parallel using all available CPU cores
-
-                    foreach (String s in aCustomers)
+                    Parallel.ForEach(aCustomers, s =>
                     {
                         String[] aCust = s.Split("|");
                         if (aCust.Count() < 2)
                         {
-                            continue;
+                            return;
                         }
                         SalesCustomer c = new SalesCustomer();
                         c.CustNo = aCust[0];
@@ -1749,16 +1705,26 @@ namespace TPSMobileApp
                         c.ARBalance = 0;
                         try
                         {
-                            c.ARBalance = Convert.ToDecimal(aCust[6]);
+                            c.ARBalance = GetDecimalValue("SalesCustomer.ARBalance", aCust[6], 0);
                         }
-                        catch { }
+                        catch(Exception ex) 
+                        { 
+                            Console.WriteLine("Error occurred while parsing ARBalance: " + ex.Message);
+                        }
                         c.ARBalanceDisplay = string.Format("{0:C2}", c.ARBalance);
                         c.CreditLimit = 0;
                         try
                         {
-                            c.CreditLimit = Convert.ToDecimal(aCust[7]);
+                            string creditLimitStr = aCust[7];
+                            if (!string.IsNullOrEmpty(creditLimitStr))
+                            {
+                                c.CreditLimit = GetDecimalValue("SalesCustomer.CreditLimit", creditLimitStr, 0);
+                            }
                         }
-                        catch { }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine("Error occurred while parsing CreditLimit: " + ex.Message);
+                        }
                         if (c.CreditLimit > 0)
                         {
                             c.CreditLimitDisplay = string.Format("{0:C2}", c.CreditLimit);
@@ -1780,12 +1746,23 @@ namespace TPSMobileApp
                             }
                             else
                             {
-                                c.LastPaymentDate = aCust[13].Substring(3, 2) + "/";
-                                c.LastPaymentDate += aCust[13].Substring(5, 2) + "/";
-                                c.LastPaymentDate += aCust[13].Substring(1, 2);
+                                string rawDate = aCust[17];
+                                if (!string.IsNullOrEmpty(rawDate) && rawDate.Length >= 7)
+                                {
+                                    c.LastOrderDate = rawDate.Substring(3, 2) + "/";
+                                    c.LastOrderDate += rawDate.Substring(5, 2) + "/";
+                                    c.LastOrderDate += rawDate.Substring(1, 2);
+                                }
+                                else
+                                {
+                                    c.LastOrderDate = "N/A"; // or some default/placeholder
+                                }
                             }
                         }
-                        catch { }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine("Error occurred while parsing LastPaymentDate: " + ex.Message);
+                        }
                         try
                         {
                             if (aCust[14] == "0")
@@ -1794,31 +1771,45 @@ namespace TPSMobileApp
                             }
                             else
                             {
-                                c.LastOrderDate = aCust[14].Substring(3, 2) + "/";
-                                c.LastOrderDate += aCust[14].Substring(5, 2) + "/";
-                                c.LastOrderDate += aCust[14].Substring(1, 2);
+                                string rawDate = aCust[17];
+                                if (!string.IsNullOrEmpty(rawDate) && rawDate.Length >= 7)
+                                {
+                                    c.LastOrderDate = rawDate.Substring(3, 2) + "/";
+                                    c.LastOrderDate += rawDate.Substring(5, 2) + "/";
+                                    c.LastOrderDate += rawDate.Substring(1, 2);
+                                }
+                                else
+                                {
+                                    c.LastOrderDate = "N/A"; // or some default/placeholder
+                                }
                             }
                         }
-                        catch { }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine("Error occurred while parsing LastOrderDate: " + ex.Message);
+                        }
                         try
                         {
-                            c.MinOrderAmount = Decimal.Parse(aCust[15]);
-                            c.ShippingFee = Decimal.Parse(aCust[16]);
-                            c.MinOrderQty = Decimal.Parse(aCust[17]);
+                            c.MinOrderAmount = GetDecimalValue("SalesCustomer.MinOrderAmount", aCust[15], 0);
+                            c.ShippingFee = GetDecimalValue("SalesCustomer.ShippingFee", aCust[16], 0);
+                            c.MinOrderQty = GetDecimalValue("SalesCustomer.MinOrderQty", aCust[17], 0);
                         }
-                        catch { }
-                        lstCustomers.Add(c);
-                    }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine("Error occurred while parsing min order values: " + ex.Message);
+                        }
+                        lstCustomer.Add(c);
+                    });
                     App.g_db.BeginTransaction();
-                    App.g_db.DeleteSalesCustomers();
-                    App.g_db.SaveSalesCustomer(lstCustomers);
+                    App.g_db.DeleteAllSalesCustomer();
+                    App.g_db.SaveSalesCustomer(lstCustomer.ToList());
                     App.g_db.CommitTransaction();
-                    Debug.WriteLine("Sales Person Completed");
+                    Console.WriteLine("Saving SalesPerson Customers");
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Exeception in parsing SalesPerson" + ex.Message);
+                Console.WriteLine("Exeception in parsing SalesPerson" + ex.Message);
             }
         }
 
@@ -1924,6 +1915,91 @@ namespace TPSMobileApp
                 catch (Exception ex)
                 {
                 }
+            }
+        }
+        public static DateTime GetDateTime(string key, string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return DateTime.MinValue;
+
+            value = value.Trim();
+
+            // First try exact formats
+            string[] formats =
+            {
+                "M/d/yyyy",
+                "MM/dd/yyyy",
+                "yyyy-MM-dd",
+                "yyyyMMdd",
+                "M/d/yy",
+                "MM/dd/yy"
+            };
+
+            if (DateTime.TryParseExact(
+                    value,
+                    formats,
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.None,
+                    out var date))
+            {
+                return date;
+            }
+
+            // Fallback to normal parsing
+            if (DateTime.TryParse(
+                    value,
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.None,
+                    out date))
+            {
+                return date;
+            }
+
+            Console.WriteLine($"{key} Invalid Date: '{value}'");
+
+            return DateTime.MinValue;
+        }
+        public static int GetIntegerValue(String key,String value,int defaultValue)
+        {
+            try
+            {
+                string sizeValue = value.Trim();
+                if(sizeValue.Length>0)
+                {
+                    string digits = new string(sizeValue
+                    .TakeWhile(char.IsDigit)
+                    .ToArray());
+
+                    return int.TryParse(digits, out var size)
+                        ? size
+                        : defaultValue;
+                }
+                else
+                {
+                    return defaultValue;
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(key+"Converting string to int"+e.Message);
+                return defaultValue;
+            }
+        }
+
+        public static Decimal GetDecimalValue(String key,String value,Decimal defaultValue)
+        {
+            try
+            {
+                string sizeValue = value.Trim();
+                if(sizeValue.Length != 0)
+                    return Convert.ToDecimal(sizeValue);
+                else
+                    return defaultValue;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(key+"Converting string to Decimal "+e.Message);
+                return defaultValue;
             }
         }
     }

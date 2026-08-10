@@ -1,15 +1,13 @@
 ﻿using System.Diagnostics;
+using TPSMobileApp.ViewModels;
 
 namespace TPSMobileApp.Views
 {
     public partial class HomePage : ContentPage
     {
-        List<Category> category;
         public HomePage()
         {
-            InitializeComponent();
-
-            BindingContext = this;            
+            InitializeComponent();          
             InitializeBannersAsync();
         }
 
@@ -120,9 +118,10 @@ namespace TPSMobileApp.Views
             App.g_SearchText = "";
             App.g_ScanBarcode = "";
             SearchText.Text = "";
-            LoadCategories();
-            TopCategoriesCollectionView.SelectedItem = null;
-            LoadingIndicator.IsVisible = false;
+            if (BindingContext is HomeViewModel viewModel)
+            {
+                viewModel.LoadCategories();
+            }
         }
 
         public void SetLoginControls()
@@ -131,23 +130,7 @@ namespace TPSMobileApp.Views
             lblUserName.Text = App.g_Customer.CompanyName;
         }
 
-        public void LoadCategories()
-        {
-            
-            if (category == null || category?.Count == 0)
-            {
-                Task.Delay(1000).ContinueWith(t =>
-                {
-                    category = App.g_db.GetHomePageCategories();
-                    App.g_HomePageCategoryList = category;
-                    MainThread.BeginInvokeOnMainThread(() =>
-                    {
-                        TopCategoriesCollectionView.ItemsSource = category;
-                    });
-                }, TaskScheduler.FromCurrentSynchronizationContext());
-            }
-        }
-
+        
         async void CategoryTapped(String Code, String Description)
         {
             Category cat = new Category();
@@ -235,6 +218,13 @@ namespace TPSMobileApp.Views
             {
                 await App.g_Shell.GoToReorderItems();
             }
+        }
+        async void OnRefresh(object sender, EventArgs e)
+        {
+            //Database db = new Database();
+            LoadingIndicator.IsVisible = true;
+            await App.g_App.LoadAppData();
+            LoadingIndicator.IsVisible = false;
         }
 
         async void OnRegisterClick(object sender, EventArgs e)

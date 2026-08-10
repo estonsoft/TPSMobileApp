@@ -1,4 +1,5 @@
-﻿using FFImageLoading.Maui;
+﻿using BarcodeScanning;
+using FFImageLoading.Maui;
 using Maui.PDFView;
 using Microsoft.Extensions.Logging;
 using Scandit.DataCapture.Barcode;
@@ -17,6 +18,7 @@ namespace TPSMobileApp
             builder
                 .UseMauiApp<App>()
                 .UseMauiPdfView()
+                .UseBarcodeScanning()   
                 .ConfigureSyncfusionCore()
                 .UseFFImageLoading()
                 .UseScanditCore()
