@@ -182,12 +182,12 @@
                             <VerticalStackLayout Grid.Column="1"
                                                  VerticalOptions="Center"
                                                  Margin="5,0,0,0">
-                                <Label FontSize="14"
+                                <Label FontSize="12"
                                        FontAttributes="Bold"
                                        Text="Past Purchases"
                                        TextColor="Blue"/>
                                 <HorizontalStackLayout VerticalOptions="Center">
-                                    <Label FontSize="11"
+                                    <Label FontSize="10"
                                            Text="Reorder"
                                            TextColor="blue"
                                            VerticalOptions="Center"/>
@@ -231,7 +231,7 @@
                                    TextColor="blue"/>
 
                             <Label Grid.Column="1"
-                                   FontSize="14"
+                                   FontSize="12"
                                    FontAttributes="Bold"
                                    VerticalOptions="Center"
                                    HorizontalOptions="Start"
