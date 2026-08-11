@@ -85,8 +85,10 @@ namespace TPSMobileApp
 
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JHaF5cWWdCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdlWXpednVURGVdVk1+XkJWZ0g=");
             App.g_db = Database.Instance();
-            
-            LoadAppData();       
+            Task.Run(async() =>
+            {
+                await LoadAppData();
+            });
         }
 
         public async Task LoadAppData()

@@ -20,19 +20,19 @@
         public async Task GetCategoriesAndSubcategories()
         {
             String response = await soapService.GetCategoriesAndSubcategoriesAsync();
-            XMLResponseParser.commService_GetCategoriesAndSubcategoriesCompleted(response);
+            await XMLResponseParser.commService_GetCategoriesAndSubcategoriesCompleted(response);
         }
 
         public async Task GetCategoriesAndSubcategoriesCust(string sCust)
         {
             String response = await soapService.GetCategoriesAndSubcategoriesCustAsync(sCust);
-            XMLResponseParser.commService_GetCategoriesAndSubcategoriesCustCompleted(response);
+            await XMLResponseParser.commService_GetCategoriesAndSubcategoriesCustCompleted(response);
         }
 
         public async Task GetItems(String sCustomer, String sDate)
         {
             String response = await soapService.GetItemsAsync(sCustomer, sDate);
-            XMLResponseParser.commService_GetItemsCompletedAsync(response);
+            await XMLResponseParser.commService_GetItemsCompletedAsync(response);
         }
         public async Task GetItemQOH(String sCustomer)
         {
@@ -49,7 +49,7 @@
         public async Task ValidateLogin(String sUser, String sPassword, String sDeviceId)
         {
             String response = await soapService.ValidateLoginAsync(sUser, sPassword, sDeviceId);
-            XMLResponseParser.commService_ValidateLoginCompletedAsync(response);
+            await XMLResponseParser.commService_ValidateLoginCompletedAsync(response);
         }
 
         public async Task ValidateUserActive(String sUser)
@@ -89,7 +89,7 @@
         public async Task GetSalespersonCustomers(string sUser)
         {
             String response = await soapService.GetSalespersonCustomersAsync(sUser);
-            XMLResponseParser.commService_GetSalespersonCustomersCompletedAsync(response);
+            await XMLResponseParser.commService_GetSalespersonCustomersCompletedAsync(response);
         }
 
         public async Task GetFlyerItemsPDF()

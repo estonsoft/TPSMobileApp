@@ -112,8 +112,9 @@ namespace TPSMobileApp.Views
                         await App.CommManager.GetItems(App.g_Customer.CustNo, "0");
                     }
                 }
-                catch
+                catch(Exception e)
                 {
+                    Console.WriteLine("Category selected exception in items"+e.Message);
                 }
             }).ContinueWith((t) =>
             {

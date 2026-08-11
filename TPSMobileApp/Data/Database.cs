@@ -47,30 +47,30 @@ namespace TPSMobileApp
 
         public void BeginTransaction()
         {
-            if (DeviceInfo.Platform == DevicePlatform.iOS)
-            {
-                while (_database.IsInTransaction)
-                {
-                    SpinWait.SpinUntil(() => !_database.IsInTransaction, 50); // Checks every 50ms
-                }
-                _database.BeginTransaction();
-            }
+            // if (DeviceInfo.Platform == DevicePlatform.iOS)
+            // {
+            //     while (_database.IsInTransaction)
+            //     {
+            //         SpinWait.SpinUntil(() => !_database.IsInTransaction, 50); // Checks every 50ms
+            //     }
+            //     _database.BeginTransaction();
+            // }
         }
 
         public void CommitTransaction()
         {
-            if (DeviceInfo.Platform == DevicePlatform.iOS)
-            {
-                _database.Commit();
-            }
+            // if (DeviceInfo.Platform == DevicePlatform.iOS)
+            // {
+            //     _database.Commit();
+            // }
         }
 
         public void RollbackTransaction()
         {
-            if (DeviceInfo.Platform == DevicePlatform.iOS)
-            {
-                _database.Rollback();
-            }
+            // if (DeviceInfo.Platform == DevicePlatform.iOS)
+            // {
+            //     _database.Rollback();
+            // }
         }
 
         public List<Item> SearchItems(String sSearch, Category category, String sBarcode, Subcategory subcategory, Subsubcategory subsubcategory)

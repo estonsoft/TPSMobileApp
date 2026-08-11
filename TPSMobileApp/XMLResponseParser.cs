@@ -260,7 +260,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static async void commService_GetItemsCompletedAsync(String response)
+        public static async Task commService_GetItemsCompletedAsync(String response)
         {
             try
             {
@@ -456,7 +456,7 @@ namespace TPSMobileApp
 
                     try
                     {
-                        App.g_db.BeginTransaction();
+                        // App.g_db.BeginTransaction();
                         App.g_db.InsertDiscontinuedItems();
                         App.g_db.DeleteItems();
                         App.g_db.SaveItems(itemsToSave.ToList());
@@ -482,7 +482,7 @@ namespace TPSMobileApp
 
                         App.g_ItemList = App.g_db.GetItems();
 
-                        App.g_db.CommitTransaction();
+                        // App.g_db.CommitTransaction();
 
                         Console.WriteLine($"Finalize + commit: {sw.ElapsedMilliseconds}ms");
                 
@@ -898,9 +898,9 @@ namespace TPSMobileApp
                         }
 
 
-                        App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
+                        await App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
 
-                        App.RefreshAll();
+                        // await App.RefreshAll();
 
                         App.g_db.SaveSetting("LoggedIn", "1");
                         App.g_db.SaveSetting("UserName", App.g_UserName);
