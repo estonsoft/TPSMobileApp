@@ -22,7 +22,7 @@
 
             App.g_CurrentPage = "SubsubcategoryPage";
 
-            List<Subsubcategory> lst = App.g_db.GetSubsubcategory(App.g_Category.Code, App.g_Subcategory.Code);
+            List<Subsubcategory> lst = await App.g_db.GetSubsubcategory(App.g_Category.Code, App.g_Subcategory.Code);
 
             SubsubcategoriesListSearch.ItemsSource = lst;
         }

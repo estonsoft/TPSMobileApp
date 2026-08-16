@@ -106,14 +106,14 @@ namespace TPSMobileApp.Views
             Message.IsVisible = true;
         }
 
-        public void ScanComplete(String barcode)
+        public async void ScanComplete(String barcode)
         {
             ClearItemInfo();
             ScanItem.Text = barcode;
 
             TapToScan.IsVisible = true;
 
-            Item item = FindItem();
+            Item item = await FindItem();
 
             if (item == null)
             {
@@ -122,8 +122,8 @@ namespace TPSMobileApp.Views
                 ScanItem.Text = "";
                 return;
             }
-
-            if (App.g_db.GetItemQty(item.ItemNo) > 0)
+            int value = await App.g_db.GetItemQty(item.ItemNo);
+            if (value > 0)
             {
                 SetMessage("Item Already In Shopping Cart");
             }
@@ -148,7 +148,7 @@ namespace TPSMobileApp.Views
             ScanComplete(ScanItem.Text.Trim());
         }
 
-        private Item FindItem()
+        private async Task<Item> FindItem()
         {
             //Database db = new Database();
 
@@ -165,12 +165,12 @@ namespace TPSMobileApp.Views
 
                 if (ItemNo > 0)
                 {
-                    item = App.g_db.FindItem(ItemNo, ItemNo.ToString());
+                    item = await App.g_db.FindItem(ItemNo, ItemNo.ToString());
                 }
 
                 if (item == null)
                 {
-                    items = App.g_db.SearchItemsQuickEntry(ScanText);
+                    items = await App.g_db.SearchItemsQuickEntry(ScanText);
 
                     if (items.Count >= 1)
                     {
@@ -183,7 +183,7 @@ namespace TPSMobileApp.Views
                     if (App.g_IsAutoAdd1)
                     {
                         item.QtyOrder += 1;
-                        App.g_db.UpdateItemQtySet(item.ItemNo, item.QtyOrder);
+                        await App.g_db.UpdateItemQtySet(item.ItemNo, item.QtyOrder);
                     }
                 }
             }

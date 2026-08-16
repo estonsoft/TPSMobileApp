@@ -7,14 +7,13 @@
         public CommManager(ISoapService service)
         {
             soapService = service;
-
         }
 
 
         public async Task GetBanners()
         {
             String banner = await soapService.GetBannersAsync();
-            XMLResponseParser.commService_GetBannersCompleted(banner);
+            await XMLResponseParser.commService_GetBannersCompleted(banner);
         }
 
         public async Task GetCategoriesAndSubcategories()
@@ -37,13 +36,13 @@
         public async Task GetItemQOH(String sCustomer)
         {
             String response = await soapService.GetItemQOHAsync(sCustomer);
-            XMLResponseParser.commService_GetItemQOHCompletedAsync(response);
+            await XMLResponseParser.commService_GetItemQOHCompletedAsync(response);
         }
 
         public async Task GetItemQOH2(String sUser, String sCustomer)
         {
             String response = await soapService.GetItemQOH2Async(sUser, sCustomer);
-            XMLResponseParser.commService_GetItemQOH2CompletedAsync(response);
+            await XMLResponseParser.commService_GetItemQOH2CompletedAsync(response);
         }
 
         public async Task ValidateLogin(String sUser, String sPassword, String sDeviceId)
@@ -55,35 +54,35 @@
         public async Task ValidateUserActive(String sUser)
         {
             String response = await soapService.ValidateUserActiveAsync(sUser);
-            XMLResponseParser.commService_ValidateUserActiveCompletedAsync(response);
+            await XMLResponseParser.commService_ValidateUserActiveCompletedAsync(response);
         }
         public async Task GetSettings()
         {
             String response = await soapService.GetSettingsAsync();
-            XMLResponseParser.commService_GetSettingsCompletedAsync(response);
+            await XMLResponseParser.commService_GetSettingsCompletedAsync(response);
         }
         public async Task SubmitOrder(string sCustNo, string sPO, string sPaymentMethod, string sCCInfo, string sOrderInfo, string sDeliveryPickup, string sUser, string sNotes, int iHoldForReview, string sOrderType)
         {
             String response = await soapService.SubmitOrderAsync(sCustNo, sPO, sPaymentMethod, sCCInfo, sOrderInfo, sDeliveryPickup, sUser, sNotes, iHoldForReview, sOrderType);
-            XMLResponseParser.commService_SubmitOrderCompletedAsync(response);
+            await XMLResponseParser.commService_SubmitOrderCompletedAsync(response);
         }
         public async Task SubmitReturn(string sCustNo, string sOrderInfo, string sUser, string sNotes)
         {
             String response = await soapService.SubmitReturnAsync(sCustNo, sOrderInfo, sUser, sNotes);
-            XMLResponseParser.commService_SubmitReturnCompletedAsync(response);
+            await XMLResponseParser.commService_SubmitReturnCompletedAsync(response);
         }
 
         public async Task GetOrderHistory(string sCustNo)
         {
             String response = await soapService.GetOrderHistoryAsync(sCustNo);
-            XMLResponseParser.commService_GetOrderHistoryCompletedAsync(response);
+            await XMLResponseParser.commService_GetOrderHistoryCompletedAsync(response);
         }
 
         public async Task<string> GetInvoicePDF(string sOrder)
         {
             String response = await soapService.GetInvoicePDFAsync(sOrder);
             return response;
-            //XMLResponseParser.commService_GetInvoicePDFCompletedAsync(response);
+            //await XMLResponseParser.commService_GetInvoicePDFCompletedAsync(response);
         }
 
         public async Task GetSalespersonCustomers(string sUser)
@@ -95,7 +94,7 @@
         public async Task GetFlyerItemsPDF()
         {
             String response = await soapService.GetFlyerItemsPDFAsync();
-            XMLResponseParser.commService_GetFlyerItemsPDFCompleted(response);
+            await XMLResponseParser.commService_GetFlyerItemsPDFCompleted(response);
         }
     }
 }

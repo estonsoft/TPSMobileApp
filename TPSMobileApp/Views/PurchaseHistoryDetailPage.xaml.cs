@@ -70,7 +70,7 @@
             OrderItemsList.ItemsSource = null;
 
             //Database db = new Database();
-            _OrderHdr = App.g_db.GetOrderHeader(App.g_OrderNo);
+            _OrderHdr = await App.g_db.GetOrderHeader(App.g_OrderNo);
 
             OrderNo = _OrderHdr.OrderNo;
             OrderDateDisplay = _OrderHdr.OrderDateDisplay;
@@ -78,9 +78,9 @@
             Pieces = _OrderHdr.Pieces;
             TotalDisplay = _OrderHdr.TotalDisplay;
 
-            List<Item> lstItem = App.g_db.GetItems();
+            List<Item> lstItem = await App.g_db.GetItems();
 
-            OrderItemsList.ItemsSource = App.g_db.GetOrderDetail(App.g_OrderNo);
+            OrderItemsList.ItemsSource = await App.g_db.GetOrderDetail(App.g_OrderNo);
 
             foreach (OrderDetail d in (List<OrderDetail>)OrderItemsList.ItemsSource)
             {

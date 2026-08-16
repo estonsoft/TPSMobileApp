@@ -25,7 +25,7 @@ namespace TPSMobileApp.Views
             base.OnAppearing();
 
             //Database db = new Database();
-            List<Item> items = App.g_db.GetReturnCartItems();
+            List<Item> items =  App.g_db.GetReturnCartItems().Result;
 
             if (items.Count > 0)
             {
@@ -39,7 +39,7 @@ namespace TPSMobileApp.Views
         {
             ItemsListCart.ItemsSource = null;
 
-            ItemsListCart.ItemsSource = App.g_db.GetLabelCartItems();
+            ItemsListCart.ItemsSource = await App.g_db.GetLabelCartItems();
 
             foreach (Item i in (List<Item>)ItemsListCart.ItemsSource)
             {
@@ -58,7 +58,7 @@ namespace TPSMobileApp.Views
 
             if (bClear)
             {
-                App.g_db.ClearLabelCartItems();
+                await App.g_db.ClearLabelCartItems();
                 await App.g_Shell.GoToHome();
             }
         }

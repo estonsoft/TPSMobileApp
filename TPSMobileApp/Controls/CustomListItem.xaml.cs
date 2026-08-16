@@ -13,7 +13,7 @@
             catch { }
         }
 
-        private void MinusButton_Clicked(object sender, EventArgs e)
+        private async void MinusButton_Clicked(object sender, EventArgs e)
         {
             PlusMinusButton button = (PlusMinusButton)sender;
 
@@ -24,7 +24,7 @@
             {
                 iQty--;
 
-                App.g_db.UpdateItemQtySet(button.ItemNo, iQty);
+                await App.g_db.UpdateItemQtySet(button.ItemNo, iQty);
 
                 QtyEntry.Text = iQty.ToString();
 
@@ -36,7 +36,7 @@
             }
         }
 
-        private void PlusButton_Clicked(object sender, EventArgs e)
+        private async void PlusButton_Clicked(object sender, EventArgs e)
         {
             PlusMinusButton button = (PlusMinusButton)sender;
 
@@ -55,7 +55,7 @@
                 return;
             }
 
-            App.g_db.UpdateItemQtySet(button.ItemNo, iQty);
+            await App.g_db.UpdateItemQtySet(button.ItemNo, iQty);
 
             QtyEntry.Text = iQty.ToString();
 
@@ -63,12 +63,12 @@
             AddToOrderButton.IsVisible = false;
         }
 
-        private void AddToOrderButton_Clicked(object sender, EventArgs e)
+        private async void AddToOrderButton_Clicked(object sender, EventArgs e)
         {
 
             AddToOrderButton button = (AddToOrderButton)sender;
 
-            App.g_db.UpdateItemQty(button.ItemNo, 1);
+            await App.g_db.UpdateItemQty(button.ItemNo, 1);
 
             QtyEntry.Text = "1";
 
@@ -130,7 +130,7 @@
                 qtyEntry.Text = "999";
             }
 
-            App.g_db.UpdateItemQtySet(qtyEntry.ItemNo, iTextQty);
+            await App.g_db.UpdateItemQtySet(qtyEntry.ItemNo, iTextQty);
 
             if (iTextQty <= 0)
             {
@@ -157,7 +157,7 @@
 
             if (bResult)
             {
-                App.g_db.UpdateItemCreditQty(button.ItemNo, 1);
+                await App.g_db.UpdateItemCreditQty(button.ItemNo, 1);
             }
         }
 
@@ -169,7 +169,7 @@
 
             if (bResult)
             {
-                App.g_db.UpdateItemLabelQty(button.ItemNo, 1);
+                await App.g_db.UpdateItemLabelQty(button.ItemNo, 1);
             }
         }
 

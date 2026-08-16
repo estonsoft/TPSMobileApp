@@ -85,12 +85,12 @@
             CartTotal = dCartTotal.ToString("{0:C2}");
         }
 
-        public void RefreshList()
+        public async void RefreshList()
         {
             ItemsListCart.ItemsSource = null;
-            Task.Run(() =>
+            await Task.Run(async () =>
             {
-                List<Item> lstItem = App.g_db.GetReturnCartItems();
+                List<Item> lstItem = await App.g_db.GetReturnCartItems();
                 foreach (Item i in lstItem)
                 {
                     Item.SetListItem(i, "C");
@@ -114,7 +114,7 @@
 
             if (bClear)
             {
-                App.g_db.ClearReturnCartItems();
+                await App.g_db.ClearReturnCartItems();
                 await App.g_Shell.GoToHome();
             }
         }

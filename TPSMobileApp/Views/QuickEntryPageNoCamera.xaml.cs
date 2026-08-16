@@ -94,7 +94,7 @@
         {
             OnScannerDisable();
 
-            Item item = FindItem();
+            Item item = FindItem().Result;
 
             if (item == null)
             {
@@ -105,7 +105,7 @@
                 return;
             }
 
-            if (App.g_db.GetItemQty(item.ItemNo) > 0)
+            if (App.g_db.GetItemQty(item.ItemNo).Result > 0)
             {
                 SetMessage("Item Already In Shopping Cart");
             }
@@ -145,7 +145,7 @@
             ScanComplete();
         }
 
-        private Item FindItem()
+        private async Task<Item> FindItem()
         {
             Item item = null;
             List<Item> items = new List<Item>();
@@ -156,12 +156,12 @@
 
             if (ItemNo > 0)
             {
-                item = App.g_db.FindItem(ItemNo, ItemNo.ToString());
+                item = await App.g_db.FindItem(ItemNo, ItemNo.ToString());
             }
 
             if (item == null)
             {
-                items = App.g_db.SearchItemsQuickEntry(ScanText);
+                items = await App.g_db.SearchItemsQuickEntry(ScanText);
 
                 if (items.Count >= 1)
                 {

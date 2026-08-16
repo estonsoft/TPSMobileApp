@@ -21,7 +21,7 @@
             base.OnAppearing();
 
             //Database db = new Database();
-            List<Item> lstCartItems = App.g_db.GetOrderCartItems();
+            List<Item> lstCartItems =  App.g_db.GetOrderCartItems().Result;
             String sOrderInfo = "";
 
             foreach (Item item in lstCartItems)

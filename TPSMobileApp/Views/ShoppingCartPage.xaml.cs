@@ -64,7 +64,7 @@ namespace TPSMobileApp.Views
         {
             base.OnAppearing();
 
-            lstItems = App.g_db.GetOrderCartItems();
+            lstItems = App.g_db.GetOrderCartItems().Result;
 
             if (lstItems.Count > 0)
             {
@@ -125,7 +125,7 @@ namespace TPSMobileApp.Views
         {
             ItemsListCart.ItemsSource = null;
 
-            lstItems = App.g_db.GetOrderCartItems();
+            lstItems = App.g_db.GetOrderCartItems().Result;
 
             foreach (Item i in lstItems)
             {
@@ -153,7 +153,7 @@ namespace TPSMobileApp.Views
 
             if (bClear)
             {
-                App.g_db.ClearOrderCartItems();
+                await App.g_db.ClearOrderCartItems();
                 await App.g_Shell.GoToHome();
             }
         }

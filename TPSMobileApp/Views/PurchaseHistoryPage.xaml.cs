@@ -24,9 +24,9 @@ namespace TPSMobileApp.Views
         public void RefreshList()
         {
             OrderHistoryList.ItemsSource = null;
-            Task.Run(() =>
+            Task.Run(async () =>
             {
-                List<OrderHeader> orderHeaders = App.g_db.GetOrderHeaders();
+                List<OrderHeader> orderHeaders = await App.g_db.GetOrderHeaders();
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
                     OrderHistoryList.ItemsSource = orderHeaders;

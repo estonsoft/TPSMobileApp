@@ -98,7 +98,7 @@
                 ItemDesc.Text = item.Description;
             }
 
-            int iQty = App.g_db.GetItemQty(item.ItemNo);
+            int iQty =  App.g_db.GetItemQty(item.ItemNo).Result;
 
             if (iQty > 0)
             {
@@ -151,7 +151,7 @@
                 return;
             }
 
-            App.g_db.UpdateItemQtySet(item.ItemNo, iQty);
+            await App.g_db.UpdateItemQtySet(item.ItemNo, iQty);
 
             Qty.Text = "";
             ItemDesc.Text = "";
@@ -172,11 +172,11 @@
 
             if (ItemNo > 0)
             {
-                item = App.g_db.FindItem(ItemNo, ItemNo.ToString());
+                item =  App.g_db.FindItem(ItemNo, ItemNo.ToString()).Result;
             }
             else
             {
-                item = App.g_db.FindItem(0, ScanText);
+                item =  App.g_db.FindItem(0, ScanText).Result;
             }
 
             return item;

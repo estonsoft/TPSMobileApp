@@ -46,12 +46,12 @@
             if (DisableScanner.IsChecked)
             {
                 App.g_IsScannerDisabled = "1";
-                App.g_db.SaveSetting("ScannerDisabled", "1");
+                await App.g_db.SaveSetting("ScannerDisabled", "1");
             }
             else
             {
                 App.g_IsScannerDisabled = "0";
-                App.g_db.SaveSetting("ScannerDisabled", "0");
+                await App.g_db.SaveSetting("ScannerDisabled", "0");
             }
 
             await App.g_Shell.GoToLogin();

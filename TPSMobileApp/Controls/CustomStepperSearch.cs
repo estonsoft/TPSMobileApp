@@ -153,19 +153,19 @@ public class CustomStepperSearch : StackLayout
         Children.Add(AddToOrderStack);
     }
 
-    void MinusBtn_Clicked(object sender, EventArgs e)
+   async void MinusBtn_Clicked(object sender, EventArgs e)
     {
         if (Text <= 0)
             return;
 
-        int iQty = App.g_db.GetItemQty(ItemNo);
+        int iQty = await App.g_db.GetItemQty(ItemNo);
         if (iQty > 0)
-            App.g_db.UpdateItemQty(ItemNo, -1);
+            await App.g_db.UpdateItemQty(ItemNo, -1);
 
         Text--;
         QtyOrder--;
 
-        App.g_ShoppingCartItems = App.g_db.GetCartPieces();
+        App.g_ShoppingCartItems = await App.g_db.GetCartPieces();
 
         try { App.g_ShoppingCartPage.UpdateTotals(); } catch { }
         try { App.g_CheckoutPage.UpdateTotals(); } catch { }
@@ -177,17 +177,17 @@ public class CustomStepperSearch : StackLayout
         }
     }
 
-    void PlusBtn_Clicked(object sender, EventArgs e)
+    async void PlusBtn_Clicked(object sender, EventArgs e)
     {
         if (Text == 999)
             return;
 
-        App.g_db.UpdateItemQty(ItemNo, 1);
+        await App.g_db.UpdateItemQty(ItemNo, 1);
 
         Text++;
         QtyOrder++;
 
-        App.g_ShoppingCartItems = App.g_db.GetCartPieces();
+        App.g_ShoppingCartItems = await App.g_db.GetCartPieces();
 
         try { App.g_ShoppingCartPage.UpdateTotals(); } catch { }
         try { App.g_CheckoutPage.UpdateTotals(); } catch { }

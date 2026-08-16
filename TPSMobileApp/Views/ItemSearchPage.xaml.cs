@@ -127,13 +127,13 @@ namespace TPSMobileApp.Views
             Subcategory = App.g_Subcategory.Description;
             Subsubcategory = App.g_Subsubcategory.Description;
 
-            if (App.g_db.GetSubcategoryCount(App.g_Category.Code) == 0)
+            if (await App.g_db.GetSubcategoryCount(App.g_Category.Code) == 0)
             {
                 SubcategoryLabel.IsVisible = false;
                 SubsubcategoryLabel.IsVisible = false;
             }
 
-            if (App.g_db.GetSubsubcategoryCount(App.g_Category.Code, App.g_Subcategory.Code) == 0)
+            if (await App.g_db.GetSubsubcategoryCount(App.g_Category.Code, App.g_Subcategory.Code) == 0)
             {
                 SubsubcategoryLabel.IsVisible = false;
             }
@@ -142,17 +142,17 @@ namespace TPSMobileApp.Views
             {
                 if (App.g_IsMonthlyAdPDFClick)
                 {
-                    lstItems = App.g_db.SearchItemsMonthlyAdClick(App.g_MonthlyAdPage, App.g_MonthlyAdX, App.g_MonthlyAdY);
+                    lstItems = await App.g_db.SearchItemsMonthlyAdClick(App.g_MonthlyAdPage, App.g_MonthlyAdX, App.g_MonthlyAdY);
                     App.g_IsMonthlyAdPDFClick = false;
                 }
                 else
                 {
-                    lstItems = App.g_db.SearchItems(App.g_SearchText, App.g_Category, App.g_ScanBarcode, App.g_Subcategory, App.g_Subsubcategory);
+                    lstItems = await App.g_db.SearchItems(App.g_SearchText, App.g_Category, App.g_ScanBarcode, App.g_Subcategory, App.g_Subsubcategory);
                 }
             }
             else
             {
-                lstItems = App.g_db.SearchItemsQuickEntry(App.g_ScanBarcode);
+                lstItems = await App.g_db.SearchItemsQuickEntry(App.g_ScanBarcode);
             }
 
             int iItems = 0;

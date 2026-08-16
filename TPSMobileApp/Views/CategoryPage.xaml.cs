@@ -30,7 +30,7 @@ namespace TPSMobileApp.Views
 
             App.g_SearchText = "";
 
-            CategoriesListSearch.ItemsSource = App.g_db.GetCategories();
+            CategoriesListSearch.ItemsSource = await App.g_db.GetCategories();
         }
 
         private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -50,7 +50,7 @@ namespace TPSMobileApp.Views
             App.g_Category = selectedCategory;
             App.g_ScanBarcode = "";
 
-            int iSubcategories = App.g_db.GetSubcategoryCount(App.g_Category.Code);
+            int iSubcategories = await App.g_db.GetSubcategoryCount(App.g_Category.Code);
 
             if (iSubcategories > 0)
             {

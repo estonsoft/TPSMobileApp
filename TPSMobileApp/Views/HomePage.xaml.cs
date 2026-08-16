@@ -16,7 +16,7 @@ namespace TPSMobileApp.Views
             try
             {
                 // Move DB call off UI thread
-                _banners = await Task.Run(() => App.g_db.GetBanners());
+                _banners = await Task.Run(async () => await App.g_db.GetBanners());
             }
             catch
             {
@@ -162,7 +162,7 @@ namespace TPSMobileApp.Views
             string CategoryCode = (string)te.Parameter;
 
             //Database db = new Database();
-            Category cat = App.g_db.GetCategory(CategoryCode);
+            Category cat = await App.g_db.GetCategory(CategoryCode);
 
             App.g_Category.Code = cat.Code;
             App.g_Category.Description = cat.Description;
@@ -194,10 +194,10 @@ namespace TPSMobileApp.Views
             {
                 try
                 {
-                    App.g_db.SuspendCartItems(App.g_Customer.CustNo);
+                    await App.g_db.SuspendCartItems(App.g_Customer.CustNo);
                 }
                 catch { }
-                App.g_db.SaveSetting("LoggedIn", "0");
+                await App.g_db.SaveSetting("LoggedIn", "0");
                 App.g_IsLoggedIn = false;
                 SetLoginControls();
                 await App.g_Shell.GoToLogin();
@@ -208,7 +208,7 @@ namespace TPSMobileApp.Views
         async void OnPastPurchases(object sender, EventArgs e)
         {
             //Database db = new Database();
-            int iReorderItems = App.g_db.GetReorderItemsCount();
+            int iReorderItems = await App.g_db.GetReorderItemsCount();
 
             if (iReorderItems == 0)
             {

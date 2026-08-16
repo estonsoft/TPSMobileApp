@@ -185,7 +185,7 @@
             }
 
             //Database db = new Database();
-            _Location = App.g_db.GetLocation(App.g_Customer.Warehouse);
+            _Location =  App.g_db.GetLocation(App.g_Customer.Warehouse).Result;
 
             try
             {
@@ -264,7 +264,7 @@
             ItemsListCart.ItemsSource = null;
 
             //Database db = new Database();
-            ItemsListCart.ItemsSource = App.g_db.GetOrderCartItems();
+            ItemsListCart.ItemsSource = await App.g_db.GetOrderCartItems();
 
             foreach (Item i in (List<Item>)ItemsListCart.ItemsSource)
             {

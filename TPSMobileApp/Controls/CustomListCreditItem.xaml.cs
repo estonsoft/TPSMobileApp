@@ -7,7 +7,7 @@
             InitializeComponent();
         }
 
-        private void MinusButton_Clicked(object sender, EventArgs e)
+        private async void MinusButton_Clicked(object sender, EventArgs e)
         {
             var button = (PlusMinusButton)sender;
 
@@ -18,7 +18,7 @@
             {
                 iQty--;
 
-                App.g_db.UpdateItemCreditQtySet(button.ItemNo, iQty);
+                await App.g_db.UpdateItemCreditQtySet(button.ItemNo, iQty);
                 QtyEntry.Text = iQty.ToString();
 
                 if (iQty == 0)
@@ -29,7 +29,7 @@
             }
         }
 
-        private void PlusButton_Clicked(object sender, EventArgs e)
+        private async void PlusButton_Clicked(object sender, EventArgs e)
         {
             var button = (PlusMinusButton)sender;
 
@@ -41,18 +41,18 @@
 
             iQty++;
 
-            App.g_db.UpdateItemCreditQtySet(button.ItemNo, iQty);
+            await App.g_db.UpdateItemCreditQtySet(button.ItemNo, iQty);
             QtyEntry.Text = iQty.ToString();
 
             StepperStack.IsVisible = true;
             AddToOrderButton.IsVisible = false;
         }
 
-        private void AddToOrderButton_Clicked(object sender, EventArgs e)
+        private async void AddToOrderButton_Clicked(object sender, EventArgs e)
         {
             var button = (AddToOrderButton)sender;
 
-            App.g_db.UpdateItemCreditQty(button.ItemNo, 1);
+            await App.g_db.UpdateItemCreditQty(button.ItemNo, 1);
             QtyEntry.Text = "1";
 
             StepperStack.IsVisible = true;
@@ -79,7 +79,7 @@
             }
         }
 
-        private void OnQtyEntry_Completed(object sender, EventArgs e)
+        private async void OnQtyEntry_Completed(object sender, EventArgs e)
         {
             var qtyEntry = (QtyEntry)sender;
 
@@ -90,7 +90,7 @@
                 iTextQty = 999;
 
             qtyEntry.Text = iTextQty.ToString();
-            App.g_db.UpdateItemCreditQtySet(qtyEntry.ItemNo, iTextQty);
+            await App.g_db.UpdateItemCreditQtySet(qtyEntry.ItemNo, iTextQty);
 
             StepperStack.IsVisible = iTextQty > 0;
             AddToOrderButton.IsVisible = iTextQty <= 0;

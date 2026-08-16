@@ -18,7 +18,7 @@ namespace TPSMobileApp
             builder
                 .UseMauiApp<App>()
                 .UseMauiPdfView()
-                .UseBarcodeScanning()   
+                .UseBarcodeScanning()
                 .ConfigureSyncfusionCore()
                 .UseFFImageLoading()
                 .UseScanditCore()
@@ -39,7 +39,7 @@ namespace TPSMobileApp
 
                 .ConfigureFonts(fonts =>
                 {
-                    
+
                     //fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("Font Awesome 5 Brands-Regular-400.otf", "FontAwesomeBrandsReg");
                     fonts.AddFont("Font Awesome 5 Free-Regular-400.otf", "FontAwesomeFreeReg");
@@ -63,7 +63,7 @@ namespace TPSMobileApp
             builder.Logging.AddDebug();
 #endif
             // ✅ REQUIRED
-            builder.Services.AddSingleton<ISoapService>(sp =>
+            builder.Services.AddTransient<ISoapService>(sp =>
             {
                 var httpClient = new HttpClient();
                 return new SoapService(httpClient);
@@ -71,7 +71,7 @@ namespace TPSMobileApp
 
             // Optional manager
             builder.Services.AddSingleton<CommManager>();
-           
+
             return builder.Build();
         }
     }

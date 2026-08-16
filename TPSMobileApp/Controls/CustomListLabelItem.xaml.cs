@@ -7,7 +7,7 @@
             InitializeComponent();
         }
 
-        private void MinusButton_Clicked(object sender, EventArgs e)
+        private async void MinusButton_Clicked(object sender, EventArgs e)
         {
             PlusMinusButton button = (PlusMinusButton)sender;
 
@@ -17,7 +17,7 @@
             {
                 iQty--;
 
-                App.g_db.UpdateItemLabelQtySet(button.ItemNo, iQty);
+                await App.g_db.UpdateItemLabelQtySet(button.ItemNo, iQty);
 
                 QtyEntry.Text = iQty.ToString();
 
@@ -29,7 +29,7 @@
             }
         }
 
-        private void PlusButton_Clicked(object sender, EventArgs e)
+        private async void PlusButton_Clicked(object sender, EventArgs e)
         {
             PlusMinusButton button = (PlusMinusButton)sender;
 
@@ -40,7 +40,7 @@
 
             iQty++;
 
-            App.g_db.UpdateItemLabelQtySet(button.ItemNo, iQty);
+            await App.g_db.UpdateItemLabelQtySet(button.ItemNo, iQty);
 
             QtyEntry.Text = iQty.ToString();
 
@@ -48,11 +48,11 @@
             AddToOrderButton.IsVisible = false;
         }
 
-        private void AddToOrderButton_Clicked(object sender, EventArgs e)
+        private async void AddToOrderButton_Clicked(object sender, EventArgs e)
         {
             AddToOrderButton button = (AddToOrderButton)sender;
 
-            App.g_db.UpdateItemLabelQty(button.ItemNo, 1);
+            await App.g_db.UpdateItemLabelQty(button.ItemNo, 1);
 
             QtyEntry.Text = "1";
 
@@ -83,7 +83,7 @@
             }
         }
 
-        private void OnQtyEntry_Completed(object sender, EventArgs e)
+        private async void OnQtyEntry_Completed(object sender, EventArgs e)
         {
             QtyEntry qtyEntry = (QtyEntry)sender;
 
@@ -95,7 +95,7 @@
                 iTextQty = 999;
             }
 
-            App.g_db.UpdateItemLabelQtySet(qtyEntry.ItemNo, iTextQty);
+            await App.g_db.UpdateItemLabelQtySet(qtyEntry.ItemNo, iTextQty);
 
             if (iTextQty <= 0)
             {

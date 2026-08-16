@@ -24,7 +24,7 @@
 
             App.g_CurrentPage = "SubcategoryPage";
 
-            List<Subcategory> lst = App.g_db.GetSubcategory(App.g_Category.Code);
+            List<Subcategory> lst = await App.g_db.GetSubcategory(App.g_Category.Code);
 
             //Subcategory subcat = new Subcategory();
             //subcat.Code = "TOPSELLERS";
@@ -50,7 +50,7 @@
             App.g_Subcategory = selectedCategory;
             App.g_ScanBarcode = "";
 
-            int iSubsubcategories = App.g_db.GetSubsubcategory(App.g_Category.Code, App.g_Subcategory.Code).Count;
+            int iSubsubcategories =  App.g_db.GetSubsubcategory(App.g_Category.Code, App.g_Subcategory.Code).Result.Count;
 
             if (iSubsubcategories < 1)
             {

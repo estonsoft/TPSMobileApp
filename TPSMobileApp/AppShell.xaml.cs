@@ -98,7 +98,7 @@ namespace TPSMobileApp
         }
         public async Task<int> GoToShoppingCart()
         {
-            if (App.g_db.GetOrderCartItems().Count == 0)
+            if (App.g_db.GetOrderCartItems().Result.Count == 0)
             {
                 await Shell.Current.DisplayAlertAsync("Profit Order", "Your shopping cart is empty", "Ok");
                 return 0;
@@ -110,7 +110,7 @@ namespace TPSMobileApp
         }
         public async Task<int> GoToReturnCart()
         {
-            if (App.g_db.GetReturnCartItems().Count == 0)
+            if (App.g_db.GetReturnCartItems().Result.Count == 0)
             {
                 await Shell.Current.DisplayAlertAsync("Profit Order", "Your return cart is empty", "Ok");
                 return 0;
@@ -122,7 +122,7 @@ namespace TPSMobileApp
         }
         public async Task<int> GoToLabelCart()
         {
-            if (App.g_db.GetLabelCartItems().Count == 0)
+            if (App.g_db.GetLabelCartItems().Result.Count == 0)
             {
                 await Shell.Current.DisplayAlertAsync("Profit Order", "Your label print cart is empty", "Ok");
                 return 0;

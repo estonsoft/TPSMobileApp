@@ -18,7 +18,8 @@ namespace TPSMobileApp
                 {
                     // foreach (String s in aBanners)
                     // {
-                    Parallel.ForEach(aBanners, s =>{
+                    Parallel.ForEach(aBanners, s =>
+                    {
                         Banner banner = new Banner();
                         banner.BannerName = s;
                         banner.BannerURL = Constants.BannerUrl + banner.BannerName;
@@ -27,10 +28,10 @@ namespace TPSMobileApp
                 }
                 try
                 {
-                    App.g_db.BeginTransaction();
-                    App.g_db.DeleteBannersAsync();
-                    App.g_db.SaveBannerAsync(lstBanners.ToList());
-                    App.g_db.CommitTransaction();
+                    await App.g_db.BeginTransaction();
+                    await App.g_db.DeleteBannersAsync();
+                    await App.g_db.SaveBannerAsync(lstBanners.ToList());
+                    await App.g_db.CommitTransaction();
                     Console.WriteLine("Get Banners returned Completed");
                 }
                 catch (Exception ex)
@@ -90,14 +91,14 @@ namespace TPSMobileApp
                     });
                     try
                     {
-                        App.g_db.BeginTransaction();
-                        App.g_db.DeleteAllCategory();
-                        App.g_db.DeleteAllSubcategory();
-                        App.g_db.SaveCategory(lstCategories.ToList());
-                        App.g_db.SaveSubcategory(lstSubcategories.ToList());
-                        App.g_db.CommitTransaction();
+                        await App.g_db.BeginTransaction();
+                        await App.g_db.DeleteAllCategory();
+                        await App.g_db.DeleteAllSubcategory();
+                        await App.g_db.SaveCategory(lstCategories.ToList());
+                        await App.g_db.SaveSubcategory(lstSubcategories.ToList());
+                        await App.g_db.CommitTransaction();
                         Console.WriteLine("Get Categories and Subcategories returned Completed");
-                        App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
+                        App.g_HomePageCategoryList = await App.g_db.GetHomePageCategories();
                     }
                     catch (Exception ex)
                     {
@@ -112,7 +113,7 @@ namespace TPSMobileApp
                     {
                         CustNo = App.g_Customer.CustNo;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine("Error occurred while parsing customer number: " + ex.Message);
                         CustNo = "0";
@@ -168,7 +169,7 @@ namespace TPSMobileApp
                         {
                             sSubsubcategory = aCategory[5];
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             Console.WriteLine("Error occurred while parsing subsubcategory: " + ex.Message);
                             sSubsubcategory = "";
@@ -206,22 +207,22 @@ namespace TPSMobileApp
                     });
                 }
                 try
-                    {
-                        App.g_db.BeginTransaction();
-                        App.g_db.DeleteAllCategory();
-                        App.g_db.DeleteAllSubcategory();
-                        App.g_db.DeleteAllSubsubcategory();
-                        App.g_db.SaveCategory(lstCategories.ToList());
-                        App.g_db.SaveSubcategory(lstSubcategories.ToList());
-                        App.g_db.SaveSubsubcategory(lstSubsubcategories.ToList());
-                        App.g_db.CommitTransaction();
-                        Console.WriteLine("Get Categories Subcategories and Subsubcategories returned Completed");
-                        App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error occurred while parsing categories subcategories and subsubcategories: " + ex.Message);
-                    }
+                {
+                    await App.g_db.BeginTransaction();
+                    await App.g_db.DeleteAllCategory();
+                    await App.g_db.DeleteAllSubcategory();
+                    await App.g_db.DeleteAllSubsubcategory();
+                    await App.g_db.SaveCategory(lstCategories.ToList());
+                    await App.g_db.SaveSubcategory(lstSubcategories.ToList());
+                    await App.g_db.SaveSubsubcategory(lstSubsubcategories.ToList());
+                    await App.g_db.CommitTransaction();
+                    Console.WriteLine("Get Categories Subcategories and Subsubcategories returned Completed");
+                    App.g_HomePageCategoryList = await App.g_db.GetHomePageCategories();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error occurred while parsing categories subcategories and subsubcategories: " + ex.Message);
+                }
 
                 try
                 {
@@ -231,7 +232,7 @@ namespace TPSMobileApp
                     {
                         CustNo = App.g_Customer.CustNo;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine("Error occurred while parsing customer number: " + ex.Message);
                         CustNo = "0";
@@ -247,7 +248,7 @@ namespace TPSMobileApp
                     {
                         await App.CommManager.GetItems(App.g_Customer.CustNo, sDate);
                     }
-                    App.g_HomePageCategoryList = App.g_db.GetHomePageCategories();
+                    App.g_HomePageCategoryList = await App.g_db.GetHomePageCategories();
                 }
                 catch (Exception e)
                 {
@@ -271,12 +272,12 @@ namespace TPSMobileApp
                 {
                     var sw = System.Diagnostics.Stopwatch.StartNew();
 
-                    List<Item> lstCartItems = App.g_db.GetCartItems();
+                    List<Item> lstCartItems = await App.g_db.GetCartItems();
                     var cartDict = lstCartItems.ToDictionary(c => c.ItemNo); // O(1) lookup instead of nested loop
 
                     var itemsToSave = new ConcurrentBag<Item>();
                     var processedItemNos = new ConcurrentBag<int>();
-                    
+
                     Parallel.ForEach(aItems, s =>
                     {
                         if (string.IsNullOrWhiteSpace(s)) return; // Skip empty rows
@@ -363,7 +364,7 @@ namespace TPSMobileApp
                                 item.IsPriceVisible = 1;
                             }
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             Console.WriteLine("Error occurred while parsing price visibility: " + e.Message);
                             item.IsPriceVisible = 1;
@@ -375,7 +376,7 @@ namespace TPSMobileApp
                             item.Keyword2 = aItem[29];
                             item.Keyword3 = aItem[30];
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             Console.WriteLine("Error occurred while parsing keywords: " + e.Message);
                             item.Keyword1 = "";
@@ -387,7 +388,7 @@ namespace TPSMobileApp
                         {
                             item.LastPurchDateDisplay = aItem[31];
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             Console.WriteLine("Error occurred while parsing last purchase date display: " + e.Message);
                             item.LastPurchDateDisplay = "";
@@ -404,12 +405,12 @@ namespace TPSMobileApp
                         {
                             item.QtyLastOrder = GetIntegerValue("QtyLastOrder", aItem[32], 0);
                         }
-                        
+
                         try
                         {
                             item.SubsubcategoryCode = aItem[33];
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             Console.WriteLine("Error occurred while parsing subsubcategory code: " + e.Message);
                             item.SubsubcategoryCode = "";
@@ -418,7 +419,7 @@ namespace TPSMobileApp
                         {
                             item.SubsubcategoryDesc = aItem[34];
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             Console.WriteLine("Error occurred while parsing subsubcategory description: " + e.Message);
                             item.SubsubcategoryDesc = "";
@@ -427,12 +428,12 @@ namespace TPSMobileApp
                         {
                             item.ItemRefNo = aItem[35];
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             Console.WriteLine("Error occurred while parsing item reference number: " + e.Message);
                             item.ItemRefNo = "";
                         }
-                        
+
 
                         item.AddToOrderDisplay = "Add To Order";
                         item.QtyOrder = 0;
@@ -456,10 +457,10 @@ namespace TPSMobileApp
 
                     try
                     {
-                        // App.g_db.BeginTransaction();
-                        App.g_db.InsertDiscontinuedItems();
-                        App.g_db.DeleteItems();
-                        App.g_db.SaveItems(itemsToSave.ToList());
+                        // await App.g_db.BeginTransaction();
+                        await App.g_db.InsertDiscontinuedItems();
+                        await App.g_db.DeleteItems();
+                        await App.g_db.SaveItems(itemsToSave.ToList());
                     }
                     catch (Exception ex)
                     {
@@ -469,23 +470,23 @@ namespace TPSMobileApp
                     Console.WriteLine($"Save items ({itemsToSave.Count}): {sw.ElapsedMilliseconds}ms"); sw.Restart();
 
                     try
-                    {   
-                        App.g_db.DeleteDiscontinuedItems(processedItemNos.ToList());
-                    
+                    {
+                        await App.g_db.DeleteDiscontinuedItems(processedItemNos.ToList());
+
                         Console.WriteLine($"Delete discontinued: {sw.ElapsedMilliseconds}ms"); sw.Restart();
 
-                        App.g_db.UpdateDiscontinuedItems();
+                        await App.g_db.UpdateDiscontinuedItems();
                         Console.WriteLine("Update Discontinued Items completed");
-                        App.g_db.UpdateOrderDetailLastPurch();
+                        await App.g_db.UpdateOrderDetailLastPurch();
                         Console.WriteLine("Update Order Detail Last Purch completed");
-                        App.g_db.SaveSetting("LastUpdateItems", DateTime.Now.ToString("1yyMMdd"));
+                        await App.g_db.SaveSetting("LastUpdateItems", DateTime.Now.ToString("1yyMMdd"));
 
-                        App.g_ItemList = App.g_db.GetItems();
+                        App.g_ItemList = await App.g_db.GetItems();
 
-                        // App.g_db.CommitTransaction();
+                        // await App.g_db.CommitTransaction();
 
                         Console.WriteLine($"Finalize + commit: {sw.ElapsedMilliseconds}ms");
-                
+
                     }
                     catch (Exception ex)
                     {
@@ -504,7 +505,7 @@ namespace TPSMobileApp
         }
 
 
-        public static void commService_GetItemQOHCompletedAsync(String response)
+        public static async Task commService_GetItemQOHCompletedAsync(String response)
         {
             try
             {
@@ -521,7 +522,7 @@ namespace TPSMobileApp
 
                 if (aItems.Length > 1)
                 {
-                    App.g_db.BeginTransaction();
+                    await App.g_db.BeginTransaction();
 
                     foreach (String s in aItems)
                     {
@@ -544,7 +545,7 @@ namespace TPSMobileApp
 
                         try
                         {
-                            App.g_db.UpdateItemQOH(iItemNo, iQOH);
+                            await App.g_db.UpdateItemQOH(iItemNo, iQOH);
                         }
                         catch (Exception ex)
                         {
@@ -552,7 +553,7 @@ namespace TPSMobileApp
                         }
                     }
 
-                    App.g_db.CommitTransaction();
+                    await App.g_db.CommitTransaction();
                 }
             }
             catch (Exception ex)
@@ -561,7 +562,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static void commService_GetItemQOH2CompletedAsync(String response)
+        public static async Task commService_GetItemQOH2CompletedAsync(String response)
         {
             Debug.WriteLine("Get Item QOH 2 returned");
 
@@ -580,7 +581,7 @@ namespace TPSMobileApp
 
                 if (aItems.Length > 1)
                 {
-                    App.g_db.BeginTransaction();
+                    await App.g_db.BeginTransaction();
 
                     foreach (String s in aItems)
                     {
@@ -603,7 +604,7 @@ namespace TPSMobileApp
 
                         try
                         {
-                            App.g_db.UpdateItemQOH(iItemNo, iQOH);
+                            await App.g_db.UpdateItemQOH(iItemNo, iQOH);
                         }
                         catch (Exception ex)
                         {
@@ -611,7 +612,7 @@ namespace TPSMobileApp
                         }
                     }
 
-                    App.g_db.CommitTransaction();
+                    await App.g_db.CommitTransaction();
                 }
             }
             catch (Exception ex)
@@ -649,7 +650,7 @@ namespace TPSMobileApp
                             {
                                 App.g_IsCredits = false;
                             }
-                            App.g_db.SaveSetting("Credits", aUser[2]);
+                            await App.g_db.SaveSetting("Credits", aUser[2]);
 
                             if (aUser[3] == "1")
                             {
@@ -659,7 +660,7 @@ namespace TPSMobileApp
                             {
                                 App.g_HoldForReview = false;
                             }
-                            App.g_db.SaveSetting("HoldForReview", aUser[3]);
+                            await App.g_db.SaveSetting("HoldForReview", aUser[3]);
 
                             try
                             {
@@ -671,12 +672,12 @@ namespace TPSMobileApp
                                 {
                                     App.g_ForceSubmit = false;
                                 }
-                                App.g_db.SaveSetting("ForceSubmit", aUser[4]);
+                                await App.g_db.SaveSetting("ForceSubmit", aUser[4]);
                             }
                             catch
                             {
                                 App.g_ForceSubmit = false;
-                                App.g_db.SaveSetting("ForceSubmit", "0");
+                                await App.g_db.SaveSetting("ForceSubmit", "0");
                             }
 
                             try
@@ -687,7 +688,7 @@ namespace TPSMobileApp
                             {
                                 App.g_QOHDisplay = "X";
                             }
-                            App.g_db.SaveSetting("QOHDisplay", App.g_QOHDisplay);
+                            await App.g_db.SaveSetting("QOHDisplay", App.g_QOHDisplay);
 
                             try
                             {
@@ -699,12 +700,12 @@ namespace TPSMobileApp
                                 {
                                     App.g_BlockItemsNoQOH = false;
                                 }
-                                App.g_db.SaveSetting("BlockItemsNoQOH", aUser[6]);
+                                await App.g_db.SaveSetting("BlockItemsNoQOH", aUser[6]);
                             }
                             catch
                             {
                                 App.g_BlockItemsNoQOH = false;
-                                App.g_db.SaveSetting("BlockItemsNoQOH", "0");
+                                await App.g_db.SaveSetting("BlockItemsNoQOH", "0");
                             }
 
                             try
@@ -717,12 +718,12 @@ namespace TPSMobileApp
                                 {
                                     App.g_IsScandit = false;
                                 }
-                                App.g_db.SaveSetting("IsScandit", aUser[7]);
+                                await App.g_db.SaveSetting("IsScandit", aUser[7]);
                             }
                             catch
                             {
                                 App.g_IsScandit = false;
-                                App.g_db.SaveSetting("IsScandit", "0");
+                                await App.g_db.SaveSetting("IsScandit", "0");
                             }
                             try
                             {
@@ -734,12 +735,12 @@ namespace TPSMobileApp
                                 {
                                     App.g_IsSalesUser = false;
                                 }
-                                App.g_db.SaveSetting("IsSalesUser", aUser[8]);
+                                await App.g_db.SaveSetting("IsSalesUser", aUser[8]);
                             }
                             catch
                             {
                                 App.g_IsSalesUser = false;
-                                App.g_db.SaveSetting("IsSalesUser", "0");
+                                await App.g_db.SaveSetting("IsSalesUser", "0");
                             }
                             try
                             {
@@ -751,12 +752,12 @@ namespace TPSMobileApp
                                 {
                                     App.g_IsMonthlyFlyer = false;
                                 }
-                                App.g_db.SaveSetting("MonthlyFlyer", aUser[9]);
+                                await App.g_db.SaveSetting("MonthlyFlyer", aUser[9]);
                             }
                             catch
                             {
                                 App.g_IsMonthlyFlyer = false;
-                                App.g_db.SaveSetting("MonthlyFlyer", "0");
+                                await App.g_db.SaveSetting("MonthlyFlyer", "0");
                             }
                             int iFlyerStartDate = 0;
                             try
@@ -765,7 +766,7 @@ namespace TPSMobileApp
                                 int.TryParse(sFlyerStartDate, out iFlyerStartDate);
                             }
                             catch { }
-                            App.g_db.SaveSetting("FlyerStartDate", iFlyerStartDate.ToString());
+                            await App.g_db.SaveSetting("FlyerStartDate", iFlyerStartDate.ToString());
                             App.g_FlyerStartDate = iFlyerStartDate;
                             int iFlyerEndDate = 0;
                             try
@@ -774,7 +775,7 @@ namespace TPSMobileApp
                                 int.TryParse(sFlyerEndDate, out iFlyerEndDate);
                             }
                             catch { }
-                            App.g_db.SaveSetting("FlyerEndDate", iFlyerEndDate.ToString());
+                            await App.g_db.SaveSetting("FlyerEndDate", iFlyerEndDate.ToString());
                             App.g_FlyerEndDate = iFlyerEndDate;
                             try
                             {
@@ -786,12 +787,12 @@ namespace TPSMobileApp
                                 {
                                     App.g_IsAutoAdd1 = false;
                                 }
-                                App.g_db.SaveSetting("AutoAdd1", aUser[13]);
+                                await App.g_db.SaveSetting("AutoAdd1", aUser[13]);
                             }
                             catch
                             {
                                 App.g_IsAutoAdd1 = false;
-                                App.g_db.SaveSetting("AutoAdd1", "0");
+                                await App.g_db.SaveSetting("AutoAdd1", "0");
                             }
                             try
                             {
@@ -803,22 +804,22 @@ namespace TPSMobileApp
                                 {
                                     App.g_IsRefNoLookup = false;
                                 }
-                                App.g_db.SaveSetting("RefNoLookup", aUser[14]);
+                                await App.g_db.SaveSetting("RefNoLookup", aUser[14]);
                             }
                             catch
                             {
                                 App.g_IsRefNoLookup = false;
-                                App.g_db.SaveSetting("RefNoLookup", "0");
+                                await App.g_db.SaveSetting("RefNoLookup", "0");
                             }
                             try
                             {
                                 App.g_ShoppingCartSort = aUser[15];
-                                App.g_db.SaveSetting("ShoppingCartSort", aUser[15]);
+                                await App.g_db.SaveSetting("ShoppingCartSort", aUser[15]);
                             }
                             catch
                             {
                                 App.g_ShoppingCartSort = "A";
-                                App.g_db.SaveSetting("ShoppingCartSort", "A");
+                                await App.g_db.SaveSetting("ShoppingCartSort", "A");
                             }
                             try
                             {
@@ -830,12 +831,12 @@ namespace TPSMobileApp
                                 {
                                     App.g_IsChainManager = false;
                                 }
-                                App.g_db.SaveSetting("IsChainManager", aUser[16]);
+                                await App.g_db.SaveSetting("IsChainManager", aUser[16]);
                             }
                             catch
                             {
                                 App.g_IsChainManager = false;
-                                App.g_db.SaveSetting("IsChainManager", "0");
+                                await App.g_db.SaveSetting("IsChainManager", "0");
                             }
 
                             if (!App.g_IsSalesUser)
@@ -873,10 +874,10 @@ namespace TPSMobileApp
                                 OldCustNo = App.g_Customer.CustNo;
                                 App.g_Customer.CustNo = aUser[1];
                                 //Database db = new Database();
-                                App.g_db.SaveCustomer(App.g_Customer);
-                                App.g_db.SaveLocation(loc);
+                                await App.g_db.SaveCustomer(App.g_Customer);
+                                await App.g_db.SaveLocation(loc);
 
-                                App.g_db.RestoreCartItems(App.g_Customer.CustNo);
+                                await App.g_db.RestoreCartItems(App.g_Customer.CustNo);
                             }
                         }
                         catch (Exception ex)
@@ -892,18 +893,18 @@ namespace TPSMobileApp
                         {
                             if (App.g_UserName.ToLower() == "app_test")
                             {
-                                App.g_db.DeleteCategories();
-                                App.g_db.DeleteItems();
+                                await App.g_db.DeleteCategories();
+                                await App.g_db.DeleteItems();
                             }
                         }
 
 
                         await App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
 
-                        // await App.RefreshAll();
+                        await App.RefreshAll();
 
-                        App.g_db.SaveSetting("LoggedIn", "1");
-                        App.g_db.SaveSetting("UserName", App.g_UserName);
+                        await App.g_db.SaveSetting("LoggedIn", "1");
+                        await App.g_db.SaveSetting("UserName", App.g_UserName);
                         App.g_IsLoggedIn = true;
                         try
                         {
@@ -1013,7 +1014,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static void commService_GetSettingsCompletedAsync(String response)
+        public static async Task commService_GetSettingsCompletedAsync(String response)
         {
             Debug.WriteLine("GetSettings Complete");
 
@@ -1030,7 +1031,7 @@ namespace TPSMobileApp
                 {
                     App.g_HoldForReview = false;
                 }
-                App.g_db.SaveSetting("HoldForReview", aSettings[0]);
+                await App.g_db.SaveSetting("HoldForReview", aSettings[0]);
 
                 try
                 {
@@ -1042,12 +1043,12 @@ namespace TPSMobileApp
                     {
                         App.g_ForceSubmit = false;
                     }
-                    App.g_db.SaveSetting("ForceSubmit", aSettings[1]);
+                    await App.g_db.SaveSetting("ForceSubmit", aSettings[1]);
                 }
                 catch
                 {
                     App.g_ForceSubmit = false;
-                    App.g_db.SaveSetting("ForceSubmit", "0");
+                    await App.g_db.SaveSetting("ForceSubmit", "0");
                 }
 
                 try
@@ -1058,7 +1059,7 @@ namespace TPSMobileApp
                 {
                     App.g_QOHDisplay = "X";
                 }
-                App.g_db.SaveSetting("QOHDisplay", App.g_QOHDisplay);
+                await App.g_db.SaveSetting("QOHDisplay", App.g_QOHDisplay);
 
                 try
                 {
@@ -1070,12 +1071,12 @@ namespace TPSMobileApp
                     {
                         App.g_BlockItemsNoQOH = false;
                     }
-                    App.g_db.SaveSetting("BlockItemsNoQOH", aSettings[3]);
+                    await App.g_db.SaveSetting("BlockItemsNoQOH", aSettings[3]);
                 }
                 catch
                 {
                     App.g_BlockItemsNoQOH = false;
-                    App.g_db.SaveSetting("BlockItemsNoQOH", "0");
+                    await App.g_db.SaveSetting("BlockItemsNoQOH", "0");
                 }
 
                 try
@@ -1088,12 +1089,12 @@ namespace TPSMobileApp
                     {
                         App.g_IsMonthlyFlyer = false;
                     }
-                    App.g_db.SaveSetting("MonthlyFlyer", aSettings[4]);
+                    await App.g_db.SaveSetting("MonthlyFlyer", aSettings[4]);
                 }
                 catch
                 {
                     App.g_IsMonthlyFlyer = false;
-                    App.g_db.SaveSetting("MonthlyFlyer", "0");
+                    await App.g_db.SaveSetting("MonthlyFlyer", "0");
                 }
 
                 int iFlyerStartDate = 0;
@@ -1103,7 +1104,7 @@ namespace TPSMobileApp
                     int.TryParse(sFlyerStartDate, out iFlyerStartDate);
                 }
                 catch { }
-                App.g_db.SaveSetting("FlyerStartDate", iFlyerStartDate.ToString());
+                await App.g_db.SaveSetting("FlyerStartDate", iFlyerStartDate.ToString());
                 App.g_FlyerStartDate = iFlyerStartDate;
 
                 int iFlyerEndDate = 0;
@@ -1113,7 +1114,7 @@ namespace TPSMobileApp
                     int.TryParse(sFlyerEndDate, out iFlyerEndDate);
                 }
                 catch { }
-                App.g_db.SaveSetting("FlyerEndDate", iFlyerEndDate.ToString());
+                await App.g_db.SaveSetting("FlyerEndDate", iFlyerEndDate.ToString());
                 App.g_FlyerEndDate = iFlyerEndDate;
 
                 try
@@ -1126,12 +1127,12 @@ namespace TPSMobileApp
                     {
                         App.g_IsAutoAdd1 = false;
                     }
-                    App.g_db.SaveSetting("AutoAdd1", aSettings[8]);
+                    await App.g_db.SaveSetting("AutoAdd1", aSettings[8]);
                 }
                 catch
                 {
                     App.g_IsAutoAdd1 = false;
-                    App.g_db.SaveSetting("AutoAdd1", "0");
+                    await App.g_db.SaveSetting("AutoAdd1", "0");
                 }
 
                 try
@@ -1144,23 +1145,23 @@ namespace TPSMobileApp
                     {
                         App.g_IsRefNoLookup = false;
                     }
-                    App.g_db.SaveSetting("RefNoLookup", aSettings[9]);
+                    await App.g_db.SaveSetting("RefNoLookup", aSettings[9]);
                 }
                 catch
                 {
                     App.g_IsRefNoLookup = false;
-                    App.g_db.SaveSetting("RefNoLookup", "0");
+                    await App.g_db.SaveSetting("RefNoLookup", "0");
                 }
 
                 try
                 {
                     App.g_ShoppingCartSort = aSettings[10];
-                    App.g_db.SaveSetting("ShoppingCartSort", aSettings[10]);
+                    await App.g_db.SaveSetting("ShoppingCartSort", aSettings[10]);
                 }
                 catch
                 {
                     App.g_ShoppingCartSort = "A";
-                    App.g_db.SaveSetting("ShoppingCartSort", "A");
+                    await App.g_db.SaveSetting("ShoppingCartSort", "A");
                 }
             }
             catch (Exception ex)
@@ -1168,13 +1169,13 @@ namespace TPSMobileApp
             }
         }
 
-        public static void commService_SubmitOrderCompletedAsync(String response)
+        public static async Task commService_SubmitOrderCompletedAsync(String response)
         {
             try
             {
                 if (response == "S")
                 {
-                    App.g_db.ClearOrderCartItems();
+                    await App.g_db.ClearOrderCartItems();
                     App.g_Notes = "";
 
                     MainThread.BeginInvokeOnMainThread(async () =>
@@ -1216,7 +1217,7 @@ namespace TPSMobileApp
                         await Shell.Current.DisplayAlertAsync("Profit Order", "Order has already been submitted.", "Ok");
                     });
 
-                    App.g_db.ClearOrderCartItems();
+                    await App.g_db.ClearOrderCartItems();
                     App.g_Notes = "";
 
                     try
@@ -1249,14 +1250,14 @@ namespace TPSMobileApp
             }
         }
 
-        public static void commService_SubmitReturnCompletedAsync(String response)
+        public static async Task commService_SubmitReturnCompletedAsync(String response)
         {
             try
             {
 
                 if (response == "S")
                 {
-                    App.g_db.ClearReturnCartItems();
+                    await App.g_db.ClearReturnCartItems();
 
                     MainThread.BeginInvokeOnMainThread(async () =>
                     {
@@ -1309,7 +1310,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static void commService_GetOrderHistoryCompletedAsyncOld(String response)
+        public static async Task commService_GetOrderHistoryCompletedAsyncOld(String response)
         {
             try
             {
@@ -1319,13 +1320,13 @@ namespace TPSMobileApp
                 String[] aOrders = sOrders.Split('~');
                 List<String> lstHeader = new List<String>();
 
-                App.g_db.DeleteReorderItems();
+                await App.g_db.DeleteReorderItems();
 
                 if (aOrders.Length > 1)
                 {
                     //Database db = new Database();
 
-                    App.g_db.BeginTransaction();
+                    await App.g_db.BeginTransaction();
 
                     foreach (String s in aOrders)
                     {
@@ -1346,7 +1347,7 @@ namespace TPSMobileApp
                         }
                         if (bDeleteDetail)
                         {
-                            App.g_db.DeleteOrderDetail(aOrder[0]);
+                            await App.g_db.DeleteOrderDetail(aOrder[0]);
                             lstHeader.Add(aOrder[0]);
                         }
 
@@ -1483,10 +1484,10 @@ namespace TPSMobileApp
 
                         try
                         {
-                            App.g_db.SaveOrderHeader(oh);
-                            App.g_db.SaveOrderDetail(od);
-                            App.g_db.SaveReorderItem(ri);
-                            Item item = App.g_db.FindItem(ri.ItemNo, ri.ItemNo.ToString());
+                            await App.g_db.SaveOrderHeader(oh);
+                            await App.g_db.SaveOrderDetail(od);
+                            await App.g_db.SaveReorderItem(ri);
+                            Item item = await App.g_db.FindItem(ri.ItemNo, ri.ItemNo.ToString());
                             if (item != null)
                             {
                                 item.LastPurchDate = ri.LastPurchDate;
@@ -1495,7 +1496,7 @@ namespace TPSMobileApp
                                 item.QtyOrderDisplay = ri.QtyOrderDisplay;
                                 item.QtyLast90 = ri.QtyLast90;
                                 item.QtyLast90Display = ri.QtyLast90Display;
-                                App.g_db.UpdateItem(item);
+                                await App.g_db.UpdateItem(item);
                             }
                         }
                         catch (Exception ex)
@@ -1504,9 +1505,9 @@ namespace TPSMobileApp
                         }
                     }
 
-                    App.g_ReorderItemList = App.g_db.GetReorderItems();
+                    App.g_ReorderItemList = await App.g_db.GetReorderItems();
 
-                    App.g_db.CommitTransaction();
+                    await App.g_db.CommitTransaction();
 
                 }
 
@@ -1519,7 +1520,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static void commService_GetOrderHistoryCompletedAsync(String response)
+        public static async Task commService_GetOrderHistoryCompletedAsync(String response)
         {
             Debug.WriteLine("Get Order History Complete");
 
@@ -1532,10 +1533,10 @@ namespace TPSMobileApp
                 {
                     //Database db = new Database();
 
-                    List<OrderHeader> lstOrders = App.g_db.GetOrderHeaders();
+                    List<OrderHeader> lstOrders = await App.g_db.GetOrderHeaders();
                     List<String> lstOrderHeadersAdded = new List<String>();
 
-                    App.g_db.BeginTransaction();
+                    await App.g_db.BeginTransaction();
 
                     foreach (String s in aOrders)
                     {
@@ -1583,7 +1584,7 @@ namespace TPSMobileApp
                             oh.Items = Convert.ToInt32(aOrder[4]);
                             oh.Pieces = Convert.ToInt32(aOrder[5]);
 
-                            App.g_db.SaveOrderHeader(oh);
+                            await App.g_db.SaveOrderHeader(oh);
                         }
 
                         OrderDetail od = new OrderDetail();
@@ -1642,8 +1643,8 @@ namespace TPSMobileApp
 
                         try
                         {
-                            App.g_db.SaveOrderDetail(od);
-                            //App.g_db.SaveReorderItem(ri);
+                            await App.g_db.SaveOrderDetail(od);
+                            //await App.g_db.SaveReorderItem(ri);
                         }
                         catch (Exception ex)
                         {
@@ -1651,11 +1652,11 @@ namespace TPSMobileApp
                         }
                     }
 
-                    App.g_db.UpdateOrderDetailLastPurch();
+                    await App.g_db.UpdateOrderDetailLastPurch();
 
-                    App.g_ReorderItemList = App.g_db.GetReorderItems();
+                    App.g_ReorderItemList = await App.g_db.GetReorderItems();
 
-                    App.g_db.CommitTransaction();
+                    await App.g_db.CommitTransaction();
                 }
             }
             catch (Exception ex)
@@ -1663,7 +1664,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static void commService_GetInvoicePDFCompletedAsync(String response)
+        public static async Task commService_GetInvoicePDFCompletedAsync(String response)
         {
             Debug.WriteLine("Get Invoice PDF Complete");
 
@@ -1681,7 +1682,7 @@ namespace TPSMobileApp
             try
             {
                 Console.WriteLine("Get Salesperson Customers returned");
-                
+
                 String sCustomers = response;
                 String[] aCustomers = sCustomers.Split('~');
                 ConcurrentBag<SalesCustomer> lstCustomer = new ConcurrentBag<SalesCustomer>();
@@ -1707,8 +1708,8 @@ namespace TPSMobileApp
                         {
                             c.ARBalance = GetDecimalValue("SalesCustomer.ARBalance", aCust[6], 0);
                         }
-                        catch(Exception ex) 
-                        { 
+                        catch (Exception ex)
+                        {
                             Console.WriteLine("Error occurred while parsing ARBalance: " + ex.Message);
                         }
                         c.ARBalanceDisplay = string.Format("{0:C2}", c.ARBalance);
@@ -1721,7 +1722,7 @@ namespace TPSMobileApp
                                 c.CreditLimit = GetDecimalValue("SalesCustomer.CreditLimit", creditLimitStr, 0);
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             Console.WriteLine("Error occurred while parsing CreditLimit: " + ex.Message);
                         }
@@ -1759,7 +1760,7 @@ namespace TPSMobileApp
                                 }
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             Console.WriteLine("Error occurred while parsing LastPaymentDate: " + ex.Message);
                         }
@@ -1784,7 +1785,7 @@ namespace TPSMobileApp
                                 }
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             Console.WriteLine("Error occurred while parsing LastOrderDate: " + ex.Message);
                         }
@@ -1794,16 +1795,16 @@ namespace TPSMobileApp
                             c.ShippingFee = GetDecimalValue("SalesCustomer.ShippingFee", aCust[16], 0);
                             c.MinOrderQty = GetDecimalValue("SalesCustomer.MinOrderQty", aCust[17], 0);
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             Console.WriteLine("Error occurred while parsing min order values: " + ex.Message);
                         }
                         lstCustomer.Add(c);
                     });
-                    App.g_db.BeginTransaction();
-                    App.g_db.DeleteAllSalesCustomer();
-                    App.g_db.SaveSalesCustomer(lstCustomer.ToList());
-                    App.g_db.CommitTransaction();
+                    await App.g_db.BeginTransaction();
+                    await App.g_db.DeleteAllSalesCustomer();
+                    await App.g_db.SaveSalesCustomer(lstCustomer.ToList());
+                    await App.g_db.CommitTransaction();
                     Console.WriteLine("Saving SalesPerson Customers");
                 }
             }
@@ -1813,7 +1814,7 @@ namespace TPSMobileApp
             }
         }
 
-        public static void commService_GetFlyerItemsPDFCompleted(String response)
+        public static async Task commService_GetFlyerItemsPDFCompleted(String response)
         {
             Debug.WriteLine("GetFlyerItemsPDFCompleted");
 
@@ -1827,9 +1828,9 @@ namespace TPSMobileApp
                 {
                     //Database db = new Database();
 
-                    App.g_db.BeginTransaction();
+                    await App.g_db.BeginTransaction();
 
-                    App.g_db.ClearFlyerItems();
+                    await App.g_db.ClearFlyerItems();
 
                     foreach (String s in aItems)
                     {
@@ -1859,7 +1860,7 @@ namespace TPSMobileApp
 
                         try
                         {
-                            App.g_db.UpdateItemFlyerInfo(item);
+                            await App.g_db.UpdateItemFlyerInfo(item);
                         }
                         catch (Exception ex)
                         {
@@ -1867,7 +1868,7 @@ namespace TPSMobileApp
                         }
                     }
 
-                    App.g_db.CommitTransaction();
+                    await App.g_db.CommitTransaction();
                 }
 
                 if (sFlyerInfo[1].Length > 0)
@@ -1891,15 +1892,15 @@ namespace TPSMobileApp
             }
         }
 
-        public static void commService_ValidateUserActiveCompletedAsync(String response)
+        public static async Task commService_ValidateUserActiveCompletedAsync(String response)
         {
             String sUser = response;
             if (sUser == "0")
             {
                 try
                 {
-                    App.g_db.SaveSetting("LoggedIn", "0");
-                    App.g_db.SaveSetting("UserName", App.g_UserName);
+                    await App.g_db.SaveSetting("LoggedIn", "0");
+                    await App.g_db.SaveSetting("UserName", App.g_UserName);
 
                     try
                     {
@@ -1959,12 +1960,12 @@ namespace TPSMobileApp
 
             return DateTime.MinValue;
         }
-        public static int GetIntegerValue(String key,String value,int defaultValue)
+        public static int GetIntegerValue(String key, String value, int defaultValue)
         {
             try
             {
                 string sizeValue = value.Trim();
-                if(sizeValue.Length>0)
+                if (sizeValue.Length > 0)
                 {
                     string digits = new string(sizeValue
                     .TakeWhile(char.IsDigit)
@@ -1979,26 +1980,26 @@ namespace TPSMobileApp
                     return defaultValue;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Console.WriteLine(key+"Converting string to int"+e.Message);
+                Console.WriteLine(key + "Converting string to int" + e.Message);
                 return defaultValue;
             }
         }
 
-        public static Decimal GetDecimalValue(String key,String value,Decimal defaultValue)
+        public static Decimal GetDecimalValue(String key, String value, Decimal defaultValue)
         {
             try
             {
                 string sizeValue = value.Trim();
-                if(sizeValue.Length != 0)
+                if (sizeValue.Length != 0)
                     return Convert.ToDecimal(sizeValue);
                 else
                     return defaultValue;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Console.WriteLine(key+"Converting string to Decimal "+e.Message);
+                Console.WriteLine(key + "Converting string to Decimal " + e.Message);
                 return defaultValue;
             }
         }

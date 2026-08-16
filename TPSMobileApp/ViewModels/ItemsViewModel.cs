@@ -29,7 +29,7 @@ namespace TPSMobileApp.ViewModels
                 //Database db = new Database();
 
                 //Items.Clear();
-                //var items = App.g_db.SearchItems("ABC", App.g_Category, App.g_ScanBarcode, App.g_Subcategory);
+                //var items = await App.g_db.SearchItems("ABC", App.g_Category, App.g_ScanBarcode, App.g_Subcategory);
                 //foreach (var item in items)
                 //{
                 //    Items.Add(item);
