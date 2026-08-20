@@ -329,7 +329,7 @@
                         <TapGestureRecognizer Tapped="OnNewItemsAll"/>
                     </Grid.GestureRecognizers>
                 </Grid>
-                <ScrollView>
+                <ScrollView HeightRequest="200">
                     <CollectionView
                         x:Name="TopCategoriesCollectionView"
                         Margin="10,0,0,0"
@@ -376,7 +376,7 @@
                 </Border.StrokeShape>
 
                 <VerticalStackLayout Spacing="15"
-                        VerticalOptions="Center">
+                                     VerticalOptions="Center">
                     <ActivityIndicator IsRunning="True"
                                        Color="Blue"
                                        HeightRequest="40"
