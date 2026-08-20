@@ -28,10 +28,10 @@ namespace TPSMobileApp
                 }
                 try
                 {
-                    await App.g_db.BeginTransaction();
+
                     await App.g_db.DeleteBannersAsync();
                     await App.g_db.SaveBannerAsync(lstBanners.ToList());
-                    await App.g_db.CommitTransaction();
+
                     Console.WriteLine("Get Banners returned Completed");
                 }
                 catch (Exception ex)
@@ -91,12 +91,12 @@ namespace TPSMobileApp
                     });
                     try
                     {
-                        await App.g_db.BeginTransaction();
+
                         await App.g_db.DeleteAllCategory();
                         await App.g_db.DeleteAllSubcategory();
                         await App.g_db.SaveCategory(lstCategories.ToList());
                         await App.g_db.SaveSubcategory(lstSubcategories.ToList());
-                        await App.g_db.CommitTransaction();
+
                         Console.WriteLine("Get Categories and Subcategories returned Completed");
                         App.g_HomePageCategoryList = await App.g_db.GetHomePageCategories();
                     }
@@ -208,14 +208,14 @@ namespace TPSMobileApp
                 }
                 try
                 {
-                    await App.g_db.BeginTransaction();
+
                     await App.g_db.DeleteAllCategory();
                     await App.g_db.DeleteAllSubcategory();
                     await App.g_db.DeleteAllSubsubcategory();
                     await App.g_db.SaveCategory(lstCategories.ToList());
                     await App.g_db.SaveSubcategory(lstSubcategories.ToList());
                     await App.g_db.SaveSubsubcategory(lstSubsubcategories.ToList());
-                    await App.g_db.CommitTransaction();
+
                     Console.WriteLine("Get Categories Subcategories and Subsubcategories returned Completed");
                     App.g_HomePageCategoryList = await App.g_db.GetHomePageCategories();
                 }
@@ -457,7 +457,7 @@ namespace TPSMobileApp
 
                     try
                     {
-                        // await App.g_db.BeginTransaction();
+                        // 
                         await App.g_db.InsertDiscontinuedItems();
                         await App.g_db.DeleteItems();
                         await App.g_db.SaveItems(itemsToSave.ToList());
@@ -483,7 +483,7 @@ namespace TPSMobileApp
 
                         App.g_ItemList = await App.g_db.GetItems();
 
-                        // await App.g_db.CommitTransaction();
+                        // 
 
                         Console.WriteLine($"Finalize + commit: {sw.ElapsedMilliseconds}ms");
 
@@ -522,7 +522,7 @@ namespace TPSMobileApp
 
                 if (aItems.Length > 1)
                 {
-                    await App.g_db.BeginTransaction();
+
 
                     foreach (String s in aItems)
                     {
@@ -553,7 +553,7 @@ namespace TPSMobileApp
                         }
                     }
 
-                    await App.g_db.CommitTransaction();
+
                 }
             }
             catch (Exception ex)
@@ -581,7 +581,7 @@ namespace TPSMobileApp
 
                 if (aItems.Length > 1)
                 {
-                    await App.g_db.BeginTransaction();
+
 
                     foreach (String s in aItems)
                     {
@@ -612,7 +612,7 @@ namespace TPSMobileApp
                         }
                     }
 
-                    await App.g_db.CommitTransaction();
+
                 }
             }
             catch (Exception ex)
@@ -1326,7 +1326,7 @@ namespace TPSMobileApp
                 {
                     //Database db = new Database();
 
-                    await App.g_db.BeginTransaction();
+
 
                     foreach (String s in aOrders)
                     {
@@ -1507,7 +1507,7 @@ namespace TPSMobileApp
 
                     App.g_ReorderItemList = await App.g_db.GetReorderItems();
 
-                    await App.g_db.CommitTransaction();
+
 
                 }
 
@@ -1536,7 +1536,7 @@ namespace TPSMobileApp
                     List<OrderHeader> lstOrders = await App.g_db.GetOrderHeaders();
                     List<String> lstOrderHeadersAdded = new List<String>();
 
-                    await App.g_db.BeginTransaction();
+
 
                     foreach (String s in aOrders)
                     {
@@ -1656,7 +1656,7 @@ namespace TPSMobileApp
 
                     App.g_ReorderItemList = await App.g_db.GetReorderItems();
 
-                    await App.g_db.CommitTransaction();
+
                 }
             }
             catch (Exception ex)
@@ -1739,6 +1739,7 @@ namespace TPSMobileApp
                         c.Email = aCust[10];
                         // invoice multiplier aCust[11]
                         c.TermsDesc = aCust[12];
+
                         try
                         {
                             if (aCust[13] == "0")
@@ -1747,17 +1748,7 @@ namespace TPSMobileApp
                             }
                             else
                             {
-                                string rawDate = aCust[17];
-                                if (!string.IsNullOrEmpty(rawDate) && rawDate.Length >= 7)
-                                {
-                                    c.LastOrderDate = rawDate.Substring(3, 2) + "/";
-                                    c.LastOrderDate += rawDate.Substring(5, 2) + "/";
-                                    c.LastOrderDate += rawDate.Substring(1, 2);
-                                }
-                                else
-                                {
-                                    c.LastOrderDate = "N/A"; // or some default/placeholder
-                                }
+                                c.LastOrderDate = FormatLastOrderDate(aCust[13]);
                             }
                         }
                         catch (Exception ex)
@@ -1766,23 +1757,14 @@ namespace TPSMobileApp
                         }
                         try
                         {
+
                             if (aCust[14] == "0")
                             {
                                 c.LastOrderDate = "N/A";
                             }
                             else
                             {
-                                string rawDate = aCust[17];
-                                if (!string.IsNullOrEmpty(rawDate) && rawDate.Length >= 7)
-                                {
-                                    c.LastOrderDate = rawDate.Substring(3, 2) + "/";
-                                    c.LastOrderDate += rawDate.Substring(5, 2) + "/";
-                                    c.LastOrderDate += rawDate.Substring(1, 2);
-                                }
-                                else
-                                {
-                                    c.LastOrderDate = "N/A"; // or some default/placeholder
-                                }
+                                c.LastOrderDate = FormatLastOrderDate(aCust[14]);
                             }
                         }
                         catch (Exception ex)
@@ -1801,10 +1783,9 @@ namespace TPSMobileApp
                         }
                         lstCustomer.Add(c);
                     });
-                    await App.g_db.BeginTransaction();
+
                     await App.g_db.DeleteAllSalesCustomer();
                     await App.g_db.SaveSalesCustomer(lstCustomer.ToList());
-                    await App.g_db.CommitTransaction();
                     Console.WriteLine("Saving SalesPerson Customers");
                 }
             }
@@ -1828,7 +1809,7 @@ namespace TPSMobileApp
                 {
                     //Database db = new Database();
 
-                    await App.g_db.BeginTransaction();
+
 
                     await App.g_db.ClearFlyerItems();
 
@@ -1868,7 +1849,7 @@ namespace TPSMobileApp
                         }
                     }
 
-                    await App.g_db.CommitTransaction();
+
                 }
 
                 if (sFlyerInfo[1].Length > 0)
@@ -2002,6 +1983,17 @@ namespace TPSMobileApp
                 Console.WriteLine(key + "Converting string to Decimal " + e.Message);
                 return defaultValue;
             }
+        }
+        private static string FormatLastOrderDate(string rawDate)
+        {
+            if (string.IsNullOrWhiteSpace(rawDate) || rawDate.Length < 7)
+            {
+                return "N/A";
+            }
+            string date = $"{rawDate[3]}{rawDate[4]}/" +
+                   $"{rawDate[5]}{rawDate[6]}/" +
+                   $"{rawDate[1]}{rawDate[2]}";
+            return date;
         }
     }
 }

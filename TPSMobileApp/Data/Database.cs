@@ -45,21 +45,6 @@ namespace TPSMobileApp
             return database;
         }
 
-        public async Task BeginTransaction()
-        {
-            // _database.BeginTransaction();
-        }
-
-        public async Task CommitTransaction()
-        {
-            // _database.Commit();
-        }
-
-        public async Task RollbackTransaction()
-        {
-            // _database.Rollback();
-        }
-
         public async Task<List<Item>> SearchItems(String sSearch, Category category, String sBarcode, Subcategory subcategory, Subsubcategory subsubcategory)
         {
             Decimal dItemNo = 0;
@@ -478,10 +463,17 @@ namespace TPSMobileApp
             return _database.Delete(server);
         }
 
-        public async Task<int> SaveItems(List<Item> items)
+        public async Task SaveItems(List<Item> items)
         {
-            // false = don't self-open a transaction; caller already has one open via BeginTransaction()
-            return _database.InsertAll(items, runInTransaction: false);
+            _database.RunInTransaction(() =>
+            {
+                _database.Execute("delete from Item");
+
+                if (items != null && items.Count > 0)
+                {
+                    _database.InsertAll(items);
+                }
+            });
         }
 
         public async Task DeleteDiscontinuedItems(List<int> itemNos)
@@ -508,23 +500,6 @@ namespace TPSMobileApp
         public async Task<int> SaveItemReplace(Item item)
         {
             return _database.InsertOrReplace(item);
-            /*
-            Item _item = FindItem(item.ItemNo);
-
-            if (_item == null)
-            {
-                return _database.Insert(item);
-            }
-            else
-            {
-                item.QtyOrder = _item.QtyOrder;
-                _database.Update(item);
-
-                UpdateItemPriceOrder(item.ItemNo);
-
-                return 1;
-            }
-            */
         }
 
         public async Task<int> UpdateItem(Item item)
@@ -668,14 +643,9 @@ namespace TPSMobileApp
 
         public async Task<int> UpdateItemQOH(int iItem, int iQOH)
         {
-            while (_database.IsInTransaction)
-            {
-                SpinWait.SpinUntil(() => !_database.IsInTransaction, 50); // Checks every 50ms
-            }
             _database.Execute("update Item set QOH = " + iQOH.ToString() + " where ItemNo = " + iItem.ToString());
             _database.Execute("update ReorderItem set QOH = " + iQOH.ToString() + " where ItemNo = " + iItem.ToString());
             _database.Execute("update OrderDetail set QOH = " + iQOH.ToString() + " where ItemNo = " + iItem.ToString());
-
             return 1;
         }
 
@@ -794,9 +764,17 @@ namespace TPSMobileApp
             return _database.DeleteAll<SalesCustomer>();
         }
 
-        public async Task<int> SaveSalesCustomer(List<SalesCustomer> cust)
+        public async Task SaveSalesCustomer(List<SalesCustomer> cust)
         {
-            return _database.InsertAll(cust);
+            _database.RunInTransaction(() =>
+            {
+                _database.DeleteAll<SalesCustomer>();
+
+                if (cust != null && cust.Count > 0)
+                {
+                    _database.InsertAll(cust);
+                }
+            });
         }
 
         public async Task<List<Category>> GetHomePageCategories()
@@ -818,11 +796,17 @@ namespace TPSMobileApp
             return _database.DeleteAll<Category>();
         }
 
-        public async Task<int> SaveCategory(List<Category> category)
+        public async Task SaveCategory(List<Category> category)
         {
-            int i = _database.InsertAll(category);
-            return i;
+            _database.RunInTransaction(() =>
+            {
+                _database.DeleteAll<Category>();
 
+                if (category != null && category.Count > 0)
+                {
+                    _database.InsertAll(category);
+                }
+            });
         }
 
         public async Task<int> DeleteCategories()
@@ -848,11 +832,17 @@ namespace TPSMobileApp
 
         }
 
-        public async Task<int> SaveSubcategory(List<Subcategory> subcategory)
+        public async Task SaveSubcategory(List<Subcategory> subcategory)
         {
-            int i = _database.InsertAll(subcategory);
-            return i;
+            _database.RunInTransaction(() =>
+            {
+                _database.DeleteAll<Subcategory>();
 
+                if (subcategory != null && subcategory.Count > 0)
+                {
+                    _database.InsertAll(subcategory);
+                }
+            });
         }
 
         public async Task<int> GetSubcategoryCount(string sCategoryCode)
@@ -907,11 +897,17 @@ namespace TPSMobileApp
 
         }
 
-        public async Task<int> SaveSubsubcategory(List<Subsubcategory> subsubcategory)
+        public async Task SaveSubsubcategory(List<Subsubcategory> Subsubcategory)
         {
-            int i = _database.InsertAll(subsubcategory);
-            return i;
+            _database.RunInTransaction(() =>
+            {
+                _database.DeleteAll<Subsubcategory>();
 
+                if (Subsubcategory != null && Subsubcategory.Count > 0)
+                {
+                    _database.InsertAll(Subsubcategory);
+                }
+            });
         }
 
         public async Task<int> DeleteSubsubcategory(Subsubcategory subsubcategory)
@@ -938,11 +934,17 @@ namespace TPSMobileApp
         }
 
 
-        public async Task<int> SaveBannerAsync(List<Banner> banner)
+        public async Task SaveBannerAsync(List<Banner> banner)
         {
+            _database.RunInTransaction(() =>
+            {
+                _database.Execute("delete from Banner");
 
-
-            return _database.InsertAll(banner);
+                if (banner != null && banner.Count > 0)
+                {
+                    _database.InsertAll(banner);
+                }
+            });
         }
 
 

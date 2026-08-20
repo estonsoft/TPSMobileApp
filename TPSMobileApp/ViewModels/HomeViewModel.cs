@@ -4,7 +4,7 @@ namespace TPSMobileApp.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
-         private List<Category> _categories = new();
+        private List<Category> _categories = new();
         public List<Category> categories
         {
             get => _categories;
@@ -31,12 +31,14 @@ namespace TPSMobileApp.ViewModels
 
         public ICommand OpenWebCommand { get; }
 
-        public async void LoadCategories()
+        public ICommand RefreshDataCommand { get; }
+
+        public async Task LoadCategories()
         {
             try
             {
                 // 1. Fetch data on a background thread pool worker
-                var topcategories =  await App.g_db.GetHomePageCategories();
+                var topcategories = await App.g_db.GetHomePageCategories();
                 categories = topcategories;
             }
             catch (Exception ex)

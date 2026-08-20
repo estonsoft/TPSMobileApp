@@ -7,7 +7,7 @@ namespace TPSMobileApp.Views
     {
         public HomePage()
         {
-            InitializeComponent();          
+            InitializeComponent();
             InitializeBannersAsync();
         }
 
@@ -77,7 +77,7 @@ namespace TPSMobileApp.Views
         {
             base.OnAppearing();
             App.g_HomePage = this;
-            LoadApp(); 
+            LoadApp();
         }
 
         private async void LoadApp()
@@ -100,7 +100,7 @@ namespace TPSMobileApp.Views
                 return;
             }
 
-            
+
             if (App.g_Customer.Status == "3")
             {
                 await Shell.Current.DisplayAlertAsync("Profit Order", "Registration request has been completed.  Please check your email for instructions.", "Ok");
@@ -130,7 +130,7 @@ namespace TPSMobileApp.Views
             lblUserName.Text = App.g_Customer.CompanyName;
         }
 
-        
+
         async void CategoryTapped(String Code, String Description)
         {
             Category cat = new Category();
@@ -221,9 +221,10 @@ namespace TPSMobileApp.Views
         }
         async void OnRefresh(object sender, EventArgs e)
         {
-            //Database db = new Database();
             LoadingIndicator.IsVisible = true;
             await App.g_App.LoadAppData();
+            HomeViewModel homeViewModel = (HomeViewModel)BindingContext;
+            await homeViewModel.LoadCategories();
             LoadingIndicator.IsVisible = false;
         }
 
