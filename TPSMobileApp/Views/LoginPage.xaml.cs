@@ -42,7 +42,7 @@ namespace TPSMobileApp.Views
                 }
             }
             catch (Exception)
-            { 
+            {
             }
             if (App.g_Customer.RememberMe)
             {
@@ -53,10 +53,11 @@ namespace TPSMobileApp.Views
 
         public void ShowAnimation()
         {
-            User.IsEnabled  = false;
+            User.IsEnabled = false;
             Password.IsEnabled = false;
             buttonLogin.IsEnabled = false;
-            waitText.IsVisible = true;
+            LoadingAlert.IsVisible = true;
+            LoadingAlert.IsEnabled = true;
         }
 
         public void HideAnimation()
@@ -65,7 +66,8 @@ namespace TPSMobileApp.Views
             User.IsEnabled = true;
             Password.IsEnabled = true;
             buttonLogin.IsEnabled = true;
-            waitText.IsVisible = false;
+            LoadingAlert.IsVisible = false;
+            LoadingAlert.IsEnabled = false;
         }
 
         protected override bool OnBackButtonPressed()
@@ -116,6 +118,22 @@ namespace TPSMobileApp.Views
                     img.Source = "missing_item.jpg";
                 }
             }
+        }
+
+        public void UpdateSyncProgress(
+            double current,
+            string status)
+        {
+            int total = 100;
+
+            var progress = (double)current / total;
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                LoadingAlert.ProgressValue = progress;
+                LoadingAlert.ProgressPercentage = (int)(progress * 100);
+                LoadingAlert.SyncStatus = status;
+            });
         }
     }
 }

@@ -20,7 +20,7 @@
                 FontSize="16"
                 Text="Profit Order"
                 TextColor="White"
-                VerticalTextAlignment="Center" />
+                VerticalTextAlignment="Center"/>
         </StackLayout>
     </NavigationPage.TitleView>
 
@@ -32,22 +32,24 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <Grid Margin="{OnPlatform iOS='0,50,0,0', Android='0'}" SafeAreaEdges="{OnPlatform iOS='None', Android='All'}">
+        <Grid Margin="{OnPlatform iOS='0,50,0,0', Android='0'}"
+              SafeAreaEdges="{OnPlatform iOS='None', Android='All'}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <controls:CustomHeader x:Name="CustomHeader" Grid.Row="0" />
+            <controls:CustomHeader x:Name="CustomHeader"
+                                   Grid.Row="0"/>
             <StackLayout Grid.Row="1">
                 <BoxView
                     BackgroundColor="gray"
                     HeightRequest="3"
                     HorizontalOptions="Fill"
                     VerticalOptions="Fill"
-                    Color="lightgray" />
+                    Color="lightgray"/>
                 <StackLayout
                     Margin="0,0,0,-5"
                     Orientation="Vertical"
@@ -67,7 +69,7 @@
                             Placeholder="Search Customers"
                             PlaceholderColor="Gray"
                             VerticalOptions="Center"
-                            WidthRequest="200" />
+                            WidthRequest="200"/>
                         <Label
                             Margin="5,6.5,0,0"
                             FontAttributes="Bold"
@@ -78,7 +80,7 @@
                             TextColor="RoyalBlue"
                             VerticalOptions="Center">
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnTappedSearch" />
+                                <TapGestureRecognizer Tapped="OnTappedSearch"/>
                             </Label.GestureRecognizers>
                         </Label>
                     </StackLayout>
@@ -93,7 +95,7 @@
                             CheckedChanged="PendingOrdersCheckbox_CheckedChanged"
                             HorizontalOptions="Center"
                             VerticalOptions="Center"
-                            Color="blue" />
+                            Color="blue"/>
                         <Label
                             x:Name="PendingOrdersLabel"
                             Margin="-3,-2,0,0"
@@ -101,7 +103,7 @@
                             HorizontalOptions="Start"
                             Text="Has Pending Orders"
                             TextColor="black"
-                            VerticalOptions="Center" />
+                            VerticalOptions="Center"/>
                         <Button
                             Margin="20,0,0,0"
                             Padding="0,0,0,0"
@@ -115,27 +117,15 @@
                             IsVisible="false"
                             Text="  Submit All  "
                             TextColor="White"
-                            TextTransform="None" />
+                            TextTransform="None"/>
                     </StackLayout>
                     <BoxView
                         BackgroundColor="gray"
                         HeightRequest="3"
                         HorizontalOptions="Fill"
                         VerticalOptions="Fill"
-                        Color="lightgray" />
+                        Color="lightgray"/>
                 </StackLayout>
-                <Label
-                    x:Name="showLoading"
-                    Grid.Row="2"
-                    Padding="50"
-                    Background="Yellow"
-                    FontSize="30"
-                    HorizontalOptions="Center"
-                    IsVisible="Collapse"
-                    Text="Please Wait customer change is in progress..."
-                    TextColor="Blue"
-                    VerticalOptions="Center" />
-
             </StackLayout>
 
             <CollectionView
@@ -151,10 +141,11 @@
                                 Orientation="Vertical">
 
                                 <controls:CustomerStackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnTappedCustomer" />
+                                    <TapGestureRecognizer Tapped="OnTappedCustomer"/>
                                 </controls:CustomerStackLayout.GestureRecognizers>
 
-                                <VerticalStackLayout Margin="10" Spacing="4">
+                                <VerticalStackLayout Margin="10"
+                                                     Spacing="4">
 
                                     <!--  Customer Number + Company  -->
                                     <HorizontalStackLayout Spacing="10">
@@ -162,84 +153,84 @@
                                             FontAttributes="Bold"
                                             FontSize="12"
                                             Text="{Binding CustNo}"
-                                            TextColor="RoyalBlue" />
+                                            TextColor="RoyalBlue"/>
 
                                         <Label
                                             FontAttributes="Bold"
                                             FontSize="12"
                                             Text="{Binding CompanyName}"
-                                            TextColor="RoyalBlue" />
+                                            TextColor="RoyalBlue"/>
                                     </HorizontalStackLayout>
 
                                     <!--  Address  -->
                                     <Label
                                         FontSize="11"
                                         Text="{Binding Address1}"
-                                        TextColor="Black" />
+                                        TextColor="Black"/>
 
                                     <Label
                                         FontSize="11"
                                         Text="{Binding CityStateZip}"
-                                        TextColor="Black" />
+                                        TextColor="Black"/>
 
                                     <Label
                                         FontSize="11"
                                         Text="{Binding Phone}"
-                                        TextColor="Black" />
+                                        TextColor="Black"/>
 
                                     <!--  Credit Information  -->
                                     <Grid ColumnDefinitions="80,70,40,90,*">
                                         <Label
                                             Grid.Column="0"
                                             FontSize="11"
-                                            Text="Credit Limit" />
+                                            Text="Credit Limit"/>
 
                                         <Label
                                             Grid.Column="1"
                                             Margin="5,0,0,0"
                                             FontAttributes="Bold"
                                             FontSize="11"
-                                            Text="{Binding CreditLimitDisplay}" />
+                                            Text="{Binding CreditLimitDisplay}"/>
 
                                         <Label
                                             Grid.Column="2"
                                             FontSize="11"
-                                            Text="Due" />
+                                            Text="Due"/>
 
                                         <Label
                                             Grid.Column="3"
                                             FontAttributes="Bold"
                                             FontSize="11"
-                                            Text="{Binding ARBalanceDisplay}" />
+                                            Text="{Binding ARBalanceDisplay}"/>
                                     </Grid>
                                     <Label
                                         FontAttributes="Bold"
                                         FontSize="11"
-                                        Text="{Binding TermsDesc}" />
+                                        Text="{Binding TermsDesc}"/>
                                     <!--  Last Payment + Last Order  -->
                                     <Grid ColumnDefinitions="90,90,80,*">
 
                                         <Label
                                             Grid.Column="0"
                                             FontSize="11"
-                                            Text="Last Payment" />
+                                            Text="Last Payment"/>
 
                                         <Label
                                             Grid.Column="1"
                                             FontAttributes="Bold"
                                             FontSize="11"
-                                            Text="{Binding LastPaymentDate}" />
+                                            Text="{Binding LastPaymentDate}"/>
 
                                         <Label
                                             Grid.Column="2"
                                             FontSize="11"
-                                            Text="Last Order" />
+                                            Text="Last Order"/>
 
                                         <Label
                                             Grid.Column="3"
                                             FontAttributes="Bold"
                                             FontSize="11"
-                                            Text="{Binding LastOrderDate}" />
+                                            Text="{Binding LastOrderDate}"/>
                                     </Grid>
 
                                     <!--  Shopping Cart  -->
@@ -253,14 +244,15 @@
                                             FontSize="14"
                                             Text="&#xF07A;"
                                             TextColor="RoyalBlue"
-                                            VerticalOptions="Center" />
+                                            VerticalOptions="Center"/>
 
                                         <Label
                                             FontAttributes="Bold"
                                             FontSize="11"
-                                            Text="{Binding ShoppingCartItemsDisplay}" />
+                                            Text="{Binding ShoppingCartItemsDisplay}"/>
 
-                                        <Label FontSize="11" Text="Items" />
+                                        <Label FontSize="11"
+                                               Text="Items"/>
                                     </HorizontalStackLayout>
 
                                 </VerticalStackLayout>
@@ -273,13 +265,24 @@
                                 Grid.Row="1"
                                 BackgroundColor="LightGray"
                                 HeightRequest="3"
-                                HorizontalOptions="Fill" />
+                                HorizontalOptions="Fill"/>
                         </Grid>
 
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <controls:CustomToolbar x:Name="CustomToolbar" Grid.Row="3" />
+            <controls:CustomToolbar x:Name="CustomToolbar"
+                                    Grid.Row="3"/>
+            <controls:CustomAlertDialog
+                x:Name="LoadingAlert"
+                Title="Updating Customer"
+                Grid.Row="0"
+                ProgressPercentage="0"
+                ProgressValue="0"
+                Grid.RowSpan="3"
+                IsLoading="True"
+                IsVisible="False"
+                Message="Please wait while we refreshing the App Data…"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

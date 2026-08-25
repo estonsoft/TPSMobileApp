@@ -78,14 +78,14 @@ namespace TPSMobileApp
 
         public async void Logout()
         {
-            App.g_db.SaveSetting("LoggedIn", "0");
+            await App.g_db.SaveSetting("LoggedIn", "0");
             App.g_IsLoggedIn = false;
             await App.g_Shell.GoToLogin();
         }
 
         public async Task<int> GoToHome()
         {
-            App.g_HeaderTitle = "Profit Order";            
+            App.g_HeaderTitle = "Profit Order";
             try
             {
                 await Current.GoToAsync("//HomePage");
@@ -134,7 +134,7 @@ namespace TPSMobileApp
         }
 
         public async Task<int> GoToSplash()
-        {   
+        {
             App.g_HeaderTitle = "Settings";
             await Current.GoToAsync("//HomePage/SplashScreen");
             return 0;

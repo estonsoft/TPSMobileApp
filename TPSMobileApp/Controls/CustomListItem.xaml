@@ -29,7 +29,7 @@
                 Grid.Column="0"
                 Margin="10"
                 Aspect="AspectFit"
-                ErrorPlaceholder="logoicon.png"
+                ErrorPlaceholder="missing_item.jpg"
                 HeightRequest="90"
                 RetryCount="0"
                 CacheType="All"
@@ -55,11 +55,11 @@
                     MaxLines="1"
                     Text="{Binding ItemNoDisplayUPC}"/>
                 <Label FontSize="14"
-                        Text="{Binding CategoryDesc}"/>
+                       Text="{Binding CategoryDesc}"/>
 
                 <!--  STOCK  -->
                 <HorizontalStackLayout IsVisible="{Binding IsStockRowVisible}"
-                        Spacing="4">
+                                       Spacing="4">
                     <Label
                         FontSize="14"
                         IsVisible="{Binding IsQOHVisible}"
@@ -179,13 +179,13 @@
                     Text="Last Purch"
                     TextColor="Gray"/>
                 <Label FontSize="10"
-                        Text="{Binding LastPurchDateDisplay}"/>
+                       Text="{Binding LastPurchDateDisplay}"/>
                 <Label
                     FontSize="10"
                     Text="Qty"
                     TextColor="Gray"/>
                 <Label FontSize="10"
-                        Text="{Binding QtyLastOrder}"/>
+                       Text="{Binding QtyLastOrder}"/>
             </HorizontalStackLayout>
         </Grid>
         <!--  DIVIDER  -->

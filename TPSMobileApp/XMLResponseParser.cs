@@ -505,120 +505,132 @@ namespace TPSMobileApp
         }
 
 
-        public static async Task commService_GetItemQOHCompletedAsync(String response)
+        public static async Task commService_GetItemQOHCompletedAsync(string response)
         {
             try
             {
-                //if (response == "X")
-                //{
-                //    App.g_Shell.Logout();
-                //    return;
-                //}
+                if (string.IsNullOrWhiteSpace(response))
+                    return;
 
-                String sItems = response;
-                String[] aItems = sItems.Split('~');
-                int iItemNo;
-                int iQOH;
+                // if (response == "X")
+                // {
+                //     App.g_Shell.Logout();
+                //     return;
+                // }
 
-                if (aItems.Length > 1)
+                string[] aItems = response.Split(
+                    '~',
+                    StringSplitOptions.RemoveEmptyEntries);
+
+                if (aItems.Length == 0)
+                    return;
+
+                var qohUpdates = new List<(int ItemNo, int QOH)>(aItems.Length);
+
+                foreach (string item in aItems)
                 {
+                    if (string.IsNullOrWhiteSpace(item))
+                        continue;
 
+                    string[] aItem = item.Split('|');
 
-                    foreach (String s in aItems)
-                    {
-                        String[] aItem = s.Split("|");
+                    if (aItem.Length < 2)
+                        continue;
 
-                        if (aItem.Count() < 2)
-                        {
-                            continue;
-                        }
+                    int itemNo = GetIntegerValue(
+                        "Item Number",
+                        aItem[0],
+                        0);
 
-                        try
-                        {
-                            iItemNo = Convert.ToInt32(aItem[0]);
-                            iQOH = Convert.ToInt32(aItem[1]);
-                        }
-                        catch (Exception ex)
-                        {
-                            continue;
-                        }
+                    int qoh = GetIntegerValue(
+                        "QOH",
+                        aItem[1],
+                        0);
 
-                        try
-                        {
-                            await App.g_db.UpdateItemQOH(iItemNo, iQOH);
-                        }
-                        catch (Exception ex)
-                        {
-                            String sMsg = ex.Message;
-                        }
-                    }
+                    if (itemNo <= 0)
+                        continue;
 
-
+                    qohUpdates.Add((itemNo, qoh));
                 }
+
+                if (qohUpdates.Count == 0)
+                    return;
+
+                // Bulk update
+                await App.g_db.UpdateAllItemQOH(qohUpdates);
+
+                Console.WriteLine(
+                    $"Item QOH updated successfully: {qohUpdates.Count} items");
             }
             catch (Exception ex)
             {
-                String sMsg = ex.Message + ex.StackTrace;
+                Console.WriteLine(
+                    $"Get Item QOH Exception: {ex.Message}");
+
+                Console.WriteLine(ex.StackTrace);
             }
         }
 
-        public static async Task commService_GetItemQOH2CompletedAsync(String response)
+        public static async Task commService_GetItemQOH2CompletedAsync(string response)
         {
-            Debug.WriteLine("Get Item QOH 2 returned");
+            Console.WriteLine("Get Item QOH 2 returned");
 
             try
             {
-                if (response == "X")
-                {
-                    App.g_Shell.Logout();
+                if (string.IsNullOrWhiteSpace(response))
                     return;
+
+                // if (response == "X")
+                // {
+                //     App.g_Shell.Logout();
+                //     return;
+                // }
+
+                var updates = new List<(int ItemNo, int QOH)>();
+
+                foreach (string item in response.Split(
+                    '~',
+                    StringSplitOptions.RemoveEmptyEntries))
+                {
+                    string[] values = item.Split('|');
+
+                    if (values.Length < 2)
+                        continue;
+
+                    int itemNo = GetIntegerValue(
+                        "Item Number",
+                        values[0],
+                        0);
+
+                    int qoh = GetIntegerValue(
+                        "QOH",
+                        values[1],
+                        0);
+
+                    if (itemNo <= 0)
+                        continue;
+
+                    updates.Add((itemNo, qoh));
                 }
 
-                String sItems = response;
-                String[] aItems = sItems.Split('~');
-                int iItemNo;
-                int iQOH;
-
-                if (aItems.Length > 1)
+                if (updates.Count > 0)
                 {
+                    // ONE DB call + ONE transaction
+                    await App.g_db.UpdateAllItemQOH(updates);
 
-
-                    foreach (String s in aItems)
-                    {
-                        String[] aItem = s.Split("|");
-
-                        if (aItem.Count() < 2)
-                        {
-                            continue;
-                        }
-
-                        try
-                        {
-                            iItemNo = Convert.ToInt32(aItem[0]);
-                            iQOH = Convert.ToInt32(aItem[1]);
-                        }
-                        catch (Exception ex)
-                        {
-                            continue;
-                        }
-
-                        try
-                        {
-                            await App.g_db.UpdateItemQOH(iItemNo, iQOH);
-                        }
-                        catch (Exception ex)
-                        {
-                            String sMsg = ex.Message;
-                        }
-                    }
-
-
+                    Console.WriteLine(
+                        $"QOH 2 updated: {updates.Count} items");
                 }
             }
             catch (Exception ex)
             {
-                String sMsg = ex.Message + ex.StackTrace;
+                Console.WriteLine(
+                    $"Get Item QOH 2 Exception: {ex.Message}");
+
+                Console.WriteLine(ex.StackTrace);
             }
+
+            Console.WriteLine("Get Item QOH 2 Completed");
         }
 
         public static async Task commService_ValidateLoginCompletedAsync(String response)
@@ -627,10 +639,6 @@ namespace TPSMobileApp
             try
             {
                 String sUser = response;
-
-                //Database db = new Database();
-                //await db.SaveCustomerAsync(App.g_Customer);
-
                 String[] aInfo = sUser.Split("~");
                 String[] aUser = aInfo[0].Split("|");
                 String[] aCust = aInfo[1].Split("|");
@@ -884,10 +892,7 @@ namespace TPSMobileApp
                         {
                         }
 
-                        if ((App.g_IsSalesUser) || (App.g_IsChainManager))
-                        {
-                            await App.CommManager.GetSalespersonCustomers(App.g_UserName);
-                        }
+
 
                         if (App.g_Customer.CustNo != OldCustNo)
                         {
@@ -898,24 +903,20 @@ namespace TPSMobileApp
                             }
                         }
 
-
-                        await App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
-
                         await App.RefreshAll();
+                        if ((App.g_IsSalesUser) || (App.g_IsChainManager))
+                        {
+                            await App.CommManager.GetSalespersonCustomers(App.g_UserName);
+                        }
+                        await App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
 
                         await App.g_db.SaveSetting("LoggedIn", "1");
                         await App.g_db.SaveSetting("UserName", App.g_UserName);
                         App.g_IsLoggedIn = true;
-                        try
-                        {
-                            MainThread.BeginInvokeOnMainThread(async () =>
+                        MainThread.BeginInvokeOnMainThread(async () =>
                             {
-                                _ = App.g_Shell.GoToHome();
+                                await App.g_Shell.GoToHome();
                             });
-                        }
-                        catch
-                        {
-                        }
                     }
                     else if (userValue == "P")
                     {
@@ -1324,10 +1325,6 @@ namespace TPSMobileApp
 
                 if (aOrders.Length > 1)
                 {
-                    //Database db = new Database();
-
-
-
                     foreach (String s in aOrders)
                     {
                         String[] aOrder = s.Split("|");
@@ -1520,148 +1517,116 @@ namespace TPSMobileApp
             }
         }
 
-        public static async Task commService_GetOrderHistoryCompletedAsync(String response)
+        public static async Task commService_GetOrderHistoryCompletedAsync(string response)
         {
-            Debug.WriteLine("Get Order History Complete");
+            Debug.WriteLine("Get Order History Returned");
 
             try
             {
-                String sOrders = response;
-                String[] aOrders = sOrders.Split('~');
+                if (string.IsNullOrWhiteSpace(response))
+                    return;
 
-                if (aOrders.Length > 1)
+                string[] orders = response.Split(
+                    '~',
+                    StringSplitOptions.RemoveEmptyEntries);
+
+                if (orders.Length == 0)
+                    return;
+
+                var existingHeaders = await App.g_db.GetOrderHeaders();
+
+                var existingOrderNos = existingHeaders
+                    .Select(x => x.OrderNo)
+                    .ToHashSet();
+
+                var addedHeaders = new HashSet<string>();
+
+                var headersToSave = new List<OrderHeader>();
+                var detailsToSave = new List<OrderDetail>();
+
+                foreach (string order in orders)
                 {
-                    //Database db = new Database();
+                    string[] aOrder = order.Split('|');
 
-                    List<OrderHeader> lstOrders = await App.g_db.GetOrderHeaders();
-                    List<String> lstOrderHeadersAdded = new List<String>();
+                    if (aOrder.Length < 24)
+                        continue;
 
+                    string orderNo = aOrder[0];
 
-
-                    foreach (String s in aOrders)
+                    // Header
+                    if (!existingOrderNos.Contains(orderNo) &&
+                        addedHeaders.Add(orderNo))
                     {
-                        String[] aOrder = s.Split("|");
-                        if (aOrder.Count() < 2)
+                        headersToSave.Add(new OrderHeader
                         {
-                            continue;
-                        }
-
-                        bool bFound = false;
-                        foreach (OrderHeader h in lstOrders)
-                        {
-                            if (h.OrderNo == aOrder[0])
-                            {
-                                bFound = true;
-                                break;
-                            }
-                        }
-                        if (bFound)
-                        {
-                            continue;
-                        }
-
-                        bFound = false;
-                        foreach (String sHeader in lstOrderHeadersAdded)
-                        {
-                            if (sHeader == aOrder[0])
-                            {
-                                bFound = true;
-                                break;
-                            }
-                        }
-
-                        if (!bFound)
-                        {
-                            lstOrderHeadersAdded.Add(aOrder[0]);
-
-                            OrderHeader oh = new OrderHeader();
-                            oh.OrderNo = aOrder[0];
-                            oh.CustId = Convert.ToInt32(aOrder[1]);
-                            oh.OrderDate = Convert.ToDateTime(aOrder[2]);
-                            oh.OrderDateDisplay = aOrder[2];
-                            oh.Total = Convert.ToDecimal(aOrder[3]);
-                            oh.TotalDisplay = string.Format("{0:C}", oh.Total);
-                            oh.Items = Convert.ToInt32(aOrder[4]);
-                            oh.Pieces = Convert.ToInt32(aOrder[5]);
-
-                            await App.g_db.SaveOrderHeader(oh);
-                        }
-
-                        OrderDetail od = new OrderDetail();
-                        od.OrderNo = aOrder[0];
-                        od.LineNo = Convert.ToInt32(aOrder[6]);
-                        od.ItemNo = Convert.ToInt32(aOrder[7]);
-                        od.ItemNoDisplay = aOrder[7];
-                        od.QtyOrdered = Convert.ToInt32(aOrder[8]);
-                        od.QtyShipped = Convert.ToInt32(aOrder[8]);
-                        od.Price = Convert.ToDecimal(aOrder[9]);
-                        od.PriceDisplay = string.Format("{0:C}", od.Price);
-                        od.UPC = aOrder[10];
-                        if (od.UPC.Length > 0)
-                        {
-                            od.ItemNoDisplayUPC = od.UPC;
-                        }
-                        else
-                        {
-                            od.ItemNoDisplayUPC = "";
-                        }
-                        od.Description = aOrder[11];
-                        od.UOM = aOrder[12];
-                        od.SellUnitsInPurch = aOrder[13];
-                        od.SizeDisplay = od.UOM + "/" + od.SellUnitsInPurch;
-                        od.SizeUOM = "/" + od.UOM;
-                        od.Size = aOrder[14];
-                        od.Form = aOrder[15];
-                        od.CategoryCode = aOrder[16];
-                        od.CategoryDesc = aOrder[17];
-                        od.SubcategoryCode = aOrder[18];
-                        od.SubcategoryDesc = aOrder[19];
-                        od.VendorId = aOrder[20];
-                        od.VendorName = aOrder[21];
-                        od.Status = aOrder[22];
-                        if (od.Status == "A")
-                        {
-                            od.IsAvailable = true;
-                        }
-                        else
-                        {
-                            od.IsAvailable = false;
-                        }
-                        try
-                        {
-                            od.QOH = Convert.ToInt32(aOrder[23].Trim());
-                        }
-                        catch
-                        {
-                            od.QOH = 0;
-                        }
-                        if (od.QOH == 0)
-                        {
-                            od.IsAvailable = false;
-                        }
-                        od.ImageURL = Constants.ItemImageUrl + od.ItemNo.ToString() + ".jpg";
-
-                        try
-                        {
-                            await App.g_db.SaveOrderDetail(od);
-                            //await App.g_db.SaveReorderItem(ri);
-                        }
-                        catch (Exception ex)
-                        {
-                            String sMsg = ex.Message;
-                        }
+                            OrderNo = orderNo,
+                            CustId = GetIntegerValue("CustId", aOrder[1], 0),
+                            OrderDate = GetDateTime("OrderDate", aOrder[2]),
+                            OrderDateDisplay = aOrder[2],
+                            Total = GetDecimalValue("Total", aOrder[3], 0),
+                            TotalDisplay = GetDecimalValue("Total", aOrder[3], 0).ToString("0.00"),
+                            Items = GetIntegerValue("Items", aOrder[4], 0),
+                            Pieces = GetIntegerValue("Pieces", aOrder[5], 0)
+                        });
                     }
 
-                    await App.g_db.UpdateOrderDetailLastPurch();
+                    int itemNo = GetIntegerValue("ItemNo", aOrder[7], 0);
+                    int qoh = GetIntegerValue("QOH", aOrder[23], 0);
 
-                    App.g_ReorderItemList = await App.g_db.GetReorderItems();
-
-
+                    detailsToSave.Add(new OrderDetail
+                    {
+                        OrderNo = orderNo,
+                        LineNo = GetIntegerValue("LineNo", aOrder[6], 0),
+                        ItemNo = itemNo,
+                        ItemNoDisplay = aOrder[7],
+                        QtyOrdered = GetIntegerValue("QtyOrdered", aOrder[8], 0),
+                        QtyShipped = GetIntegerValue("QtyShipped", aOrder[8], 0),
+                        Price = GetDecimalValue("Price", aOrder[9], 0),
+                        PriceDisplay = GetDecimalValue("Price", aOrder[9], 0).ToString("0.00"),
+                        UPC = aOrder[10],
+                        ItemNoDisplayUPC = string.IsNullOrWhiteSpace(aOrder[10])
+                            ? string.Empty
+                            : aOrder[10],
+                        Description = aOrder[11],
+                        UOM = aOrder[12],
+                        SellUnitsInPurch = aOrder[13],
+                        SizeDisplay = $"{aOrder[12]}/{aOrder[13]}",
+                        SizeUOM = $"/{aOrder[12]}",
+                        Size = aOrder[14],
+                        Form = aOrder[15],
+                        CategoryCode = aOrder[16],
+                        CategoryDesc = aOrder[17],
+                        SubcategoryCode = aOrder[18],
+                        SubcategoryDesc = aOrder[19],
+                        VendorId = aOrder[20],
+                        VendorName = aOrder[21],
+                        Status = aOrder[22],
+                        QOH = qoh,
+                        IsAvailable = aOrder[22] == "A" && qoh > 0,
+                        ImageURL = $"{Constants.ItemImageUrl}{itemNo}.jpg"
+                    });
                 }
+
+                //
+                // BULK SAVE
+                //
+                await App.g_db.SaveOrderHeaders(headersToSave);
+                await App.g_db.SaveOrderDetails(detailsToSave);
+
+                await App.g_db.UpdateOrderDetailLastPurch();
+
+                App.g_ReorderItemList =
+                    await App.g_db.GetReorderItems();
+
+                Debug.WriteLine(
+                    $"Headers:{headersToSave.Count} Details:{detailsToSave.Count}");
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(
+                    $"GetOrderHistory Exception: {ex}");
             }
+            Debug.WriteLine("Get Order History Complete");
         }
 
         public static async Task commService_GetInvoicePDFCompletedAsync(String response)

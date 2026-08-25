@@ -23,6 +23,7 @@
 
         private async void OnLoginClicked(object obj)
         {
+            await App.ResetProgressAsync();
             App.g_LoginPage.ShowAnimation();
             if (User.ToLower() == "app_test")
             {

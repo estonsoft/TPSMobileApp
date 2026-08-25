@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="TPSMobileApp.Controls.CustomAlertDialog"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="this">
+
+    <Grid BackgroundColor="#80000000">
+
+        <Border
+            Padding="24"
+            BackgroundColor="White"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            WidthRequest="320"
+            StrokeShape="RoundRectangle 16">
+
+            <VerticalStackLayout Spacing="14">
+
+                <!-- Loading -->
+                <ActivityIndicator
+                    HeightRequest="36"
+                    HorizontalOptions="Center"
+                    IsRunning="{Binding IsLoading, Source={x:Reference this}}"
+                    IsVisible="{Binding IsLoading, Source={x:Reference this}}"
+                    WidthRequest="36"
+                    Color="#378ADD"/>
+
+                <!-- Title -->
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding Title, Source={x:Reference this}}"
+                    TextColor="#111111"/>
+
+                <!-- Current operation -->
+                <Label
+                    FontSize="15"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding SyncStatus, Source={x:Reference this}}"
+                    TextColor="#555555"/>
+
+                <!-- Percentage -->
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="28"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding ProgressPercentage, Source={x:Reference this}, StringFormat='{0}%'}"
+                    TextColor="#378ADD"/>
+
+                <!-- Progress bar -->
+                <ProgressBar
+                    Progress="{Binding ProgressValue, Source={x:Reference this}}"
+                    ProgressColor="#378ADD"
+                    BackgroundColor="#E5E5E5"
+                    HeightRequest="8"/>
+
+
+                <!-- Optional message -->
+                <Label
+                    FontSize="14"
+                    HorizontalTextAlignment="Center"
+                    LineBreakMode="WordWrap"
+                    Text="{Binding Message, Source={x:Reference this}}"
+                    TextColor="#666666"/>
+
+            </VerticalStackLayout>
+
+        </Border>
+
+    </Grid>
+</ContentView>

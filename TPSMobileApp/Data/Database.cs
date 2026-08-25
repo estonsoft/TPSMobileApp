@@ -649,6 +649,31 @@ namespace TPSMobileApp
             return 1;
         }
 
+        public Task<int> UpdateAllItemQOH(
+            List<(int ItemNo, int QOH)> updates)
+        {
+            if (updates == null || updates.Count == 0)
+                return Task.FromResult(0);
+            foreach (var item in updates)
+            {
+                _database.Execute(
+                    "UPDATE Item SET QOH = ? WHERE ItemNo = ?",
+                    item.QOH,
+                    item.ItemNo);
+
+                _database.Execute(
+                    "UPDATE ReorderItem SET QOH = ? WHERE ItemNo = ?",
+                    item.QOH,
+                    item.ItemNo);
+
+                _database.Execute(
+                    "UPDATE OrderDetail SET QOH = ? WHERE ItemNo = ?",
+                    item.QOH,
+                    item.ItemNo);
+            }
+            return Task.FromResult(updates.Count);
+        }
+
         public async Task<int> GetItemQty(int iItem)
         {
 
@@ -1046,11 +1071,20 @@ namespace TPSMobileApp
 
         public async Task<int> SaveOrderHeader(OrderHeader oh)
         {
-
-
             return _database.InsertOrReplace(oh);
         }
 
+        public Task SaveOrderHeaders(List<OrderHeader> headers)
+        {
+            _database.InsertAll(headers);
+            return Task.CompletedTask;
+        }
+
+        public Task SaveOrderDetails(List<OrderDetail> details)
+        {
+            _database.InsertAll(details);
+            return Task.CompletedTask;
+        }
 
         public async Task<List<OrderHeader>> GetOrderHeaders()
         {

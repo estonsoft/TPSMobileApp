@@ -18,6 +18,7 @@ namespace TPSMobileApp
         public static ReturnCartPage g_ReturnCartPage;
         public static LabelCartPage g_LabelCartPage;
         public static CheckoutPage g_CheckoutPage;
+        public static CustomerListPage g_CustomerPage;
         public static Customer g_Customer;
         public static Category g_Category;
         public static Subcategory g_Subcategory;
@@ -85,10 +86,7 @@ namespace TPSMobileApp
 
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JHaF5cWWdCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdlWXpednVURGVdVk1+XkJWZ0g=");
             App.g_db = Database.Instance();
-            Task.Run(async () =>
-            {
-                await LoadAppData();
-            });
+            LoadAppData();
         }
 
         public async Task LoadAppData()
@@ -278,6 +276,7 @@ namespace TPSMobileApp
         {
             await App.CommManager.GetSettings();
             await App.RefreshAll();
+            await App.RefreshQOH();
             await App.RefreshOrderHistory();
         }
 
@@ -300,7 +299,6 @@ namespace TPSMobileApp
             {
                 await App.CommManager.GetSalespersonCustomers(App.g_UserName);
             }
-            await App.RefreshQOH();
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
@@ -348,6 +346,133 @@ namespace TPSMobileApp
                 }
             }
             catch { }
+        }
+
+        private static CancellationTokenSource? _progressCts;
+        private static int _actualProgress;
+        private static int _displayProgress;
+
+        public static async Task StartProgress(int progress, string status)
+        {
+            _actualProgress = progress;
+            _displayProgress = progress;
+
+            _progressCts?.Cancel();
+            _progressCts = new CancellationTokenSource();
+
+            await UpdateProgressUI(_displayProgress, status);
+
+            _ = RunProgressAnimationAsync(status, _progressCts.Token);
+        }
+
+
+        private static async Task RunProgressAnimationAsync(
+            string status,
+            CancellationToken token)
+        {
+            try
+            {
+                while (!token.IsCancellationRequested)
+                {
+                    await Task.Delay(1000, token);
+
+                    if (token.IsCancellationRequested)
+                        break;
+
+                    // Never go above 99 until actual progress reaches 100
+                    if (_displayProgress < _actualProgress + 40 &&
+                        _displayProgress < 99)
+                    {
+                        _displayProgress++;
+
+                        await UpdateProgressUI(
+                            _displayProgress,
+                            status);
+                    }
+
+                    // Reached 99, wait for the next real progress update
+                    if (_displayProgress >= 99)
+                        break;
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                // Expected when a new progress update arrives
+            }
+        }
+
+        public static async Task ResetProgressAsync(
+    string status = "Starting...")
+        {
+            // Stop previous animation
+            _progressCts?.Cancel();
+            _progressCts?.Dispose();
+            _progressCts = null;
+
+            // Reset progress completely
+            _actualProgress = 0;
+            _displayProgress = 0;
+
+            await UpdateProgressUI(
+                0,
+                status);
+        }
+
+        public static async Task UpdateProgress(
+    int progress,
+    string status)
+        {
+            _actualProgress = Math.Clamp(progress, 0, 100);
+
+            // Cancel previous animation
+            _progressCts?.Cancel();
+            _progressCts?.Dispose();
+            _progressCts = null;
+
+            // Actual progress reached 100
+            if (_actualProgress >= 100)
+            {
+                _displayProgress = 100;
+
+                await UpdateProgressUI(
+                    100,
+                    status);
+
+                // No animation should run at 100
+                return;
+            }
+
+            // Don't move backwards
+            if (_displayProgress < _actualProgress)
+                _displayProgress = _actualProgress;
+
+            await UpdateProgressUI(
+                _displayProgress,
+                status);
+
+            // Start a NEW animation cycle
+            _progressCts = new CancellationTokenSource();
+
+            _ = RunProgressAnimationAsync(
+                status,
+                _progressCts.Token);
+        }
+
+        public static async Task UpdateProgressUI(double current,
+            string status)
+        {
+            switch (g_CurrentPage)
+            {
+                case "LoginPage":
+                    g_LoginPage.UpdateSyncProgress(current, status);
+                    break;
+                case "HomePage":
+                    g_HomePage.UpdateSyncProgress(current, status);
+                    break;
+                case "CustomerListPage":
+                    g_CustomerPage.UpdateSyncProgress(current, status);
+                    break;
+            }
         }
     }
 }

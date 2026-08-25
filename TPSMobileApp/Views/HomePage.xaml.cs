@@ -120,7 +120,7 @@ namespace TPSMobileApp.Views
             SearchText.Text = "";
             if (BindingContext is HomeViewModel viewModel)
             {
-                viewModel.LoadCategories();
+                await viewModel.LoadCategories();
             }
         }
 
@@ -221,11 +221,14 @@ namespace TPSMobileApp.Views
         }
         async void OnRefresh(object sender, EventArgs e)
         {
-            LoadingIndicator.IsVisible = true;
+            await App.ResetProgressAsync();
+            LoadingAlert.IsVisible = true;
+            LoadingAlert.IsEnabled = true;
             await App.g_App.LoadAppData();
             HomeViewModel homeViewModel = (HomeViewModel)BindingContext;
             await homeViewModel.LoadCategories();
-            LoadingIndicator.IsVisible = false;
+            LoadingAlert.IsVisible = false;
+            LoadingAlert.IsEnabled = false;
         }
 
         async void OnRegisterClick(object sender, EventArgs e)
@@ -262,12 +265,7 @@ namespace TPSMobileApp.Views
 
         protected override bool OnBackButtonPressed()
         {
-            // ignore button
             return true;
-
-            // if want to allow back button
-            //base.OnBackButtonPressed();
-            //return false;
         }
         void OnMenuTapped(object sender, EventArgs e)
         {
@@ -297,6 +295,22 @@ namespace TPSMobileApp.Views
 
                 //await App.g_Shell.GoToHome();
             }
+        }
+
+        public void UpdateSyncProgress(
+            double current,
+            string status)
+        {
+            int total = 100;
+
+            var progress = (double)current / total;
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                LoadingAlert.ProgressValue = progress;
+                LoadingAlert.ProgressPercentage = (int)(progress * 100);
+                LoadingAlert.SyncStatus = status;
+            });
         }
     }
 }

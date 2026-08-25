@@ -9,15 +9,8 @@ namespace TPSMobileApp.Views
 
         public CustomerListPage()
         {
-            try
-            {
-                InitializeComponent();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("InitializeComponent Error " + Environment.NewLine + ex.ToString() + Environment.NewLine + ex.StackTrace);
-            }
-
+            InitializeComponent();
+            App.g_CustomerPage = this;
             BindingContext = this;
         }
 
@@ -68,10 +61,13 @@ namespace TPSMobileApp.Views
 
         async void OnTappedCustomer(object sender, EventArgs args)
         {
+
+            LoadingAlert.IsVisible = true;
+            LoadingAlert.IsEnabled = true;
+            await App.ResetProgressAsync();
             string OldCustNo = App.g_Customer.CustNo;
 
             var c = sender as CustomerStackLayout;
-            showLoading.IsVisible = true;
             CustomerList.IsVisible = false;
             await Task.Run(async () =>
             {
@@ -105,17 +101,7 @@ namespace TPSMobileApp.Views
                 //await App.g_db.ClearFavorites();
                 await App.g_db.DeleteOrderHistory();
                 await App.g_db.RestoreCartItems(App.g_Customer.CustNo);
-                try
-                {
-                    if (!string.IsNullOrEmpty(App.g_Customer.CustNo) && App.g_Customer.CustNo != "0")
-                    {
-                        await App.CommManager.GetItems(App.g_Customer.CustNo, "0");
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Category selected exception in items" + e.Message);
-                }
+                await App.g_App.LoadAppData();
             }).ContinueWith((t) =>
             {
                 MainThread.BeginInvokeOnMainThread(async () =>
@@ -123,6 +109,8 @@ namespace TPSMobileApp.Views
                     await App.g_Shell.GoToHome();
                 });
             }, TaskScheduler.FromCurrentSynchronizationContext());
+            LoadingAlert.IsVisible = false;
+            LoadingAlert.IsEnabled = false;
         }
 
         protected override bool OnBackButtonPressed()
@@ -143,6 +131,22 @@ namespace TPSMobileApp.Views
         private void SubmitAll_Clicked(object sender, EventArgs e)
         {
 
+        }
+
+        public void UpdateSyncProgress(
+            double current,
+            string status)
+        {
+            int total = 100;
+
+            var progress = (double)current / total;
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                LoadingAlert.ProgressValue = progress;
+                LoadingAlert.ProgressPercentage = (int)(progress * 100);
+                LoadingAlert.SyncStatus = status;
+            });
         }
     }
 }
