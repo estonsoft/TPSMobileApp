@@ -329,8 +329,9 @@
                         <TapGestureRecognizer Tapped="OnNewItemsAll"/>
                     </Grid.GestureRecognizers>
                 </Grid>
-                <ScrollView HeightRequest="200">
+                <ScrollView HeightRequest="140">
                     <CollectionView
+                        HeightRequest="130"
                         x:Name="TopCategoriesCollectionView"
                         Margin="10,0,0,0"
                         HorizontalOptions="Fill"

@@ -56,15 +56,8 @@ namespace TPSMobileApp.Views
 
         protected override void OnDisappearing()
         {
+            base.OnDisappearing();
             ScannerControl.CameraEnabled = false;
-            try
-            {
-                base.OnDisappearing();
-                Content = null;
-            }
-            catch
-            {
-            }
         }
 
         protected override bool OnBackButtonPressed()
