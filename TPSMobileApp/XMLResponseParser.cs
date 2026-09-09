@@ -1179,22 +1179,12 @@ namespace TPSMobileApp
                     await App.g_db.ClearOrderCartItems();
                     App.g_Notes = "";
 
+                    await Shell.Current.DisplayAlertAsync("Profit Order", "Thank you! Your order has been placed.", "OK");
+
                     MainThread.BeginInvokeOnMainThread(async () =>
                     {
-                        await Shell.Current.DisplayAlertAsync("Profit Order", "Thank you! Your order has been placed.", "OK");
+                        await App.g_Shell.GoToHome();
                     });
-
-
-                    try
-                    {
-                        MainThread.BeginInvokeOnMainThread(async () =>
-                        {
-                            await App.g_Shell.GoToHome();
-                        });
-                    }
-                    catch
-                    {
-                    }
                 }
                 else if (response == "X")
                 {
@@ -1213,37 +1203,18 @@ namespace TPSMobileApp
                 }
                 else if (response == "Z")
                 {
-                    MainThread.BeginInvokeOnMainThread(async () =>
-                    {
-                        await Shell.Current.DisplayAlertAsync("Profit Order", "Order has already been submitted.", "Ok");
-                    });
+                    await Shell.Current.DisplayAlertAsync("Profit Order", "Order has already been submitted.", "Ok");
 
                     await App.g_db.ClearOrderCartItems();
                     App.g_Notes = "";
-
-                    try
+                    MainThread.BeginInvokeOnMainThread(async () =>
                     {
-                        MainThread.BeginInvokeOnMainThread(async () =>
-                        {
-                            await App.g_Shell.GoToHome();
-                        });
-                    }
-                    catch
-                    {
-                    }
+                        await App.g_Shell.GoToHome();
+                    });
                 }
                 else
                 {
-                    try
-                    {
-                        MainThread.BeginInvokeOnMainThread(async () =>
-                        {
-                            await Shell.Current.DisplayAlertAsync("Profit Order", "Error submitting order.  Please try again.", "Ok");
-                        });
-                    }
-                    catch
-                    {
-                    }
+                    await Shell.Current.DisplayAlertAsync("Profit Order", "Error submitting order.  Please try again.", "Ok");
                 }
             }
             catch (Exception ex)
