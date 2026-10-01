@@ -1,12 +1,12 @@
-﻿using SQLite;
+﻿using Realms;
 
 namespace TPSMobileApp
 {
-    public class FlyerItem
+    public class FlyerItem : RealmObject
     {
         [PrimaryKey]
         public int ItemNo { get; set; }
-        public String Section { get; set; }
+        public string Section { get; set; }
         public int Page { get; set; }
         public int Box { get; set; }
         public int StartDate { get; set; }

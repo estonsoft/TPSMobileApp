@@ -1,6 +1,8 @@
-﻿namespace TPSMobileApp
+﻿using Realms;
+
+namespace TPSMobileApp
 {
-    public class OrderDetail
+    public class OrderDetail : RealmObject
     {
         public string OrderNo { get; set; }
         public int ItemNo { get; set; }
@@ -41,7 +43,7 @@
         public Boolean IsStockRowVisible { get; set; }
         public Boolean IsQOHRedVisible { get; set; }
         public Boolean IsQOHBlackVisible { get; set; }
-        public DateTime LastPurchDate { get; set; }
+        public DateTimeOffset LastPurchDate { get; set; }
         public string LastPurchDateDisplay { get; set; }
         public int QtyLastOrder { get; set; }
         public string QtyOrderDisplay { get; set; }

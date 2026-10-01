@@ -1,8 +1,8 @@
-﻿using SQLite;
+﻿using Realms;
 
 namespace TPSMobileApp
 {
-    class DiscontinuedItem
+    class DiscontinuedItem : RealmObject
     {
         [PrimaryKey]
         public int ItemNo { get; set; }

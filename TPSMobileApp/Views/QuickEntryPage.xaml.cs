@@ -9,11 +9,12 @@ namespace TPSMobileApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class QuickEntryPage : ContentPage
     {
-        List<Item> lstItems;
+        List<Item> lstItems = new();
 
         public QuickEntryPage()
         {
             InitializeComponent();
+            ScannerControl.BarcodeSymbologies = BarcodeFormats.CodaBar | BarcodeFormats.Code39 | BarcodeFormats.Code93 | BarcodeFormats.Code128 | BarcodeFormats.Ean8 | BarcodeFormats.Ean13 | BarcodeFormats.GS1DataBar | BarcodeFormats.Itf | BarcodeFormats.Upce;
         }
 
         protected override async void OnAppearing()

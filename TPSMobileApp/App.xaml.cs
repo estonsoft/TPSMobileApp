@@ -86,12 +86,17 @@ namespace TPSMobileApp
 
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JHaF5cWWdCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdlWXpednVURGVdVk1+XkJWZ0g=");
             App.g_db = Database.Instance();
-            LoadAppData();
         }
 
         public async Task LoadAppData()
         {
             await LoadSettings();
+
+            if (!App.g_IsLoggedIn)
+            {
+                return;
+            }
+
             await LoadDataFromServer();
             await LoadCustomerFromServer();
         }
@@ -303,7 +308,39 @@ namespace TPSMobileApp
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            var loadingPage = new SplashScreen();
+            var window = new Window(loadingPage);
+            loadingPage.RetryRequested += async (_, _) => await LoadStartupDataAsync(window, loadingPage);
+            _ = LoadStartupDataAsync(window, loadingPage);
+            return window;
+        }
+
+        private async Task LoadStartupDataAsync(Window window, SplashScreen loadingPage)
+        {
+            await MainThread.InvokeOnMainThreadAsync(loadingPage.ShowLoading);
+            try
+            {
+                await LoadAppData();
+                await MainThread.InvokeOnMainThreadAsync(async () =>
+                {
+                    var shell = new AppShell();
+                    window.Page = shell;
+
+                    if (App.g_IsLoggedIn)
+                    {
+                        await shell.GoToHome();
+                    }
+                    else
+                    {
+                        await shell.GoToLogin();
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Startup data load failed: {ex}");
+                await MainThread.InvokeOnMainThreadAsync(() => loadingPage.ShowLoadError(ex.Message));
+            }
         }
         public static void UpdateServerLinks()
         {

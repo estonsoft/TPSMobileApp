@@ -61,17 +61,20 @@ namespace TPSMobileApp.Views
 
         async void OnTappedCustomer(object sender, EventArgs args)
         {
+            var c = sender as CustomerStackLayout;
+            if (c == null) return;
+            string selectedCustNo = c.CustNo;
+            App.g_Customer = await App.g_db.GetCustomer() ?? new Customer();
+            string OldCustNo = App.g_Customer.CustNo;
 
             LoadingAlert.IsVisible = true;
             LoadingAlert.IsEnabled = true;
             await App.ResetProgressAsync();
-            string OldCustNo = App.g_Customer.CustNo;
 
-            var c = sender as CustomerStackLayout;
             CustomerList.IsVisible = false;
             await Task.Run(async () =>
             {
-                SalesCustomer cust = await App.g_db.FindSalesCustomer(c.CustNo);
+                SalesCustomer cust = await App.g_db.FindSalesCustomer(selectedCustNo);
                 App.g_Customer.CustNo = cust.CustNo;
                 App.g_Customer.CompanyName = cust.CompanyName;
                 App.g_Customer.Address1 = cust.Address1;

@@ -2,17 +2,45 @@
 <ContentPage
     x:Class="TPSMobileApp.Views.SplashScreen"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:ffimageloading="clr-namespace:FFImageLoading.Maui;assembly=FFImageLoading.Maui"
     xmlns:controls="clr-namespace:TPSMobileApp.Controls"
     Title="SplashScreen">
     <Grid
+        Padding="24"
         BackgroundColor="White"
         HorizontalOptions="Fill"
         SafeAreaEdges="None"
         VerticalOptions="Fill">
-       <ffimageloading:CachedImage 
+        <VerticalStackLayout
             HorizontalOptions="Center"
-            Source="logo.png"
-            VerticalOptions="Center" />
+            Spacing="18"
+            VerticalOptions="Center">
+            <Image
+                HeightRequest="120"
+                HorizontalOptions="Center"
+                Source="logo.png"
+                WidthRequest="180"/>
+            <ActivityIndicator
+                x:Name="LoadingIndicator"
+                Color="RoyalBlue"
+                IsRunning="True"/>
+            <Label
+                x:Name="StatusLabel"
+                FontSize="16"
+                HorizontalTextAlignment="Center"
+                Text="Loading app data..."
+                TextColor="Black"/>
+            <Label
+                x:Name="ErrorLabel"
+                IsVisible="False"
+                LineBreakMode="WordWrap"
+                TextColor="DarkRed"/>
+            <Button
+                x:Name="RetryButton"
+                Clicked="RetryButton_Clicked"
+                IsVisible="False"
+                Text="Retry"/>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

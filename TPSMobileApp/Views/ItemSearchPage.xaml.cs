@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 
 namespace TPSMobileApp.Views
 {
@@ -12,16 +11,16 @@ namespace TPSMobileApp.Views
         bool _topSellers;
         bool _inStockOnly;
         string _search_text;
-        List<Item> lstItems = new ();
+        private const int PageSize = 30;
+        private readonly ObservableCollection<Item> lstItems = new();
+        private int _nextItemOffset;
+        private int _searchGeneration;
+        private bool _isLoadingItems;
+        private bool _hasMoreItems;
+        private bool _isBarcodeSearch;
+        private bool _isMonthlyAdSearch;
 
-        // The items actually shown in the CollectionView
 
-        private int _pageSize = 10;
-
-        // Remove [ObservableProperty] from itemtoload field
-        // and implement as a property with OnPropertyChanged
-
-        
         public string Category
         {
             get { return _category; }
@@ -123,6 +122,14 @@ namespace TPSMobileApp.Views
 
         public async void RefreshList()
         {
+            int generation = ++_searchGeneration;
+            _nextItemOffset = 0;
+            _hasMoreItems = true;
+            _isBarcodeSearch = !string.IsNullOrEmpty(App.g_ScanBarcode);
+            _isMonthlyAdSearch = !_isBarcodeSearch && App.g_IsMonthlyAdPDFClick;
+            lstItems.Clear();
+            ItemsListSearch.ItemsSource = lstItems;
+
             Category = App.g_Category.Description;
             Subcategory = App.g_Subcategory.Description;
             Subsubcategory = App.g_Subsubcategory.Description;
@@ -138,46 +145,23 @@ namespace TPSMobileApp.Views
                 SubsubcategoryLabel.IsVisible = false;
             }
 
-            if (App.g_ScanBarcode == "")
+            int itemCount = await LoadNextItemsPageAsync(generation);
+            if (generation != _searchGeneration)
             {
-                if (App.g_IsMonthlyAdPDFClick)
-                {
-                    lstItems = await App.g_db.SearchItemsMonthlyAdClick(App.g_MonthlyAdPage, App.g_MonthlyAdX, App.g_MonthlyAdY);
-                    App.g_IsMonthlyAdPDFClick = false;
-                }
-                else
-                {
-                    lstItems = await App.g_db.SearchItems(App.g_SearchText, App.g_Category, App.g_ScanBarcode, App.g_Subcategory, App.g_Subsubcategory);
-                }
-            }
-            else
-            {
-                lstItems = await App.g_db.SearchItemsQuickEntry(App.g_ScanBarcode);
+                return;
             }
 
-            int iItems = 0;
-
-            foreach (Item i in lstItems)
+            if (itemCount == 0 && App.g_Category.Description != "ALL CATEGORIES")
             {
-                iItems++;
-                Item.SetListItem(i, "O");
-            }
-
-
-            if (iItems == 0 && App.g_Category.Description != "ALL CATEGORIES")
-            {
-                //await Shell.Current.DisplayAlertAsync("Profit Order", "No items found matching search criteria", "Ok");
                 bool answer = await Shell.Current.DisplayAlertAsync(
-                "Profit Order",
-                "No items found in selected category. Do you want to search in all categories?",
-                "Yes",
-                "No");
+                    "Profit Order",
+                    "No items found in selected category. Do you want to search in all categories?",
+                    "Yes",
+                    "No");
 
                 if (answer)
                 {
-                    // User tapped 'Yes' - Call your search method here
                     App.g_SearchText = Search.Text;
-                    //App.g_SearchFromPage = "HomePage";
                     App.g_Category.Code = "";
                     App.g_Category.Description = "ALL CATEGORIES";
 
@@ -191,37 +175,83 @@ namespace TPSMobileApp.Views
                     // User tapped 'No' - Handle cancellation or do nothing
                 }
             }
-            else if (iItems == 0 ){
-                await Shell.Current.DisplayAlertAsync(
-               "Profit Order",
-               "No items found in selected category.Please modify your search.",
-               "Cancel");
+            else if (itemCount == 0)
+            {
+                await Shell.Current.DisplayAlertAsync("Profit Order", "No items found in selected category. Please modify your search.", "Cancel");
             }
-            ItemsListSearch.ItemsSource = lstItems;
-            //loadMoreCommand?.Execute(null);
         }
 
-        //[RelayCommand]
-        //private void LoadMore()
-        //{
-        //    // 1. Calculate how many items are already shown
-        //    int currentCount = DisplayedItems.Count;
+        private async Task<int> LoadNextItemsPageAsync(int generation)
+        {
+            if (_isLoadingItems || !_hasMoreItems || generation != _searchGeneration)
+            {
+                return 0;
+            }
 
-        //    // 2. Check if there's more to load
-        //    if (currentCount < lstItems.Count)
-        //    {
-        //        // 3. Take the next batch from your master list
-        //        var nextBatch = lstItems
-        //            .Skip(currentCount)
-        //            .Take(_pageSize);
+            _isLoadingItems = true;
+            try
+            {
+                List<Item> page;
+                if (_isBarcodeSearch)
+                {
+                    page = await App.g_db.SearchItemsQuickEntry(App.g_ScanBarcode, _nextItemOffset, PageSize);
+                }
+                else if (_isMonthlyAdSearch)
+                {
+                    page = await App.g_db.SearchItemsMonthlyAdClick(
+                        App.g_MonthlyAdPage,
+                        App.g_MonthlyAdX,
+                        App.g_MonthlyAdY,
+                        _nextItemOffset,
+                        PageSize);
+                }
+                else
+                {
+                    page = await App.g_db.SearchItems(
+                        App.g_SearchText,
+                        App.g_Category,
+                        App.g_ScanBarcode,
+                        App.g_Subcategory,
+                        App.g_Subsubcategory,
+                        _nextItemOffset,
+                        PageSize);
 
-        //        // 4. Add them to the observable collection
-        //        foreach (var item in nextBatch)
-        //        {
-        //            DisplayedItems.Add(item);
-        //        }
-        //    }
-        //}
+                    if (generation != _searchGeneration)
+                    {
+                        return 0;
+                    }
+                }
+
+                if (generation != _searchGeneration)
+                {
+                    return 0;
+                }
+
+                _hasMoreItems = page.Count == PageSize;
+                if (_isMonthlyAdSearch && App.g_IsMonthlyAdPDFClick)
+                {
+                    App.g_IsMonthlyAdPDFClick = false;
+                }
+
+                foreach (var item in page)
+                {
+                    Item.SetListItem(item, "O");
+                    lstItems.Add(item);
+                }
+
+                _nextItemOffset += page.Count;
+                return page.Count;
+            }
+            finally
+            {
+                _isLoadingItems = false;
+            }
+        }
+
+        private async void ItemsListSearch_RemainingItemsThresholdReached(object sender, EventArgs e)
+        {
+            await LoadNextItemsPageAsync(_searchGeneration);
+        }
 
         private void OnTappedClearCategory(object sender, EventArgs e)
         {
@@ -286,14 +316,12 @@ namespace TPSMobileApp.Views
         private void TopSellers_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
             App.g_IsTopSellers = TopSellers.IsChecked;
-            lstItems.Clear();
             RefreshList();
         }
 
         private void InStockOnly_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
             App.g_InStockOnly = InStockOnly.IsChecked;
-            lstItems.Clear();
             RefreshList();
         }
 
@@ -320,8 +348,8 @@ namespace TPSMobileApp.Views
         private void Button_Clicked(object sender, EventArgs e)
         {
             ImageOverlay.IsVisible = false;
-            if (ItemsListSearch.SelectedItem!= null)
-            {   
+            if (ItemsListSearch.SelectedItem != null)
+            {
                 ItemsListSearch.SelectedItem = null;
                 FullImage.Source = null;
             }
@@ -330,8 +358,8 @@ namespace TPSMobileApp.Views
         private void ItemsListSearch_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = e.CurrentSelection?.FirstOrDefault() as Item;
-                if (selectedItem == null)
-                    return;
+            if (selectedItem == null)
+                return;
             ImageOverlay.IsVisible = true;
             FullImage.Source = selectedItem.ImageURL;
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace TPSMobileApp
 {
@@ -265,7 +266,7 @@ namespace TPSMobileApp
         {
             try
             {
-                Console.WriteLine(DateTime.Now.ToString() + " - Get Items returned");
+                Console.WriteLine(DateTimeOffset.Now.ToString() + " - Get Items returned");
                 String sItems = response;
                 String[] aItems = sItems.Split('~');
                 if (aItems.Length > 1)
@@ -479,7 +480,7 @@ namespace TPSMobileApp
                         Console.WriteLine("Update Discontinued Items completed");
                         await App.g_db.UpdateOrderDetailLastPurch();
                         Console.WriteLine("Update Order Detail Last Purch completed");
-                        await App.g_db.SaveSetting("LastUpdateItems", DateTime.Now.ToString("1yyMMdd"));
+                        await App.g_db.SaveSetting("LastUpdateItems", DateTimeOffset.Now.ToString("1yyMMdd"));
 
                         App.g_ItemList = await App.g_db.GetItems();
 
@@ -1506,9 +1507,16 @@ namespace TPSMobileApp
 
                 var existingHeaders = await App.g_db.GetOrderHeaders();
 
-                var existingOrderNos = existingHeaders
-                    .Select(x => x.OrderNo)
-                    .ToHashSet();
+                var existingOrderNos = new HashSet<string>();
+
+                for (int i = 0; i < existingHeaders.Count; i++)
+                {
+                    var orderNo = existingHeaders[i].OrderNo;
+                    if (orderNo != null)
+                    {
+                        existingOrderNos.Add(orderNo);
+                    }
+                }
 
                 var addedHeaders = new HashSet<string>();
 
@@ -1835,10 +1843,10 @@ namespace TPSMobileApp
                 }
             }
         }
-        public static DateTime GetDateTime(string key, string value)
+        public static DateTimeOffset GetDateTime(string key, string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                return DateTime.MinValue;
+                return DateTimeOffset.MinValue;
 
             value = value.Trim();
 
@@ -1853,7 +1861,7 @@ namespace TPSMobileApp
                 "MM/dd/yy"
             };
 
-            if (DateTime.TryParseExact(
+            if (DateTimeOffset.TryParseExact(
                     value,
                     formats,
                     CultureInfo.InvariantCulture,
@@ -1864,7 +1872,7 @@ namespace TPSMobileApp
             }
 
             // Fallback to normal parsing
-            if (DateTime.TryParse(
+            if (DateTimeOffset.TryParse(
                     value,
                     CultureInfo.InvariantCulture,
                     DateTimeStyles.None,
@@ -1875,7 +1883,7 @@ namespace TPSMobileApp
 
             Console.WriteLine($"{key} Invalid Date: '{value}'");
 
-            return DateTime.MinValue;
+            return DateTimeOffset.MinValue;
         }
         public static int GetIntegerValue(String key, String value, int defaultValue)
         {
@@ -1884,9 +1892,7 @@ namespace TPSMobileApp
                 string sizeValue = value.Trim();
                 if (sizeValue.Length > 0)
                 {
-                    string digits = new string(sizeValue
-                    .TakeWhile(char.IsDigit)
-                    .ToArray());
+                    string digits = Regex.Match(sizeValue ?? "", @"^\d+").Value;
 
                     return int.TryParse(digits, out var size)
                         ? size

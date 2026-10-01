@@ -1,13 +1,13 @@
-﻿using SQLite;
+﻿using Realms;
 
 namespace TPSMobileApp
 {
-    public class ReorderItem
+    public class ReorderItem : RealmObject
     {
         [PrimaryKey]
         public int ItemNo { get; set; }
         public string ItemNoDisplay { get; set; }
-        public DateTime LastPurchDate { get; set; }
+        public DateTimeOffset LastPurchDate { get; set; }
         public string LastPurchDateDisplay { get; set; }
         public int QtyLastOrder { get; set; }
         public string QtyOrderDisplay { get; set; }

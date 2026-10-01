@@ -1,8 +1,8 @@
-﻿using SQLite;
+﻿using Realms;
 
 namespace TPSMobileApp
 {
-    public class Banner
+    public class Banner : RealmObject
     {
         [PrimaryKey]
         public string BannerName { get; set; }

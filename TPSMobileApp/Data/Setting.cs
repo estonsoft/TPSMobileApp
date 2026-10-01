@@ -1,8 +1,8 @@
-﻿using SQLite;
+﻿using Realms;
 
 namespace TPSMobileApp
 {
-    public class Setting
+    public class Setting : RealmObject
     {
         [PrimaryKey]
         public string Key { get; set; }

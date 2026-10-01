@@ -1,8 +1,8 @@
-﻿using SQLite;
+﻿using Realms;
 
 namespace TPSMobileApp
 {
-    public class Location
+    public class Location : RealmObject
     {
         [PrimaryKey]
         public int LocationId { get; set; }

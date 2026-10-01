@@ -1,8 +1,8 @@
-﻿using SQLite;
+﻿using Realms;
 
 namespace TPSMobileApp
 {
-    public class CartItem
+    public class CartItem : RealmObject
     {
         [PrimaryKey]
         public int ItemNo { get; set; }

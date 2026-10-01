@@ -50,9 +50,9 @@
             App.g_Subcategory = selectedCategory;
             App.g_ScanBarcode = "";
 
-            int iSubsubcategories =  App.g_db.GetSubsubcategory(App.g_Category.Code, App.g_Subcategory.Code).Result.Count;
+            var subsubcategories = await App.g_db.GetSubsubcategory(App.g_Category.Code, App.g_Subcategory.Code);
 
-            if (iSubsubcategories < 1)
+            if (subsubcategories.Count > 0)
             {
                 await App.g_Shell.GoToSubsubcategories();
             }

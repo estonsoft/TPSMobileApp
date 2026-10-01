@@ -243,7 +243,7 @@ namespace TPSMobileApp
                 return 0;
             }
 
-            int iNow = Convert.ToInt32(DateTime.Now.ToString("1yyMMdd"));
+            int iNow = Convert.ToInt32(DateTimeOffset.Now.ToString("1yyMMdd"));
             if ((iNow < App.g_FlyerStartDate) || (iNow > App.g_FlyerEndDate))
             {
                 await Shell.Current.DisplayAlertAsync("Profit Order", "No active monthly ads at this time", "Ok");

@@ -1,8 +1,8 @@
-﻿using SQLite;
+﻿using Realms;
 
 namespace TPSMobileApp
 {
-    public class Subsubcategory
+    public class Subsubcategory : RealmObject
     {
         [PrimaryKey]
         public string Code { get; set; }

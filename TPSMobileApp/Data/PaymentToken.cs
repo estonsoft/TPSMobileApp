@@ -1,6 +1,8 @@
-﻿namespace TPSMobileApp
+﻿using Realms;
+
+namespace TPSMobileApp
 {
-    public class PaymentToken
+    public class PaymentToken : RealmObject
     {
         public int CustId { get; set; }
         public string Token { get; set; }

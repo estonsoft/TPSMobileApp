@@ -1,9 +1,11 @@
-﻿using SQLite;
+﻿using Realms;
 
 namespace TPSMobileApp
 {
-    public class Item
+    public class Item : RealmObject
     {
+        internal string custNo;
+
         [PrimaryKey]
         public int ItemNo { get; set; }
         public string ItemNoDisplay { get; set; }
@@ -63,7 +65,7 @@ namespace TPSMobileApp
         public int AllocationQty { get; set; }
         public Boolean IsNew { get; set; }
         public string AddedDateDisplay { get; set; }
-        public DateTime LastPurchDate { get; set; }
+        public DateTimeOffset LastPurchDate { get; set; }
         public string LastPurchDateDisplay { get; set; }
         public int QtyLastOrder { get; set; }
         public string QtyLastOrderDisplay { get; set; }
@@ -94,6 +96,10 @@ namespace TPSMobileApp
         public string SubsubcategoryDesc { get; set; }
         public string ItemRefNo { get; set; }
         public int LineNo { get; set; }
+        public int QtyOnOrderSellUnit1 { get; internal set; }
+        public int QtyOnOrderSellUnit2 { get; internal set; }
+        public int QtyOnOrderSellUnit3 { get; internal set; }
+        public int QtyOnOrderSellUnit4 { get; internal set; }
 
         public static void SetListItem(Item i, string Type)
         {

@@ -1,6 +1,8 @@
-﻿namespace TPSMobileApp
+﻿using Realms;
+
+namespace TPSMobileApp
 {
-    public class SuspendItem
+    public class SuspendItem : RealmObject
     {
         public string CustNo { get; set; }
         public int ItemNo { get; set; }

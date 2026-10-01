@@ -8,6 +8,9 @@ using Scandit.DataCapture.Core.UI.Maui;
 using SQLitePCL;
 using Syncfusion.Maui.Core.Hosting;
 using TPSMobileApp.Data;
+#if MAUI_DEVFLOW
+using Microsoft.Maui.DevFlow.Agent;
+#endif
 namespace TPSMobileApp
 {
     public static class MauiProgram
@@ -49,6 +52,11 @@ namespace TPSMobileApp
                     fonts.AddFont("Font Awesome 6 Pro-Solid-900.otf", "FontAwesomePro6Solid");
                     fonts.AddFont("Font Awesome 6 Pro-Thin-100.otf", "FontAwesomePro6Thin");
                 });
+
+#if MAUI_DEVFLOW
+            builder.AddMauiDevFlowAgent();
+#endif
+
             try
             {
                 Batteries_V2.Init();
