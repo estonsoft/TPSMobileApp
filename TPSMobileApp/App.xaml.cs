@@ -276,7 +276,7 @@ namespace TPSMobileApp
             }
 
         }
-        private async Task LoadDataFromServer()
+        public async Task LoadDataFromServer()
         {
             await App.CommManager.GetSettings();
             await App.RefreshAll();

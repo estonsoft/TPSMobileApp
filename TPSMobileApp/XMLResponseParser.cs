@@ -904,20 +904,9 @@ namespace TPSMobileApp
                             }
                         }
 
-                        // await App.RefreshAll();
-                        // if ((App.g_IsSalesUser) || (App.g_IsChainManager))
-                        // {
-                        //     await App.CommManager.GetSalespersonCustomers(App.g_UserName);
-                        // }
-                        // await App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
-
                         await App.g_db.SaveSetting("LoggedIn", "1");
                         await App.g_db.SaveSetting("UserName", App.g_UserName);
                         App.g_IsLoggedIn = true;
-                        MainThread.BeginInvokeOnMainThread(async () =>
-                            {
-                                await App.g_Shell.GoToHome();
-                            });
                     }
                     else if (userValue == "P")
                     {
@@ -995,10 +984,6 @@ namespace TPSMobileApp
                     {
                     }
                 }
-                MainThread.BeginInvokeOnMainThread(async () =>
-                {
-                    await AppShell.Current.Navigation.PopAsync(true);
-                });
             }
             catch (Exception ex)
             {

@@ -49,6 +49,14 @@
             //Database db = new Database();
             await App.g_db.SaveCustomer(App.g_Customer);
             await App.CommManager.ValidateLogin(User, Password, App.g_Customer.UniqueId);
+            if (App.g_IsLoggedIn)
+            {
+                await App.g_App.LoadDataFromServer();
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    await App.g_Shell.GoToHome();
+                });
+            }
         }
     }
 }
