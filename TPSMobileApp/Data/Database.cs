@@ -16,8 +16,15 @@ namespace TPSMobileApp
 
             _config = new RealmConfiguration(dbPath)
             {
-                SchemaVersion = 1,
-                MigrationCallback = (migration, oldSchemaVersion) => { }
+                SchemaVersion = 2,
+                MigrationCallback = (migration, oldSchemaVersion) =>
+                {
+                    // OrderDetail primary key changed; drop old rows so they re-sync.
+                    if (oldSchemaVersion < 2)
+                    {
+                        migration.NewRealm.RemoveAll<OrderDetail>();
+                    }
+                }
             };
         }
 
@@ -508,7 +515,7 @@ namespace TPSMobileApp
             realm.Write(() =>
             {
                 item.QtyOrder += iQty;
-                int maxLineNo = realm.All<Item>().Any() ? realm.All<Item>().Max(i => i.LineNo) : 0;
+                int maxLineNo = realm.All<Item>().OrderByDescending(i => i.LineNo).FirstOrDefault()?.LineNo ?? 0;
                 if (item.LineNo == 0) item.LineNo = maxLineNo + 1;
             });
 
@@ -549,7 +556,7 @@ namespace TPSMobileApp
                 item.QtyOrder += iQtyOrder;
                 item.QtyCredit += iQtyCredit;
                 item.QtyLabel += iQtyLabel;
-                int maxLineNo = realm.All<Item>().Any() ? realm.All<Item>().Max(i => i.LineNo) : 0;
+                int maxLineNo = realm.All<Item>().OrderByDescending(i => i.LineNo).FirstOrDefault()?.LineNo ?? 0;
                 if (item.LineNo == 0) item.LineNo = maxLineNo + 1;
             });
             return 1;
@@ -564,7 +571,7 @@ namespace TPSMobileApp
             realm.Write(() =>
             {
                 item.QtyOrder = iQty;
-                int maxLineNo = realm.All<Item>().Any() ? realm.All<Item>().Max(i => i.LineNo) : 0;
+                int maxLineNo = realm.All<Item>().OrderByDescending(i => i.LineNo).FirstOrDefault()?.LineNo ?? 0;
                 if (item.LineNo == 0) item.LineNo = maxLineNo + 1;
             });
 
@@ -1016,7 +1023,15 @@ namespace TPSMobileApp
             if (details == null) return Task.CompletedTask;
             var detailSnapshots = CopyRealmObjects(details);
             var realm = GetRealm();
-            realm.Write(() => { foreach (var detail in detailSnapshots) realm.Add(detail, update: true); });
+            realm.Write(() =>
+            {
+                foreach (var detail in detailSnapshots)
+                {
+                    var old = realm.Find<OrderDetail>(detail.Id);
+                    if (old != null) realm.Remove(old);
+                    realm.Add(detail);
+                }
+            });
             return Task.CompletedTask;
         }
 
@@ -1048,7 +1063,12 @@ namespace TPSMobileApp
             if (od == null) return 0;
             var detailSnapshot = CopyRealmObject(od)!;
             var realm = GetRealm();
-            realm.Write(() => realm.Add(detailSnapshot, update: true));
+            realm.Write(() =>
+            {
+                var old = realm.Find<OrderDetail>(detailSnapshot.Id);
+                if (old != null) realm.Remove(old);
+                realm.Add(detailSnapshot);
+            });
             return 1;
         }
 
@@ -1063,7 +1083,9 @@ namespace TPSMobileApp
         public async Task<List<OrderDetail>> GetOrderDetail(string sOrderNo)
         {
             var realm = GetRealm();
-            return CopyRealmObjects(realm.All<OrderDetail>().Where(d => d.OrderNo == sOrderNo).OrderBy(d => d.Description));
+            // Drop duplicate rows already stored by earlier syncs.
+            var rows = realm.All<OrderDetail>().Where(d => d.OrderNo == sOrderNo);
+            return CopyRealmObjects(rows);
         }
 
         public async Task<int> UpdateOrderDetailLastPurch()

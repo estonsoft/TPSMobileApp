@@ -4,6 +4,8 @@ namespace TPSMobileApp
 {
     public class OrderDetail : RealmObject
     {
+        [PrimaryKey]
+        public string Id { get; set; }
         public string OrderNo { get; set; }
         public int ItemNo { get; set; }
         public string ItemNoDisplay { get; set; }

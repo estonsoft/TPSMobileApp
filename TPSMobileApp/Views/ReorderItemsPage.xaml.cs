@@ -21,46 +21,23 @@
         {
             //ReorderItemsList.ItemsSource = App.g_ReorderItemList;
 
-            await Task.Run(() =>
+            try
             {
-                try
+                // Cached lists are stale snapshots; reload so QtyOrder reflects the cart.
+                var reorderList = await App.g_db.GetReorderItems();
+                App.g_ReorderItemList = reorderList;
+
+                foreach (Item ri in reorderList)
                 {
-                    // Fix 5: reuse already loaded list
-                    var lstItem = App.g_ItemList as List<Item>;
-                    if (lstItem == null || lstItem.Count == 0) return;
-
-                    // Fix 3: safe cast
-                    if (App.g_ReorderItemList is not List<Item> reorderList
-                        || reorderList.Count == 0) return;
-
-                    // Fix 4: O(1) lookup with Dictionary
-                    var itemLookup = lstItem.ToDictionary(i => i.ItemNo);
-
-                    foreach (Item ri in reorderList)
-                    {
-                        ri.IsLoggedIn = App.g_IsLoggedIn;
-
-                        if (itemLookup.TryGetValue(ri.ItemNo, out Item? matched) && matched != null)
-                        {
-                            ri.QtyOrder = matched.QtyOrder;
-                            ri.IsPriceVisible = matched.IsPriceVisible;
-                        }
-
-                        Item.SetListItem(ri, "O");
-                    }
-
-                    // Fix 2: correct list as ItemsSource
-                    MainThread.BeginInvokeOnMainThread(() =>
-                    {
-                        ReorderItemsList.ItemsSource = null;           // force refresh
-                        ReorderItemsList.ItemsSource = reorderList;    // ✅ reorder list
-                    });
+                    Item.SetListItem(ri, "O");
                 }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"ReorderList error: {ex.Message}");
-                }
-            });
+
+                ReorderItemsList.ItemsSource = reorderList;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"ReorderList error: {ex.Message}");
+            }
         }
 
         protected override bool OnBackButtonPressed()

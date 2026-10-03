@@ -904,12 +904,12 @@ namespace TPSMobileApp
                             }
                         }
 
-                        await App.RefreshAll();
-                        if ((App.g_IsSalesUser) || (App.g_IsChainManager))
-                        {
-                            await App.CommManager.GetSalespersonCustomers(App.g_UserName);
-                        }
-                        await App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
+                        // await App.RefreshAll();
+                        // if ((App.g_IsSalesUser) || (App.g_IsChainManager))
+                        // {
+                        //     await App.CommManager.GetSalespersonCustomers(App.g_UserName);
+                        // }
+                        // await App.CommManager.GetOrderHistory(App.g_Customer.CustNo);
 
                         await App.g_db.SaveSetting("LoggedIn", "1");
                         await App.g_db.SaveSetting("UserName", App.g_UserName);
@@ -1283,212 +1283,6 @@ namespace TPSMobileApp
             }
         }
 
-        public static async Task commService_GetOrderHistoryCompletedAsyncOld(String response)
-        {
-            try
-            {
-                Debug.WriteLine("Get Order History returned");
-
-                String sOrders = response;
-                String[] aOrders = sOrders.Split('~');
-                List<String> lstHeader = new List<String>();
-
-                await App.g_db.DeleteReorderItems();
-
-                if (aOrders.Length > 1)
-                {
-                    foreach (String s in aOrders)
-                    {
-                        String[] aOrder = s.Split("|");
-                        if (aOrder.Count() < 2)
-                        {
-                            continue;
-                        }
-
-                        bool bDeleteDetail = true;
-                        foreach (String sOrder in lstHeader)
-                        {
-                            if (sOrder == aOrder[0])
-                            {
-                                bDeleteDetail = false;
-                                break;
-                            }
-                        }
-                        if (bDeleteDetail)
-                        {
-                            await App.g_db.DeleteOrderDetail(aOrder[0]);
-                            lstHeader.Add(aOrder[0]);
-                        }
-
-                        OrderHeader oh = new OrderHeader();
-                        oh.OrderNo = aOrder[0];
-                        oh.CustId = Convert.ToInt32(aOrder[1]);
-                        oh.OrderDate = Convert.ToDateTime(aOrder[2]);
-                        oh.OrderDateDisplay = aOrder[2];
-                        oh.Total = Convert.ToDecimal(aOrder[3]);
-                        oh.TotalDisplay = string.Format("{0:C}", oh.Total);
-                        oh.Items = Convert.ToInt32(aOrder[4]);
-                        oh.Pieces = Convert.ToInt32(aOrder[5]);
-
-                        OrderDetail od = new OrderDetail();
-                        od.OrderNo = aOrder[0];
-                        od.LineNo = Convert.ToInt32(aOrder[6]);
-                        od.ItemNo = Convert.ToInt32(aOrder[7]);
-                        od.ItemNoDisplay = aOrder[7];
-                        od.QtyOrdered = Convert.ToInt32(aOrder[8]);
-                        od.QtyShipped = Convert.ToInt32(aOrder[8]);
-                        od.Price = Convert.ToDecimal(aOrder[9]);
-                        od.PriceDisplay = string.Format("{0:C}", od.Price);
-                        od.UPC = aOrder[10];
-                        if (od.UPC.Length > 0)
-                        {
-                            od.ItemNoDisplayUPC = od.UPC;
-                        }
-                        else
-                        {
-                            od.ItemNoDisplayUPC = "";
-                        }
-                        od.Description = aOrder[11];
-                        od.UOM = aOrder[12];
-                        od.SellUnitsInPurch = aOrder[13];
-                        od.SizeDisplay = od.UOM + "/" + od.SellUnitsInPurch;
-                        od.SizeUOM = "/" + od.UOM;
-                        od.Size = aOrder[14];
-                        od.Form = aOrder[15];
-                        od.CategoryCode = aOrder[16];
-                        od.CategoryDesc = aOrder[17];
-                        od.SubcategoryCode = aOrder[18];
-                        od.SubcategoryDesc = aOrder[19];
-                        od.VendorId = aOrder[20];
-                        od.VendorName = aOrder[21];
-                        od.Status = aOrder[22];
-                        if (od.Status == "A")
-                        {
-                            od.IsAvailable = true;
-                        }
-                        else
-                        {
-                            od.IsAvailable = false;
-                        }
-                        try
-                        {
-                            od.QOH = Convert.ToInt32(aOrder[23].Trim());
-                        }
-                        catch
-                        {
-                            od.QOH = 0;
-                        }
-                        if (od.QOH == 0)
-                        {
-                            od.IsAvailable = false;
-                        }
-                        od.ImageURL = Constants.ItemImageUrl + od.ItemNo.ToString() + ".jpg";
-                        od.LastPurchDate = Convert.ToDateTime(aOrder[2]);
-                        od.LastPurchDateDisplay = aOrder[2];
-                        od.QtyLastOrder = Convert.ToInt32(aOrder[8]);
-                        od.QtyOrderDisplay = aOrder[8];
-                        try
-                        {
-                            od.QtyLast90 = Convert.ToInt32(aOrder[24].Trim());
-                            od.QtyLast90Display = aOrder[24];
-                        }
-                        catch
-                        {
-                            od.QtyLast90 = 0;
-                            od.QtyLast90Display = "N/A";
-                        }
-
-                        ReorderItem ri = new ReorderItem();
-                        ri.ItemNo = Convert.ToInt32(aOrder[7]);
-                        ri.ItemNoDisplay = aOrder[7];
-                        ri.LastPurchDate = Convert.ToDateTime(aOrder[2]);
-                        ri.LastPurchDateDisplay = aOrder[2];
-                        ri.QtyLastOrder = Convert.ToInt32(aOrder[8]);
-                        ri.QtyOrderDisplay = aOrder[8];
-                        ri.Description = aOrder[11];
-                        ri.Price = Convert.ToDecimal(aOrder[9]);
-                        ri.PriceDisplay = string.Format("{0:C}", ri.Price);
-                        ri.ImageURL = Constants.ItemImageUrl + ri.ItemNo.ToString() + ".jpg";
-                        ri.UPC = aOrder[10];
-                        if (ri.UPC.Length > 0)
-                        {
-                            ri.ItemNoDisplayUPC = ri.UPC;
-                        }
-                        else
-                        {
-                            ri.ItemNoDisplayUPC = "";
-                        }
-                        ri.UOM = aOrder[12];
-                        ri.SellUnitsInPurch = aOrder[13];
-                        ri.SizeDisplay = ri.UOM + "/" + ri.SellUnitsInPurch;
-                        ri.SizeUOM = "/" + ri.UOM;
-                        ri.Size = aOrder[14];
-                        ri.Form = aOrder[15];
-                        ri.CategoryCode = aOrder[16];
-                        ri.CategoryDesc = aOrder[17];
-                        ri.SubcategoryCode = aOrder[18];
-                        ri.SubcategoryDesc = aOrder[19];
-                        ri.VendorId = aOrder[20];
-                        ri.VendorName = aOrder[21];
-                        ri.Status = aOrder[22];
-                        try
-                        {
-                            ri.QOH = Convert.ToInt32(aOrder[23].Trim());
-                        }
-                        catch
-                        {
-                            ri.QOH = 0;
-                        }
-                        try
-                        {
-                            ri.QtyLast90 = Convert.ToInt32(aOrder[24].Trim());
-                            ri.QtyLast90Display = aOrder[24];
-                        }
-                        catch
-                        {
-                            ri.QtyLast90 = 0;
-                            ri.QtyLast90Display = "N/A";
-                        }
-                        ri.ImageURL = Constants.ItemImageUrl + ri.ItemNo.ToString() + ".jpg";
-
-                        try
-                        {
-                            await App.g_db.SaveOrderHeader(oh);
-                            await App.g_db.SaveOrderDetail(od);
-                            await App.g_db.SaveReorderItem(ri);
-                            Item item = await App.g_db.FindItem(ri.ItemNo, ri.ItemNo.ToString());
-                            if (item != null)
-                            {
-                                item.LastPurchDate = ri.LastPurchDate;
-                                item.LastPurchDateDisplay = ri.LastPurchDateDisplay;
-                                item.QtyLastOrder = ri.QtyLastOrder;
-                                item.QtyOrderDisplay = ri.QtyOrderDisplay;
-                                item.QtyLast90 = ri.QtyLast90;
-                                item.QtyLast90Display = ri.QtyLast90Display;
-                                await App.g_db.UpdateItem(item);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            String sMsg = ex.Message;
-                        }
-                    }
-
-                    App.g_ReorderItemList = await App.g_db.GetReorderItems();
-
-
-
-                }
-
-                Debug.WriteLine("Get Order History Updated");
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Get Order History Error");
-                Debug.WriteLine(ex.Message);
-            }
-        }
-
         public static async Task commService_GetOrderHistoryCompletedAsync(string response)
         {
             Debug.WriteLine("Get Order History Returned");
@@ -1552,10 +1346,13 @@ namespace TPSMobileApp
                     int itemNo = GetIntegerValue("ItemNo", aOrder[7], 0);
                     int qoh = GetIntegerValue("QOH", aOrder[23], 0);
 
+                    int lineNo = GetIntegerValue("LineNo", aOrder[6], 0);
+
                     detailsToSave.Add(new OrderDetail
                     {
+                        Id = $"{orderNo}|{lineNo}",
                         OrderNo = orderNo,
-                        LineNo = GetIntegerValue("LineNo", aOrder[6], 0),
+                        LineNo = lineNo,
                         ItemNo = itemNo,
                         ItemNoDisplay = aOrder[7],
                         QtyOrdered = GetIntegerValue("QtyOrdered", aOrder[8], 0),
@@ -1589,6 +1386,7 @@ namespace TPSMobileApp
                 //
                 // BULK SAVE
                 //
+                await App.g_db.DeleteOrderHistory();
                 await App.g_db.SaveOrderHeaders(headersToSave);
                 await App.g_db.SaveOrderDetails(detailsToSave);
 

@@ -98,7 +98,6 @@ namespace TPSMobileApp
             }
 
             await LoadDataFromServer();
-            await LoadCustomerFromServer();
         }
 
         private async Task LoadSettings()
@@ -282,7 +281,7 @@ namespace TPSMobileApp
             await App.CommManager.GetSettings();
             await App.RefreshAll();
             await App.RefreshQOH();
-            await App.RefreshOrderHistory();
+            await LoadCustomerFromServer();
         }
 
         protected override async void OnResume()
